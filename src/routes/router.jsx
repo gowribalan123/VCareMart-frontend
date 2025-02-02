@@ -13,6 +13,7 @@ import { Cart } from "../pages/user/Cart";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Categories } from "../pages/user/categories";
 
+
 export const router = createBrowserRouter([
     {
         path: "",
@@ -71,7 +72,8 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "orders",
-                      //  element: <h1> orders page</h1>,
+                     //  element: <h1> My Orders</h1>,
+                   //  element:<Orders/>,
                     },
                     {
                         path: "payment/success",

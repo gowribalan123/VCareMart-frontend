@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { Link } from "react-router-dom";
-import { Orders } from "../../components/user/Orders";
+import { Link } from "react-router-dom"; 
 
 export const Profile = () => {
     const [profileData, isLoading, error] = useFetch("/user/profile");
@@ -14,7 +13,7 @@ export const Profile = () => {
             <button onClick={() => setShowOrders(!showOrders)} className="btn btn-secondary">
                 Orders
             </button>
-            {showOrders && <Orders />}
+            {showOrders && <Orders/>}
         </div>
     );
 };

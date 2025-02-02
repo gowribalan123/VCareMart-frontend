@@ -1,53 +1,77 @@
 import React from "react";
-import { Carousel, Typography, Button } from "@material-tailwind/react";
+import { Carousel, Typography, Button,IconButton } from "@material-tailwind/react";
 
 export const Carrousel = () => {
     return (
-        <div transition={{ duration: 2 }} className="carousel w-full ">
-            <div id="slide1" className="carousel-item relative w-full">
-                <img
-                    src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-                    alt="Slide 1"
-                    className="w-full"
-                />
-                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                    <a href="#slide4" className="btn btn-circle" aria-label="Previous Slide">❮</a>
-                    <a href="#slide2" className="btn btn-circle" aria-label="Next Slide">❯</a>
-                </div>
-            </div>
-            <div id="slide2" className="carousel-item relative w-full">
-                <img
-                    src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
-                    alt="Slide 2"
-                    className="w-full"
-                />
-                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                    <a href="#slide1" className="btn btn-circle" aria-label="Previous Slide">❮</a>
-                    <a href="#slide3" className="btn btn-circle" aria-label="Next Slide">❯</a>
-                </div>
-            </div>
-            <div id="slide3" className="carousel-item relative w-full">
-                <img
-                    src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
-                    alt="Slide 3"
-                    className="w-full"
-                />
-                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                    <a href="#slide2" className="btn btn-circle" aria-label="Previous Slide">❮</a>
-                    <a href="#slide4" className="btn btn-circle" aria-label="Next Slide">❯</a>
-                </div>
-            </div>
-            <div id="slide4" className="carousel-item relative w-full">
-                <img
-                    src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp"
-                    alt="Slide 4"
-                    className="w-full"
-                />
-                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                    <a href="#slide3" className="btn btn-circle" aria-label="Previous Slide">❮</a>
-                    <a href="#slide1" className="btn btn-circle" aria-label="Next Slide">❯</a>
-                </div>
-            </div>
-        </div>
-    );
-};
+       
+
+            <Carousel
+              className="rounded-xl"
+              prevArrow={({ handlePrev }) => (
+                <IconButton
+                  variant="text"
+                  color="white"
+                  size="lg"
+                  onClick={handlePrev}
+                  className="!absolute top-2/4 left-4 -translate-y-2/4"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                </IconButton>
+              )}
+              nextArrow={({ handleNext }) => (
+                <IconButton
+                  variant="text"
+                  color="white"
+                  size="lg"
+                  onClick={handleNext}
+                  className="!absolute top-2/4 !right-4 -translate-y-2/4"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </IconButton>
+              )}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+                alt="image 1"
+                className="h-65 w-full object-cover"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+                alt="image 2"
+                className="h-65 w-full object-cover"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                alt="image 3"
+                className="h-65 w-full object-cover"
+              />
+            </Carousel>
+          );
+        }
+  

@@ -31,11 +31,11 @@ export const Card = ({ product }) => {
 
     return (
         <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
-  <div className="relative p-2.5 h-96 overflow-hidden rounded-xl bg-clip-border">
+  <div className="relative p-2.5 h-70 overflow-hidden rounded-xl bg-clip-border">
     <img
       src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
       alt="card-image"
-      className="h-full w-full object-cover rounded-md"
+      className="h-70 w-full object-cover rounded-md"
     />
   </div>
   <div className="p-4">

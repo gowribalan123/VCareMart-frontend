@@ -10,13 +10,7 @@ export const Header = () => {
         <div className="flex justify-between items-center p-14 h-20 shadow-2xl ">
             <div>
             <Link to="/" className="flex items-center">
-                <img
-                    src="logo1.png"
-                    width="40"
-                    height="50"
-                    alt="Logo"
-                    className="mr-2"
-                />
+                
                 <div className="text-3xl font-bold text-blue-600">VCare</div>
             </Link>
             </div>

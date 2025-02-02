@@ -16,10 +16,10 @@
   //plugins: [],
 //});
 
-
 /** @type {import('tailwindcss').Config} */
-import daisyui from "daisyui"
+//import daisyui from "daisyui"
 import withMT from "@material-tailwind/react/utils/withMT"
+
 export default({
 content: [
   "./src/**/*.{js,jsx,ts,tsx}", // Adjust this path based on your project structure
@@ -32,7 +32,6 @@ theme: {
   },
 },
 plugins: [
-  require('daisyui'), // Add DaisyUI as a plugin
-  // You can add other plugins here as needed
+  withMT
 ],
 });
