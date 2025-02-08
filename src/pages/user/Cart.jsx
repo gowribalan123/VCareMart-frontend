@@ -3,7 +3,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { CartCards } from "../../components/user/Cards";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
-import { loadStripe } from "@stripe/stripe-js";
+//import { loadStripe } from "@stripe/stripe-js";
 
 export const Cart = () => {
     

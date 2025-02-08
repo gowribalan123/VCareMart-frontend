@@ -1,0 +1,17 @@
+/* Global styles */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Light mode styles */
+  body {
+    background-color: #ffffff; /* Light background */
+    color: #000000; /* Dark text */
+  }
+  
+  /* Dark mode styles */
+  .dark body {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text */
+  }
+  

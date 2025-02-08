@@ -57,19 +57,24 @@ export const Carrousel = () => {
               )}
             >
               <img
-                src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+                src="https://res.cloudinary.com/dvvacfrz3/image/upload/v1739012823/gillori_1920x_o9qtct.jpg"
                 alt="image 1"
-                className="h-65 w-full object-cover"
+                className="h-75 w-full object-cover"
               />
               <img
-                src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+                src="https://res.cloudinary.com/dvvacfrz3/image/upload/v1739012811/banner-home-alexinternational-WOMENS-CLOTHING_vxltmd.jpg"
                 alt="image 2"
-                className="h-65 w-full object-cover"
+                className="h-75 w-full object-cover"
               />
               <img
-                src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                src="https://res.cloudinary.com/dvvacfrz3/image/upload/v1739012801/WDDDD_vuebpf.jpg"
                 alt="image 3"
-                className="h-65 w-full object-cover"
+                className="h-75 w-full object-cover"
+              />
+               <img
+                src="https://res.cloudinary.com/dvvacfrz3/image/upload/v1739012764/Refurbished_Mobile_Phones_1_ldklox.jpg"
+                alt="image 4"
+                className="h-75 w-full object-cover"
               />
             </Carousel>
           );

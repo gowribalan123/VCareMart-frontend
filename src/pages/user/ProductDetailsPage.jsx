@@ -1,57 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
-import { useFetch } from "../../hooks/useFetch";
 import toast from "react-hot-toast";
+import { FaShoppingCart } from 'react-icons/fa'; // Importing an icon
+import { Button } from "@material-tailwind/react"; // Import Material Tailwind Button
 
 export const ProductDetailsPage = () => {
-   const params = useParams();
-   const { productId }=params;
-    console.log("params===",productId)
-    const [ productDetails, setProductDetails,isLoading, error] = useFetch(`/ product/ product-details/${productId}`);
+    const { productId } = useParams();
+    const [productDetails, setProductDetails] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
 
     const handleAddToCart = async () => {
+        setIsAddingToCart(true);
         try {
-            const response = await axiosInstance({
-                method: "POST",
-                url: "/cart/add-to-cart",
-                data: { productId },
-            });
-            toast.success("product added successfully")
+            await axiosInstance.post(`/cart/add-to-cart/${productId}`, { productId });
+            toast.success("Product added successfully");
         } catch (error) {
-            console.log(error);
-            toast.error( error?.response?.data?.message || "failed - add to cart");
+            console.error(error);
+            toast.error(error?.response?.data?.message || "Failed to add to cart");
+        } finally {
+            setIsAddingToCart(false);
         }
     };
-    const fetchProducts = async () => {
+
+    const fetchProductDetails = async () => {
         try {
-            const response = await axiosInstance({
-                method: "GET",
-                url: `/products/product-details/${productId}`,
-            });
-            console.log("response====", response);
-            setProductDetails(response?.data?.data);
+            const response = await axiosInstance.get(`/product/product-details/${productId}`);
+            setProductDetails(response.data.data);
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            setError("Failed to fetch product details");
+        } finally {
+            setIsLoading(false);
         }
     };
+
     useEffect(() => {
-        fetchProducts();
-    }, []);
+        fetchProductDetails();
+    }, [productId]);
+
+    if (isLoading) {
+        return <div className="text-center">Loading...</div>;
+    }
+
+    if (error) {
+        return <div className="text-red-500 text-lg font-semibold text-center">{error}</div>;
+    }
 
     return (
-        <div>
-             <section>
-                <h2 className="text-2xl font-bold">Product Details Page</h2>
+        <div className="max-w-screen-lg mx-auto px-4 py-8">
+            <section className="mb-8">
+                <h2 className="text-3xl font-bold text-center">Product Details</h2>
             </section>
-            <section>
-                <h1>{productDetails?.name} </h1>
-                <img src={productDetails?.image} alt="" />
-                <p>{productDetails?.description} </p>
-                <button className="btn btn-success" onClick={handleAddToCart}>add to cart</button>
+            <section className="bg-white shadow-lg rounded-lg p-4 md:p-6 w-80 mx-auto">
+                <h1 className="text-2xl font-semibold">{productDetails?.name}</h1>
+                <img 
+                    src={productDetails?.image} 
+                    alt={productDetails?.name} 
+                    className="w-full h-auto object-contain rounded-lg my-4" 
+                />
+                <p className="text-gray-700">{productDetails?.description}</p>
+                <p className="text-xl font-bold mt-4">${productDetails?.price?.toFixed(2)}</p>
+                <Button 
+                    className={`flex items-center justify-center mt-4 ${isAddingToCart ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                    color="green" 
+                    onClick={handleAddToCart}
+                    disabled={isAddingToCart}
+                >
+                    <FaShoppingCart className="mr-2" /> {/* Shopping Cart Icon */}
+                    {isAddingToCart ? 'Adding...' : 'Add to Cart'}
+                </Button>
             </section>
-            <div>
-                <h1>seller details </h1>
+            <div className="mt-8">
+                <h1 className="text-xl font-semibold">Seller Details</h1>
+                {/* Add seller details here if available */}
             </div>
         </div>
     );

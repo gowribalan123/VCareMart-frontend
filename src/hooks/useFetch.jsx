@@ -3,7 +3,7 @@ import { axiosInstance } from "../config/axiosInstance";
 
 export const useFetch = (url) => {
     const [data, setData] = useState();
-    const [error, setError] = useState({});
+    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {

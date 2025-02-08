@@ -3,10 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
+import { Button, Input } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
+import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Login = ({ role = "user" }) => {
+export const Login = ({ role}) => {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const dispatch=useDispatch();
 
     const user = {
         role: "user",
@@ -15,70 +19,63 @@ export const Login = ({ role = "user" }) => {
         signup_route: "/signup",
     };
 
-    if (role === "seller")
-         {
-            user.role = "seller";
-             (user.login_api = "/seller/login"), 
-             (user.profile_route = "/seller/profile"),
-              (user.signup_route = "/seller/signup");
+    if (role === "seller") {
+        user.role = "seller";
+        user.login_api = "/seller/login";
+        user.profile_route = "/seller/profile", (user.signup_route = "/seller/signup");;
+        user.signup_route = "/seller/signup";
     }
-
-    console.log(user, "=====user");
 
     const onSubmit = async (data) => {
         try {
-            console.log(data,'====data');
-            
-            const response = await axiosInstance({ 
-                method: "POST", 
-                url: user.login_api, 
-                data :data,
+            const response = await axiosInstance({
+                method: "PUT",
+                url: user.login_api,
+                data: data,
             });
-            console.log(response, "====response");
+            console.log("response====", response);
+            dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
             navigate(user.profile_route);
         } catch (error) {
+            dispatch(clearUser());
             toast.error("Log-in failed");
             console.log(error);
         }
     };
 
     return (
-        <div className="hero bg-base-200 min-h-screen">
-            <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Login now! {role} </h1>
-                    <p className="py-6">
-                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque
-                        aut repudiandae et a id nisi.
-                    </p>
+        <div className="relative flex flex-col rounded-xl  shadow-lg p-8 max-w-md mx-auto">
+            <div className="hero-content flex-col lg:flex-row-reverse shadow-lg rounded-lg p-8 ">
+                <div className=" text-center mb-6:text-left mb-8">
+                    <h1 className="text-5xl font-bold text-blue-600">Login now! {user.role}</h1>
                 </div>
-                <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form className="card-body" onSubmit={handleSubmit(onSubmit)} >
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input type="email" {...register("email")} placeholder="email" className="input input-bordered" required />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Password</span>
-                            </label>
-                            <input
-                                type="password"
-                                {...register("password")}
-                                placeholder="password"
-                                className="input input-bordered"
-                                required
-                            />
-                            <label className="label">
-                                <Link to={user.signup_route}>new User ?</Link>
-                            </label>
-                        </div>
-                        <div className="form-control mt-6">
-                            <button className="btn btn-primary">Login</button>
-                        </div>
+                <div className="w-full max-w-sm">
+                    <form className="flex flex-col gap-4 " onSubmit={handleSubmit(onSubmit)}>
+                        <Input
+                            label="Email"
+                            type="email"
+                            {...register("email", { required: true })}
+                            placeholder="Enter your email"
+                            className="input input-bordered  "
+                            required
+                        />
+                        <Input
+                            label="Password"
+                            type="password"
+                            {...register("password", { required: true })}
+                            placeholder="Enter your password"
+                            className="input input-bordered"
+                            required
+                        />
+                        <label className="label">
+                            <Link to={user.signup_route} className="text-sm text-blue-500 underline">
+                                New User?
+                            </Link>
+                        </label>
+                        <Button type="submit" className="btn btn-primary mt-4">
+                            Login
+                        </Button>
                     </form>
                 </div>
             </div>

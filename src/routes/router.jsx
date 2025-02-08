@@ -12,8 +12,10 @@ import { Profile } from "../pages/user/Profile";
 import { Cart } from "../pages/user/Cart";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Categories } from "../pages/user/categories";
-
-
+import { SellerLayout } from "../layout/sellerLayout";
+import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
+import { CreateProduct } from "../pages/seller/CreateProduct";
+const data={};
 export const router = createBrowserRouter([
     {
         path: "",
@@ -41,15 +43,12 @@ export const router = createBrowserRouter([
                 element: <Contact />,
             },
             {
-                path: "products",
+                path: "product",
                 element: <ProductPage />,
             },
+          
             {
-              path:"category",
-              element:<Categories/>,
-            },
-            {
-                path: "productDetails/:productId",
+                path: "product-details/:productId",
                 element: <ProductDetailsPage />,
             },
             {
@@ -68,7 +67,7 @@ export const router = createBrowserRouter([
                     {
                         path: "/user/cart",
                        /// element: <h1>My Cart</h1>,
-                       element: <Cart />,
+                      // element: <Cart />,
                     },
                     {
                         path: "orders",
@@ -83,4 +82,55 @@ export const router = createBrowserRouter([
             },
         ],
     },
+{
+    path: "seller",
+    element: <SellerLayout />,
+    errorElement: <ErrorPage role="seller" />,
+    children: [
+        {
+            path: "login",
+            element: <Login role="seller" />,
+        },
+        {
+            path: "signup",
+            element: <SignUp role="seller" />,
+        },
+    ],
+},
+{
+    path:"",
+    element: <ProtectedRouteSeller />,
+    children: [
+        {
+            path: "dashboard",
+        },
+        {
+            path: "all-products",
+        },
+        {
+            path: "profile",
+            element: <h1>Seller Profile page</h1>
+        },
+        {
+            path: "create-product",
+            element: <CreateProduct />,
+        },
+    ],
+},
+
+{
+    path: "admin",
+    element: <SellerLayout />,
+    errorElement: <ErrorPage role="admin" />,
+    children: [
+        {
+            path: "login",
+            element: <Login role="admin" />,
+        },
+        {
+            path: "signup",
+            element: <SignUp role="admin" />,
+        },
+    ],
+},
 ]);

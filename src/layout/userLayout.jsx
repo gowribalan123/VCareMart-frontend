@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState  } from "react";
 import { Header } from "../components/user/Header";
 import { Footer } from "../components/user/Footer";
 import { Outlet, useLocation } from "react-router-dom";
@@ -7,13 +7,15 @@ import { axiosInstance } from "../config/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
 
-//import { AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import { Link } from "react-router-dom";
 
 export const UserLayout = () => {
-    const location = useLocation();
-    const { isUserAuth } = useSelector((state) => state.user);
+  
+    const { isUserAuth,userData  } = useSelector((state) => state.user);
+
     const dispatch = useDispatch();
+    const location = useLocation(); // Use useLocation to get current pathname
+
+    console.log("isUserAuth====", isUserAuth);
 
     const checkUser = async () => {
         try {
@@ -21,29 +23,27 @@ export const UserLayout = () => {
                 method: "GET",
                 url: "/user/check-user",
             });
-            console.log(response, "=====checkUser");
-            dispatch(saveUser());
+            dispatch(saveUser())
         } catch (error) {
+            dispatch(clearUser())
             console.log(error);
-            dispatch(clearUser());
         }
     };
 
     useEffect(() => {
         checkUser();
-    }, [location.pathname]);
+    }, [location.pathname]); // React to changes in the pathname
 
     return (
-        <div >
-              {/* User Header */} {/* Header */}
+        <div>
+                   
+
+            {/* User Header or Regular Header */}
             {isUserAuth ? <UserHeader /> : <Header />}
-            
 
-            <div >
-               
-
+            <div>
                 {/* Main Content Area */}
-                <main className=" min-h-96">
+                <main className="min-h-96">
                     <Outlet />
                 </main>
             </div>
@@ -53,4 +53,3 @@ export const UserLayout = () => {
         </div>
     );
 };
-
