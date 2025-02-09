@@ -1,36 +1,34 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export const Header = () => {
-const navigate =useNavigate()
+    const navigate = useNavigate();
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-gray-800 text-white shadow-lg">
             <div className="navbar-start">
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle text-white hover:bg-gray-700 transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
                         </svg>
                     </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li>
-                            <a>Home</a>
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content bg-gray-800 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg flex flex-col">
+                        <li className="flex">
+                            <Link to="/" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">Home</Link>
                         </li>
-                        <li>
-                            <a>Portfolio</a>
+                        <li className="flex">
+                            <Link to="/portfolio" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">Portfolio</Link>
                         </li>
-                        <li>
-                            <a>About</a>
+                        <li className="flex">
+                            <Link to="/about" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">About</Link>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">daisyUI</a>
-            </div>
-            <div className="navbar-end">
-                <button className="btn btn-ghost btn-circle">
+            <div className="navbar-end flex items-center space-x-3">
+                <Link to="/" className="btn btn-ghost text-2xl font-bold">MyApp</Link>
+                <button className="btn btn-ghost btn-circle text-white hover:bg-gray-700 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path
                             strokeLinecap="round"
@@ -40,9 +38,9 @@ const navigate =useNavigate()
                         />
                     </svg>
                 </button>
-                <button className="btn btn-ghost btn-circle" onClick={()=>navigate('/seller/notifications')}>
+                <button className="btn btn-ghost btn-circle" onClick={() => navigate('/seller/notifications')}>
                     <div className="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white hover:bg-gray-700 transition duration-300">
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"

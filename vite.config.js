@@ -8,12 +8,6 @@ export default defineConfig({
         react(),
        tailwindcss(),
        
-<<<<<<< HEAD
+
     ] 
 });
-=======
-    ],
-     base:'/VCareMart-frontend/',
-
-});
->>>>>>> 3a8a104ccbb59d012ad5ab616e25824970702d3e
