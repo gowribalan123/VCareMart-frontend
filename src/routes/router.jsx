@@ -11,7 +11,7 @@ import { ErrorPage } from "../pages/shared/ErrorPage";
 import { Profile } from "../pages/user/Profile";
 import { Cart } from "../pages/user/Cart";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Categories } from "../pages/user/categories";
+import { Categories } from "../pages/user/Categories";
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
 import { CreateProduct } from "../pages/seller/CreateProduct";
