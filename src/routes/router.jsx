@@ -15,6 +15,12 @@ import { Categories } from "../pages/user/Categories";
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
 import { CreateProduct } from "../pages/seller/CreateProduct";
+
+import {Men} from '../pages/user/Men';
+import {Women} from '../pages/user/Women';
+import {Boys} from '../pages/user/Boys';
+import {Girls} from '../pages/user/Girls';
+
 const data={};
 export const router = createBrowserRouter([
     {
@@ -52,6 +58,27 @@ export const router = createBrowserRouter([
                 element: <ProductDetailsPage />,
             },
             {
+                path: "men",
+                element: <Men />,
+            },
+            {
+                path: "women",
+                element: <Women />,
+            },
+            {
+                path: "boys",
+                element: <Boys />,
+            },
+            {
+                path: "girls",
+                element: <Girls />,
+            },
+
+
+
+
+
+            {
                 element: <ProtectedRoute />,
                 path: "user",
                 children: [
@@ -61,18 +88,18 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "profile",
-                        element: <h1>Profile page</h1>
-                      // element: <Profile />,
+                        element: <h1>Profile page</h1>,
+                       element: <Profile />,
                     },
                     {
                         path: "/user/cart",
-                       /// element: <h1>My Cart</h1>,
-                      // element: <Cart />,
+                        element: <h1>My Cart</h1>,
+                      //element: <Cart />,
                     },
                     {
                         path: "orders",
-                     //  element: <h1> My Orders</h1>,
-                   //  element:<Orders/>,
+                      element: <h1> My Orders</h1>,
+                   // element:<Orders/>,
                     },
                     {
                         path: "payment/success",

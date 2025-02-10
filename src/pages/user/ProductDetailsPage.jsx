@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate} from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
-import { FaShoppingCart } from 'react-icons/fa'; // Importing an icon
-import { Button } from "@material-tailwind/react"; // Import Material Tailwind Button
+import { FaShoppingCart } from 'react-icons/fa';
+import { Button, Card, Typography } from "@material-tailwind/react";
+import { ProductSkelton } from "../../components/shared/Skeltons";
+
 
 export const ProductDetailsPage = () => {
     const { productId } = useParams();
+    
     const [productDetails, setProductDetails] = useState({});
+    const [sellerData, setSellerData] = useState(null);
+    const navigate=useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
 
     const handleAddToCart = async () => {
+        // Check if user is logged in (this is a placeholder; implement your own logic)
+        const isLoggedIn = false; // Replace with actual authentication check
+
+        if (!isLoggedIn) {
+           // toast.error("Please log in to add items to your cart.");
+            navigate("/login"); // Redirect to login page using navigate
+            return;
+        }
+
         setIsAddingToCart(true);
         try {
             await axiosInstance.post(`/cart/add-to-cart/${productId}`, { productId });
@@ -29,6 +43,8 @@ export const ProductDetailsPage = () => {
         try {
             const response = await axiosInstance.get(`/product/product-details/${productId}`);
             setProductDetails(response.data.data);
+            const sellerId = response.data.data.seller.$oid; // Adjust based on your response structure
+          //  fetchSellerDetails(sellerId);
         } catch (error) {
             console.error(error);
             setError("Failed to fetch product details");
@@ -37,12 +53,13 @@ export const ProductDetailsPage = () => {
         }
     };
 
+
     useEffect(() => {
         fetchProductDetails();
     }, [productId]);
 
     if (isLoading) {
-        return <div className="text-center">Loading...</div>;
+        return <ProductSkelton/> // Show skeleton while loading
     }
 
     if (error) {
@@ -52,30 +69,47 @@ export const ProductDetailsPage = () => {
     return (
         <div className="max-w-screen-lg mx-auto px-4 py-8">
             <section className="mb-8">
-                <h2 className="text-3xl font-bold text-center">Product Details</h2>
+                <Typography variant="h3" className="text-center font-bold">
+                    Product Details
+                </Typography>
             </section>
-            <section className="bg-white shadow-lg rounded-lg p-4 md:p-6 w-80 mx-auto">
-                <h1 className="text-2xl font-semibold">{productDetails?.name}</h1>
+            <Card className="bg-white shadow-lg rounded-lg p-6 mx-auto">
+                <Typography variant="h4" className="font-semibold uppercase text-center mb-4">
+                    {productDetails?.name}
+                </Typography>
                 <img 
                     src={productDetails?.image} 
                     alt={productDetails?.name} 
                     className="w-full h-auto object-contain rounded-lg my-4" 
                 />
-                <p className="text-gray-700">{productDetails?.description}</p>
-                <p className="text-xl font-bold mt-4">${productDetails?.price?.toFixed(2)}</p>
+                <Typography className="text-gray-700 mb-2">{productDetails?.description}</Typography>
+                <Typography variant="h5" className="font-bold mt-4">
+                ₹{productDetails?.price?.toFixed(2)}
+                </Typography>
+                <Typography className="text-gray-700">Color: {productDetails?.color}</Typography>
+                <Typography className="text-gray-700">Age group: {productDetails?.age_group}</Typography>
+                <Typography className="text-gray-700">Size: {productDetails?.size}</Typography>
+                <Typography className="text-gray-700">Stock: {productDetails?.stock}</Typography>
+                <Typography className="text-gray-700">Rating: {productDetails?.rating}</Typography>
+                
+
                 <Button 
                     className={`flex items-center justify-center mt-4 ${isAddingToCart ? 'opacity-50 cursor-not-allowed' : ''}`} 
                     color="green" 
                     onClick={handleAddToCart}
-                    disabled={isAddingToCart}
+                    disabled={isAddingToCart} 
                 >
-                    <FaShoppingCart className="mr-2" /> {/* Shopping Cart Icon */}
+                    <FaShoppingCart className="mr-2" />
                     {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                 </Button>
-            </section>
+            </Card>
             <div className="mt-8">
-                <h1 className="text-xl font-semibold">Seller Details</h1>
-                {/* Add seller details here if available */}
+                <Typography variant="h5" className="font-semibold">Seller Details</Typography>
+                <Typography className="text-gray-700">Seller name  : {productDetails?.seller.name}</Typography>
+                <Typography className="text-gray-700">Email id: {productDetails?.seller.email}</Typography>
+                <Typography className="text-gray-700">No: of Products: {productDetails?.seller.noofproducts}</Typography>
+                <Typography className="text-gray-700">Phone : {productDetails?.seller.phone}</Typography>
+                 
             </div>
         </div>
     );

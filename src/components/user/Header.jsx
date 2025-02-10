@@ -9,20 +9,33 @@ const NavLinks = () => (
             <Link to="/" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
         </li>
         <li>
-            <Link to="/products/men" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Men</Link>
+            <Link to="/men" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Men</Link>
         </li>
         <li>
-            <Link to="/products/women" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Women</Link>
+            <Link to="/women" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Women</Link>
         </li>
         <li>
-            <Link to="/products/boys" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Boys</Link>
+            <Link to="/boys" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Boys</Link>
         </li>
         <li>
-            <Link to="/products/girls" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Girls</Link>
+            <Link to="/girls" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Girls</Link>
         </li>
         <li>
-            <Link to="/products/mobile" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Mobile</Link>
+            <Link to="/about" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">About</Link>
         </li>
+        <li>
+            <Link to="/contact" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Contact</Link>
+        </li>
+        <li>
+            <Link to="/product" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Products</Link>
+        </li>
+        <li>
+            <Link to="/login" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Login</Link>
+        </li>
+        <li>
+            <Link to="/signup" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Sign Up</Link>
+        </li>
+         
     </ul>
 );
 
