@@ -3,22 +3,22 @@ import { useFetch } from "../../hooks/useFetch";
 import { CartCards } from "../../components/user/Cards";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
-//import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js"; // Uncommented to use Stripe
 
 export const Cart = () => {
-    
     const [cartDetails, isLoading, error] = useFetch("/cart/get-cart");
 
     const handleRemoveProduct = async (productId) => {
         try {
-            const response = await axiosInstance({
+            await axiosInstance({
                 method: "DELETE",
                 url: "/cart/remove-from-cart",
                 data: { productId },
             });
-            toast.success("product removed successfully");
+            toast.success("Product removed successfully");
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            toast.error("Failed to remove product");
         }
     };
 
@@ -32,34 +32,48 @@ export const Cart = () => {
                 data: { products: cartDetails?.products },
             });
 
-            console.log(session, "=======session");
-            const result = stripe.redirectToCheckout({
-                // sessionId: session.data.sessionId,
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.data.sessionId, // Ensure this line is uncommented
             });
+
+            if (result.error) {
+                toast.error(result.error.message);
+            }
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            toast.error("Payment failed. Please try again.");
         }
     };
 
+    if (isLoading) {
+        return <div>Loading...</div>; // Add a loading indicator
+    }
+
+    if (error) {
+        return <div className="text-red-500 text-lg">{error}</div>; // Display error message
+    }
+
     return (
-        <div className="">
+        <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
             <div>
                 {cartDetails?.products?.map((value) => (
                     <CartCards item={value} key={value._id} handleRemove={handleRemoveProduct} />
                 ))}
             </div>
             {cartDetails?.products?.length ? (
-                <div className="w-6/12 bg-base-300 flex flex-col items-center gap-5">
-                    <h2>Price summary</h2>
-
-                    <h2>Total Price: {cartDetails?.totalPrice}</h2>
-
-                    <button className="btn btn-success" onClick={makePayment}>
+                <div className="w-full md:w-6/12 bg-base-300 flex flex-col items-center gap-5 p-5 rounded-lg shadow-md">
+                    <h2 className="text-xl font-semibold">Price Summary</h2>
+                    <h2 className="text-lg">Total Price: ₹{cartDetails?.totalPrice?.toFixed(2)}</h2>
+                    <button 
+                        className="btn btn-success w-full mt-4" 
+                        onClick={makePayment}
+                    >
                         Checkout
                     </button>
                 </div>
             ) : (
-                <h1> cart is empty </h1>
+                <h1 className="text-lg font-semibold">Your cart is empty</h1>
             )}
         </div>
     );

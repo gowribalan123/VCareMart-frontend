@@ -19,17 +19,10 @@ export const ProductDetailsPage = () => {
 
     const handleAddToCart = async () => {
         // Check if user is logged in (this is a placeholder; implement your own logic)
-        const isLoggedIn = false; // Replace with actual authentication check
-
-        if (!isLoggedIn) {
-           // toast.error("Please log in to add items to your cart.");
-            navigate("/login"); // Redirect to login page using navigate
-            return;
-        }
-
+       
         setIsAddingToCart(true);
         try {
-            await axiosInstance.post(`/cart/add-to-cart/${productId}`, { productId });
+            await axiosInstance.post(`/cart/add-to-cart/${productId}`);
             toast.success("Product added successfully");
         } catch (error) {
             console.error(error);
@@ -42,8 +35,9 @@ export const ProductDetailsPage = () => {
     const fetchProductDetails = async () => {
         try {
             const response = await axiosInstance.get(`/product/product-details/${productId}`);
+           // console.log("product id",productId)
             setProductDetails(response.data.data);
-            const sellerId = response.data.data.seller.$oid; // Adjust based on your response structure
+           // const sellerId = response.data.data.seller.$oid; // Adjust based on your response structure
           //  fetchSellerDetails(sellerId);
         } catch (error) {
             console.error(error);
@@ -67,7 +61,7 @@ export const ProductDetailsPage = () => {
     }
 
     return (
-        <div className="max-w-screen-lg mx-auto px-4 py-8">
+        <div className="max-w-xl mx-auto px-4 py-8">
             <section className="mb-8">
                 <Typography variant="h3" className="text-center font-bold">
                     Product Details

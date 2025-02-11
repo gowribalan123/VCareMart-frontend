@@ -10,6 +10,7 @@ import { ProductDetailsPage } from "../pages/user/ProductDetailsPage";
 import { ErrorPage } from "../pages/shared/ErrorPage";
 import { Profile } from "../pages/user/Profile";
 import { Cart } from "../pages/user/Cart";
+import { Orders } from "../pages/user/Orders";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Categories } from "../pages/user/Categories";
 import { SellerLayout } from "../layout/sellerLayout";
@@ -91,15 +92,16 @@ export const router = createBrowserRouter([
                         element: <h1>Profile page</h1>,
                        element: <Profile />,
                     },
+                
                     {
-                        path: "/user/cart",
+                        path: "cart",
                         element: <h1>My Cart</h1>,
-                      //element: <Cart />,
+                      element: <Cart />,
                     },
                     {
                         path: "orders",
                       element: <h1> My Orders</h1>,
-                   // element:<Orders/>,
+                    element: <Orders/>,
                     },
                     {
                         path: "payment/success",
@@ -132,7 +134,7 @@ export const router = createBrowserRouter([
             path: "dashboard",
         },
         {
-            path: "all-products",
+            path: "get-all-products",
         },
         {
             path: "profile",

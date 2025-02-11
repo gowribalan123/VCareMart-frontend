@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkMode } from "../shared/DarkMode";
-//import ThemeToggle from '../shared/ThemeToggle';
+import { ShoppingBag } from "lucide-react";
 
 const NavLinks = () => (
     <ul className="flex justify-center items-center gap-5">
@@ -35,7 +35,6 @@ const NavLinks = () => (
         <li>
             <Link to="/signup" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Sign Up</Link>
         </li>
-         
     </ul>
 );
 
@@ -57,8 +56,6 @@ export const Header = () => {
             <nav className="hidden md:flex justify-center items-center gap-8" role="navigation">
                 <NavLinks />
                 <div className="flex justify-center items-center gap-3">
-                  {/*  <ThemeToggle/>
-                   */}
                     <DarkMode />  
                     <button
                         className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-300"
@@ -67,6 +64,9 @@ export const Header = () => {
                     >
                         Shop with Us
                     </button>
+                    <Link to={'/cart'} className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">
+                        <ShoppingBag className="w-6 h-6" aria-label="Shopping Cart" />
+                    </Link>
                 </div>
             </nav>
             {/* Mobile Menu Button */}

@@ -18,7 +18,7 @@ export const CreateProductForm = ({ product }) => {
             console.log(data, "=====data");
             const formData = new FormData();
 
-            formData.append("title", data.name);
+            formData.append("Name", data.name);
             formData.append("description", data.description);
             formData.append("stock", data.stock);
             formData.append("price", data.price);
@@ -83,21 +83,8 @@ export const CreateProductForm = ({ product }) => {
                 {errors.price && <span className="text-red-500 text-sm mt-1">{errors.price.message}</span>}
             </div>
 
-            {/* duration */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Duration</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder="Enter Duration"
-                    className={`input input-bordered text-sm ${errors.duration ? "input-error" : ""}`}
-                    {...register("duration", {
-                        required: "Duration is required",
-                    })}
-                />
-                {errors.duration && <span className="text-red-500 text-sm mt-1">{errors.duration.message}</span>}
-            </div>
+          
+          
 
             {/* description */}
             <div className="form-control">

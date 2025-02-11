@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 export const ProtectedRouteSeller = () => {
     const { isSellerAuth, userData } = useSelector((state) => state.user);
-     console.log("isSellerAuth=====", isSellerAuth);
+   //  console.log("isSellerAuth=====", isSellerAuth);
     // // loading
 
     const isSellerAUth = true;

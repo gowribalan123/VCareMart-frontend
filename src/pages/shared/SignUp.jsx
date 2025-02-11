@@ -17,7 +17,7 @@ export const SignUp = () => {
               url: "/user/login",
               data: data,
           });
-          console.log("response====", response);
+         // console.log("response====", response);
           navigate("/user/profile");
       } catch (error) {
           console.log(error);

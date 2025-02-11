@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 export const ProtectedRoute = () => {
     const { isUserAuth, userData  } = useSelector((state) => state.user);
-    console.log("isuserAuth=====", isUserAuth);
+   // console.log("isuserAuth=====", isUserAuth);
     // loading
 
     const navigate = useNavigate();

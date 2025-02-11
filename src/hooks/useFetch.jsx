@@ -12,7 +12,7 @@ export const useFetch = (url) => {
                 method: "GET",
                 url: url,
             });
-            console.log("response=====", response);
+         //   console.log("response=====", response);
             setData(response?.data?.data);
             setTimeout(() => {
                 setIsLoading(false);

@@ -15,7 +15,7 @@ export const UserLayout = () => {
     const dispatch = useDispatch();
     const location = useLocation(); // Use useLocation to get current pathname
 
-    console.log("isUserAuth====", isUserAuth);
+   // console.log("isUserAuth====", isUserAuth);
 
     const checkUser = async () => {
         try {
