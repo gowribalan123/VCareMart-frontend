@@ -6,7 +6,7 @@ import { ProductSkelton } from "../../components/shared/Skeltons";
 
 export const ProductPage = () => {
     const [productList, isLoading, error] = useFetch("/product/get-all-products");
-  //  console.log('products===',productList);
+   console.log('products===',productList);
     return (
         <div className="flex flex-col items-center justify-start px-4 py-16 max-w-screen-xl mx-auto">
             {isLoading ? (
