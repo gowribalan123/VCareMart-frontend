@@ -12,7 +12,7 @@ import { Profile } from "../pages/user/Profile";
 import { Cart } from "../pages/user/Cart";
 import { Orders } from "../pages/user/Orders";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Categories } from "../pages/user/Categories";
+
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
 import { CreateProduct } from "../pages/seller/CreateProduct";
@@ -144,6 +144,7 @@ export const router = createBrowserRouter([
             path: "create-product",
             element: <CreateProduct />,
         },
+      
     ],
 },
 
@@ -160,6 +161,7 @@ export const router = createBrowserRouter([
             path: "signup",
             element: <SignUp role="admin" />,
         },
+        
     ],
 },
 ]);

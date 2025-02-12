@@ -8,7 +8,7 @@ import { ProductSkelton } from "../../components/shared/Skeltons";
 
 
 export const ProductDetailsPage = () => {
-    const { productId } = useParams();
+    const { productId} = useParams();
     
     const [productDetails, setProductDetails] = useState({});
     const [sellerData, setSellerData] = useState(null);

@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams , useNavigate} from "react-router-dom";
+import { axiosInstance } from "../../config/axiosInstance";
 import { useFetch } from "../../hooks/useFetch";
 import { CartCards } from "../../components/user/Cards";
-import { axiosInstance } from "../../config/axiosInstance";
+
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js"; // Uncommented to use Stripe
 
 export const Cart = () => {
-    const [cartDetails, isLoading, error] = useFetch("/cart/get-cart");
+    const { userId } = useParams();
+    
+    
+    const [cartDetails, isLoading, error] = useFetch("/cart/get-cart/${userId}");
+
+    
+    
 
     const handleRemoveProduct = async (productId) => {
         try {

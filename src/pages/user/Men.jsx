@@ -10,7 +10,7 @@ export const Men = ({ subcategoryId }) => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axiosInstance.get(`/product/get-all-products?category=men&subcategoryId=${subcategoryId}`);
+            const response = await axiosInstance.get(`/product/get-all-products`);
             setProducts(response.data.data); // Adjust based on your API response structure
            // console.log("adads",response);
         } catch (error) {

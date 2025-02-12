@@ -1,21 +1,18 @@
-import React, { useEffect, useState  } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../components/user/Header";
 import { Footer } from "../components/user/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { UserHeader } from "../components/user/UserHeader";
 import { axiosInstance } from "../config/axiosInstance";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
 
-
 export const UserLayout = () => {
-  
-    const { isUserAuth,userData  } = useSelector((state) => state.user);
+    const { isUserAuth,userData } = useSelector((state) => state.user);
+    const dispatch = useDispatch()
+    const location = useLocation()
 
-    const dispatch = useDispatch();
-    const location = useLocation(); // Use useLocation to get current pathname
-
-   // console.log("isUserAuth====", isUserAuth);
+    console.log("isUserAuth====", isUserAuth);
 
     const checkUser = async () => {
         try {
@@ -30,25 +27,19 @@ export const UserLayout = () => {
         }
     };
 
+
     useEffect(() => {
         checkUser();
-    }, [location.pathname]); // React to changes in the pathname
+    }, [location.pathname]);
 
     return (
         <div>
-                   
-
-            {/* User Header or Regular Header */}
             {isUserAuth ? <UserHeader /> : <Header />}
 
-            <div>
-                {/* Main Content Area */}
-                <main className="min-h-96">
-                    <Outlet />
-                </main>
+            <div className="min-h-96">
+                <Outlet />
             </div>
 
-            {/* Footer */}
             <Footer />
         </div>
     );
