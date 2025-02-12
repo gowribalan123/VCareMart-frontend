@@ -11,9 +11,9 @@ export const useFetch = (url) => {
             const response = await axiosInstance({
                 method: "GET",
                 url: url,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+               // headers: {
+                 //   'Content-Type': 'application/json',
+                //},
             });
          //   console.log("response=====", response);
             setData(response?.data?.data);
