@@ -1,63 +1,65 @@
-import React, { useEffect, useState } from "react";
-import { useParams , useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useNavigate,useLocation  } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
 import { FaShoppingCart } from 'react-icons/fa';
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { ProductSkelton } from "../../components/shared/Skeltons";
+import { ProductSkelton } from "../../components/shared/Skeltons"; // Corrected spelling
+import { useFetch } from "../../hooks/useFetch";
+import { useSelector } from "react-redux"; // Assuming you're using Redux for auth
 
 
 export const ProductDetailsPage = () => {
-    const { productId} = useParams();
-    
-    const [productDetails, setProductDetails] = useState({});
-    const [sellerData, setSellerData] = useState(null);
-    const navigate=useNavigate();
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { productId } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation(); // Get the current location
     const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const { isUserAuth } = useSelector((state) => state.user); // Access authentication state from Redux
+
+    const [productDetails, isLoading, error] = useFetch(`/product/product-details/${productId}`);
 
     const handleAddToCart = async () => {
-        // Check if user is logged in (this is a placeholder; implement your own logic)
-       
+        // Check if the user is authenticated
+        if (!isUserAuth) {
+            navigate("/login", { state: { from: location } }); // Redirect to login with the current location
+            return; // Prevent further execution
+        }
+
+
         setIsAddingToCart(true);
         try {
-            await axiosInstance.post(`/cart/add-to-cart/${productId}`);
-            toast.success("Product added successfully");
+            const response = await axiosInstance({
+                url: "/cart/add-to-cart",
+                method: "POST",
+                data: { productId },
+            });
+
+            console.log("response====", response);
+            toast.success("Product added to cart");
         } catch (error) {
-            console.error(error);
-            toast.error(error?.response?.data?.message || "Failed to add to cart");
+            console.log(error);
+            toast.error(error?.response?.data?.message);
         } finally {
             setIsAddingToCart(false);
         }
     };
 
-    const fetchProductDetails = async () => {
-        try {
-            const response = await axiosInstance.get(`/product/product-details/${productId}`);
-           // console.log("product id",productId)
-            setProductDetails(response.data.data);
-           // const sellerId = response.data.data.seller.$oid; // Adjust based on your response structure
-          //  fetchSellerDetails(sellerId);
-        } catch (error) {
-            console.error(error);
-            setError("Failed to fetch product details");
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-
-    useEffect(() => {
-        fetchProductDetails();
-    }, [productId]);
-
     if (isLoading) {
-        return <ProductSkelton/> // Show skeleton while loading
+        return (
+            <div className="max-w-xl mx-auto px-4 py-8">
+                <ProductSkelton /> {/* Display loading skeleton */}
+            </div>
+        );
     }
 
     if (error) {
-        return <div className="text-red-500 text-lg font-semibold text-center">{error}</div>;
+        return (
+            <div className="max-w-xl mx-auto px-4 py-8">
+                <Typography className="text-red-500 text-lg text-center">
+                    {error.message || "Failed to load product details."}
+                </Typography>
+            </div>
+        );
     }
 
     return (
@@ -78,14 +80,13 @@ export const ProductDetailsPage = () => {
                 />
                 <Typography className="text-gray-700 mb-2">{productDetails?.description}</Typography>
                 <Typography variant="h5" className="font-bold mt-4">
-                ₹{productDetails?.price?.toFixed(2)}
+                    ₹{productDetails?.price?.toFixed(2)}
                 </Typography>
                 <Typography className="text-gray-700">Color: {productDetails?.color}</Typography>
                 <Typography className="text-gray-700">Age group: {productDetails?.age_group}</Typography>
                 <Typography className="text-gray-700">Size: {productDetails?.size}</Typography>
                 <Typography className="text-gray-700">Stock: {productDetails?.stock}</Typography>
                 <Typography className="text-gray-700">Rating: {productDetails?.rating}</Typography>
-                
 
                 <Button 
                     className={`flex items-center justify-center mt-4 ${isAddingToCart ? 'opacity-50 cursor-not-allowed' : ''}`} 
@@ -99,11 +100,10 @@ export const ProductDetailsPage = () => {
             </Card>
             <div className="mt-8">
                 <Typography variant="h5" className="font-semibold">Seller Details</Typography>
-                <Typography className="text-gray-700">Seller name  : {productDetails?.seller.name}</Typography>
+                <Typography className="text-gray-700">Seller name: {productDetails?.seller.name}</Typography>
                 <Typography className="text-gray-700">Email id: {productDetails?.seller.email}</Typography>
-                <Typography className="text-gray-700">No: of Products: {productDetails?.seller.noofproducts}</Typography>
-                <Typography className="text-gray-700">Phone : {productDetails?.seller.phone}</Typography>
-                 
+                <Typography className="text-gray-700">No. of Products: {productDetails?.seller.noofproducts}</Typography>
+                <Typography className="text-gray-700">Phone: {productDetails?.seller.phone}</Typography>
             </div>
         </div>
     );

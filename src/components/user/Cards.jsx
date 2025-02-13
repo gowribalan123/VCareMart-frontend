@@ -132,28 +132,30 @@ export const Card3 = () => {
 </div>
   );
 };
-export const CartCards = ({ item, handleRemove }) => {
+export const CartCards = ({ product, handleRemove }) => {
+  return (
+      <div className="flex w-full h-32 items-center gap-6 bg-gray-100 shadow-lg rounded-lg p-4 mb-6 transition-transform transform hover:scale-105">
+          <img 
+              src={product?.productId?.image} 
+              alt="cart-item" 
+              className="w-24 h-20 object-cover rounded-md" 
+          />
 
-console.log('item=====',item);
+          <div className="flex-1">
+              <h2 className="text-lg font-semibold text-gray-800">{product?.productId?.name}</h2>
+              <h3 className="text-md font-medium text-gray-600">₹{product?.productId?.price}</h3>
+          </div>
 
-
-    return (
-        <div classNameName="flex w-full h-32 items-center gap-20 bg-base-300 mb-10 rounded-md ">
-          <img src={item?.productId?.image} alt="cart-item" classNameName="w-24 h-20" />
-
-            <div>
-                <h2>{item?.productId?.name} </h2>
-                <h3>{item?.productId?.price} </h3>
-            </div>
-
-        <button classNameName="btn btn-secondary" onClick={() => handleRemove(item?.productId?._id)}>
-               Remove
-            </button>
-        </div>
- 
-
- 
-   );
+          <button
+              className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition-colors duration-200"
+              onClick={() => {
+                  handleRemove(product?.productId?._id);
+              }}
+          >
+              Remove
+          </button>
+      </div>
+  );
 };
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 import { Button, Input } from "@material-tailwind/react";
@@ -9,6 +9,7 @@ import { clearUser, saveUser } from "../../redux/features/userSlice";
 
 export const Login = ({ role}) => {
     const { register, handleSubmit } = useForm();
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch=useDispatch();
 
@@ -16,6 +17,7 @@ export const Login = ({ role}) => {
         role: "user",
         login_api: "/user/login",
         profile_route: "/user/profile",
+        home_route:"/user/home",
         signup_route: "/signup",
     };
 
@@ -36,7 +38,10 @@ export const Login = ({ role}) => {
             console.log("response====", response);
             dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
-            navigate(user.profile_route);
+            navigate(user.home_route);
+             // Redirect to the previous location or default to home
+             const from = location.state?.from || "/";
+             navigate(from);
         } catch (error) {
             dispatch(clearUser());
             toast.error("Log-in failed");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkMode } from "../shared/DarkMode";
-//import { ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 
 //import ThemeToggle from '../shared/ThemeToggle';
 
