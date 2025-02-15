@@ -1,79 +1,88 @@
 import React, { useState } from "react";
-//import { useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import { useFetch } from "../../hooks/useFetch"; 
 import { CartCards } from "../../components/user/Cards";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-//import { addToCart } from "../../redux/features/cartSlice"
 import { loadStripe } from "@stripe/stripe-js";
+import { removeItem } from "../../redux/features/cartSlice";
 
 export const Cart = () => {
-
     const [refreshState, setRefreshState] = useState(false);
     const [cartDetails, isLoading, error] = useFetch("/cart/get-cart", refreshState);
     const dispatch = useDispatch();
-    //const { cartItems = [], total_price = 0 } = useSelector((state) => state.cart);
-    //const { user } = useSelector((state) => state.auth);
-  
-    //useEffect(() => {
-      //const user_id = user ? user._id : null;
-   
-      //dispatch(fetchCart({ user_id  }));
-    ///}, [dispatch, user]);
 
-
-    const handleRemoveProduct = async (productId) => {
+    const handleRemoveCartItem = async (productId) => {
         try {
-            await axiosInstance({
-                method: "DELETE",
-                url: "/cart/remove-from-cart",
-                data: { productId },
-            });
+            await axiosInstance.delete("/cart/remove-from-cart", { data: { productId } });
             toast.success("Product removed successfully");
-            setRefreshState((prev) => !prev);
+            dispatch(removeItem(productId));
+            setRefreshState(prev => !prev);
         } catch (error) {
             console.error(error);
-            toast.error(error?.response?.data?.message || "failed to remove");
+            toast.error(error?.response?.data?.message || "Failed to remove");
+        }
+    };
+
+    const makePayment = async () => {
+        try {
+            const stripe = await loadStripe(import.meta.env.VITE_STRIPE_Publishable_key);
+            const session = await axiosInstance.post("/payment/create-checkout-session", {
+                products: cartDetails?.products,
+            });
+
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.data.sessionId,
+            });
+
+            if (result.error) {
+                toast.error(result.error.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Payment failed. Please try again.");
         }
     };
 
     if (isLoading) {
-        return <div>Loading...</div>; // Add a loading indicator
+        return <div className="text-center text-xl">Loading...</div>;
     }
 
     if (error) {
-        return <div className="text-red-500 text-lg">{error}</div>; // Display error message
+        return <div className="text-red-500 text-lg text-center">{error}</div>;
     }
 
     return (
         <div className="container mx-auto p-4">
-            <section>
-            <h1 className="text-2xl font-bold mb-4">My Cart</h1>
+            <section className="mb-6">
+                <h1 className="text-3xl font-bold text-center">My Cart</h1>
             </section>
             <section>
-
-            
-              <div>
-                {cartDetails?.products?.map((value) => (
-                    <CartCards 
-                        item={value} 
-                        key={value._id} 
-                        handleRemove={handleRemoveProduct} 
-                         // Pass add to cart handler
-                    />
-                ))}
-            </div>
-            {cartDetails?.products?.length ? (
-                <div className="w-full md:w-6/12 bg-base-300 flex flex-col items-center gap-5 p-5 rounded-lg shadow-md">
-                    <h2 className="text-xl font-semibold">Price Summary</h2>
-                    <h2 className="text-lg">Total Price: ₹{cartDetails?.totalPrice?.toFixed(2)}</h2>
+                <div className="space-y-4">
+                    {cartDetails?.products?.length > 0 ? (
+                        cartDetails.products.map((value) => (
+                            <CartCards 
+                                item={value} 
+                                key={value._id} 
+                                handleRemove={handleRemoveCartItem} 
+                            />
+                        ))
+                    ) : (
+                        <h1 className="text-lg font-semibold text-center">Your cart is empty</h1>
+                    )}
                 </div>
-            ) : (
-                <h1 className="text-lg font-semibold">Your cart is empty</h1>
-            )}
-  <button className="btn btn-success mt-20" >Make payment</button>
-         </section>
+                <h2 className="text-xl font-semibold mt-6">Price Summary</h2>
+                <h2 className="text-lg">Total Price: ₹{cartDetails?.totalPrice?.toFixed(2)}</h2>
+                <div className="text-center mt-4">
+                    <button 
+                        className="btn btn-success mt-4 px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded"
+                        onClick={makePayment} 
+                        disabled={cartDetails?.products?.length === 0}
+                    >
+                        Make Payment
+                    </button>
+                </div>
+            </section>
         </div>
     );
 };

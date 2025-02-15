@@ -12,16 +12,16 @@ export const UserLayout = () => {
     const dispatch = useDispatch()
     const location = useLocation()
 
-    console.log("isUserAuth====", isUserAuth);
+ //   console.log("isUserAuth====", isUserAuth);
 
     const checkUser = async () => {
         try {
             const response = await axiosInstance({
                 method: "GET",
                 url: "/user/check-user",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+               // headers: {
+               //     'Content-Type': 'application/json',
+               // },
             });
             dispatch(saveUser())
         } catch (error) {

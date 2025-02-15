@@ -131,36 +131,40 @@ export const Card3 = () => {
 </div>
 </div>
   );
-};
-export const CartCards = ({ product, handleRemove }) => {
+};export const CartCards = ({ item, handleRemove }) => {
+  if (!item || !item.productId) {
+    return <div className="text-red-500">Item not available</div>;
+  }
+
   return (
-      <div className="flex w-full h-32 items-center gap-6 bg-gray-100 shadow-lg rounded-lg p-4 mb-6 transition-transform transform hover:scale-105">
+      <div className="flex w-full h-52 items-center gap-6 bg-gray-100 shadow-lg rounded-lg p-4 mb-6 transition-transform transform hover:scale-105">
           <img 
-              src={product?.productId?.image} 
-              alt="cart-item" 
-              className="w-24 h-20 object-cover rounded-md" 
+              src={item.productId.image || "placeholder-image-url.jpg"} 
+              alt={item.productId.name || "cart-item"} 
+              className="w-35 h-50 object-cover rounded-md" 
+              loading="lazy" // Lazy loading for better performance
           />
 
           <div className="flex-1">
-              <h2 className="text-lg font-semibold text-gray-800">{product?.productId?.name}</h2>
-              <h3 className="text-md font-medium text-gray-600">₹{product?.productId?.price}</h3>
+              <h2 className="text-lg font-semibold text-gray-800">Name: {item.productId.name}</h2>
+              <h3 className="text-md font-medium text-gray-600">Price: ₹{item.productId.price}</h3>
+              <h2 className="text-md font-medium text-gray-600">Description: {item.productId.description}</h2>
+              <h3 className="text-md font-medium text-gray-600">Size: {item.productId.size}</h3>
+              <h3 className="text-md font-medium text-gray-600">Stock: {item.productId.stock}</h3>
+              <h3 className="text-md font-medium text-gray-600">Rating: {item.productId.rating}</h3>
+              <h3 className="text-md font-medium text-gray-600">Color: {item.productId.color}</h3>
           </div>
 
           <button
               className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition-colors duration-200"
-              onClick={() => {
-                  handleRemove(product?.productId?._id);
-              }}
+              onClick={() => handleRemove(item.productId._id)}
+              aria-label={`Remove ${item.productId.name} from cart`}
           >
               Remove
           </button>
       </div>
   );
 };
-
-
-
-
 
 export const CardMen = () => {
   return (

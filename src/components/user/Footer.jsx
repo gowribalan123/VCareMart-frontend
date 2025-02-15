@@ -63,7 +63,7 @@ export function Footer() {
             variant="small"
             className="mb-4 text-center font-normal text-blue-gray-300 md:mb-0"
           >
-            &copy; {currentYear} <a href="https://material-tailwind.com/" target="_blank" rel="noopener noreferrer">Material Tailwind</a>. All Rights Reserved.
+            &copy; {currentYear} <a href="/" target="_blank" rel="noopener noreferrer">VCare Mart</a>. All Rights Reserved.
           </Typography>
           <div className="flex gap-6 text-blue-gray-300 sm:justify-center">
             {/* Social Media Icons */}

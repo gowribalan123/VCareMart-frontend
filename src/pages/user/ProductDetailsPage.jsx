@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useEffect,useState } from "react";
 import { useParams, useNavigate,useLocation  } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
@@ -10,7 +10,9 @@ import { useSelector } from "react-redux"; // Assuming you're using Redux for au
 
 
 export const ProductDetailsPage = () => {
+
     const { productId } = useParams();
+
     const navigate = useNavigate();
     const location = useLocation(); // Get the current location
     const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -18,7 +20,7 @@ export const ProductDetailsPage = () => {
 
     const [productDetails, isLoading, error] = useFetch(`/product/product-details/${productId}`);
 
-    const handleAddToCart = async () => {
+    const addToCart = async () => {
         // Check if the user is authenticated
         if (!isUserAuth) {
             navigate("/login", { state: { from: location } }); // Redirect to login with the current location
@@ -34,7 +36,7 @@ export const ProductDetailsPage = () => {
                 data: { productId },
             });
 
-            console.log("response====", response);
+           /// console.log("response====", response);
             toast.success("Product added to cart");
         } catch (error) {
             console.log(error);
@@ -91,9 +93,13 @@ export const ProductDetailsPage = () => {
                 <Button 
                     className={`flex items-center justify-center mt-4 ${isAddingToCart ? 'opacity-50 cursor-not-allowed' : ''}`} 
                     color="green" 
-                    onClick={handleAddToCart}
+                    onClick={addToCart}
                     disabled={isAddingToCart} 
                 >
+                    {/**  
+                     *  {" "}
+                    Add to Cart{" "}
+                    */}
                     <FaShoppingCart className="mr-2" />
                     {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                 </Button>
