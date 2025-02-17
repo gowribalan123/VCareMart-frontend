@@ -1,12 +1,6 @@
 import { Link , useNavigate} from "react-router-dom";
 import React from "react";
  
-
-
-
-
-
-
 export const ProductCard = ({ product }) => {
     console.log("productCard=====", product);
     const navigate = useNavigate();
@@ -131,8 +125,10 @@ export const Card3 = () => {
 </div>
 </div>
   );
-};export const CartCards = ({ item, handleRemove }) => {
-  if (!item || !item.productId) {
+};
+
+export const CartCards = ({ item, handleRemove }) => {
+  if (!item || !item) {
     return <div className="text-red-500">Item not available</div>;
   }
 
@@ -153,6 +149,8 @@ export const Card3 = () => {
               <h3 className="text-md font-medium text-gray-600">Stock: {item.productId.stock}</h3>
               <h3 className="text-md font-medium text-gray-600">Rating: {item.productId.rating}</h3>
               <h3 className="text-md font-medium text-gray-600">Color: {item.productId.color}</h3>
+              
+              
           </div>
 
           <button
@@ -168,7 +166,7 @@ export const Card3 = () => {
 
 export const CardMen = () => {
   return (
-    <Link to="/products/men" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+    <Link to="/men" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
       <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
         <img
           src="https://urbanmenoutfits.com/wp-content/uploads/2018/06/summer-beach-wedding-outfits-male-guests-21.jpg"
@@ -188,7 +186,7 @@ export const CardMen = () => {
 
 export const CardWomen = () => {
   return (
-    <Link to="/products/women" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+    <Link to="/women" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
       <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
         <img
           src="https://media.xogrp.com/images/fca44051-8452-187e-919d-fffef9ae68b9?quality=50"
@@ -208,7 +206,7 @@ export const CardWomen = () => {
 
 export const CardGirl = () => {
   return (
-    <Link to="/products/girls" className="relative flex flex-col g my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+    <Link to="/girls" className="relative flex flex-col g my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
       <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
         <img
           src="https://cdn.shopify.com/s/files/1/0346/5021/products/nora-flower-embroidery-strasburg-children-pink-dress-for-girls-floral-ribbon-embroidery-on-handmade-heirloom-dress-dresses-11786980393042_480x.jpg?v=1616876095"
@@ -228,7 +226,7 @@ export const CardGirl = () => {
 
 export const CardBoy = () => {
   return (
-    <Link to="/products/boys" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+    <Link to="/boys" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
       <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
         <img
           src="https://i.pinimg.com/736x/22/b2/af/22b2af4b7b659ae637d1e55b1ab7cee1.jpg"
@@ -243,5 +241,31 @@ export const CardBoy = () => {
         </p>
       </div>
     </Link>
+  );
+};
+
+
+
+
+
+
+
+
+export const CardMenDetails = ({ products }) => {
+  return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {products.map(product => (
+              <ProductCard key={product._id} className="p-4">
+                  <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="w-full h-auto object-cover" 
+                  />
+                  <h2 className="text-lg font-semibold">{product.name}</h2>
+                  <p className="text-gray-600">Price: ₹{product.price.toFixed(2)}</p>
+                  <p className="text-gray-500">{product.description}</p>
+              </ProductCard>
+          ))}
+      </div>
   );
 };

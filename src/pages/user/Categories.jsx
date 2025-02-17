@@ -2,12 +2,12 @@
 
 import React from "react";
 import { useFetch } from "../../hooks/useFetch"; // Custom hook for fetching data
-import { CardMen } from "../../components/user/Cards"; // Import your CardMen component
+ 
 
 export const Categories = () => {
     // Fetch categories from the API
-    const [categoryList, isLoading, error] = useFetch("/category/category-details/men");
-console.log(categoryList)
+    const { categoryId } = useParams();
+    const [categoryList, isLoading, error] = useFetch(`/category/category-details/${categoryId}`);
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

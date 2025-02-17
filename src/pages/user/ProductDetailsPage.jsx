@@ -9,6 +9,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useSelector } from "react-redux"; // Assuming you're using Redux for auth
 
 
+
 export const ProductDetailsPage = () => {
 
     const { productId } = useParams();
@@ -19,6 +20,7 @@ export const ProductDetailsPage = () => {
     const { isUserAuth } = useSelector((state) => state.user); // Access authentication state from Redux
 
     const [productDetails, isLoading, error] = useFetch(`/product/product-details/${productId}`);
+    
 
     const addToCart = async () => {
         // Check if the user is authenticated
@@ -89,17 +91,20 @@ export const ProductDetailsPage = () => {
                 <Typography className="text-gray-700">Size: {productDetails?.size}</Typography>
                 <Typography className="text-gray-700">Stock: {productDetails?.stock}</Typography>
                 <Typography className="text-gray-700">Rating: {productDetails?.rating}</Typography>
-
-                <Button 
+                <Typography className="text-gray-700">Seller: {productDetails?.seller.name}</Typography>
+    
+                   {/* Display subcategory 
+            
+            <Typography className="text-gray-700">
+                Subcategory: {Subcategories.find(subcategory => subcategory._id === productDetails?.subcategoryid)?.name}
+            </Typography>
+            */}
+             <Button 
                     className={`flex items-center justify-center mt-4 ${isAddingToCart ? 'opacity-50 cursor-not-allowed' : ''}`} 
                     color="green" 
                     onClick={addToCart}
                     disabled={isAddingToCart} 
                 >
-                    {/**  
-                     *  {" "}
-                    Add to Cart{" "}
-                    */}
                     <FaShoppingCart className="mr-2" />
                     {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                 </Button>
@@ -113,4 +118,5 @@ export const ProductDetailsPage = () => {
             </div>
         </div>
     );
+    
 };

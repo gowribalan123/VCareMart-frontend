@@ -42,15 +42,26 @@ export const Home = () => {
             <section className="my-1 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-4 text-center">Fashion</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <CardMen />
+                <Link to="/men"> {/* Link to the men's products page */}
+                        <CardMen />
+                    </Link>
+                    <Link to="/women"> {/* Link to the women's products page */}
                     <CardWomen />
+                    </Link>
+                    <Link to="/girl"> {/* Link to the girl's products page */}
                     <CardGirl />
+                    </Link>
+                    <Link to="/boy"> {/* Link to the boy's products page */}
                     <CardBoy />
+                    </Link>
+                  
+                   
                 </div>
             </section>
             <section className="my-8 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-4 text-center">Trending Mobiles</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  
                     <Card1 />
                     <Card2 />
                     <Card3 />
