@@ -82,9 +82,9 @@ export const ProductDetailsPage = () => {
                     alt={productDetails?.name} 
                     className="w-full h-auto object-contain rounded-lg my-4" 
                 />
-                <Typography className="text-gray-700 mb-2">{productDetails?.description}</Typography>
-                <Typography variant="h5" className="font-bold mt-4">
-                    ₹{productDetails?.price?.toFixed(2)}
+                <Typography className="text-gray-700 mb-2">Description : {productDetails?.description}</Typography>
+                <Typography  className="text-gray-700">
+                 Price :   ₹{productDetails?.price?.toFixed(2)}
                 </Typography>
                 <Typography className="text-gray-700">Color: {productDetails?.color}</Typography>
                 <Typography className="text-gray-700">Age group: {productDetails?.age_group}</Typography>
