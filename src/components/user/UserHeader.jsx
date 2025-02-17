@@ -22,7 +22,7 @@ export const UserHeader = () => {
                 <Link to={'/user/cart'} className="relative" aria-label="View Cart">
                     <ShoppingBag />
                     <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-                        {cartItemCount || 0}
+                    {/**    {cartItemCount || 0}*/} 
                     </span>
                 </Link>
                 <Link to={"/user/profile"} aria-label="View Profile">
