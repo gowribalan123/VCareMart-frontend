@@ -175,7 +175,7 @@ export const CardMen = () => {
         />
       </div>
       <div className="p-3 flex flex-col items-center">
-        <p className="text-slate-800 text-lg font-semibold mb-1">Men</p>
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Men</p>
         <p className="text-slate-600 text-sm text-center">
           Explore the latest trends in men's fashion.
         </p>
@@ -195,7 +195,7 @@ export const CardWomen = () => {
         />
       </div>
       <div className="p-3 flex flex-col items-center">
-        <p className="text-slate-800 text-lg font-semibold mb-1">Women</p>
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Women</p>
         <p className="text-slate-600 text-sm text-center">
           Discover the latest styles in women's fashion.
         </p>
@@ -215,7 +215,7 @@ export const CardGirl = () => {
         />
       </div>
       <div className="p-3 flex flex-col items-center">
-        <p className="text-slate-800 text-lg font-semibold mb-1">Girls</p>
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Girls</p>
         <p className="text-slate-600 text-sm text-center">
           Find adorable outfits for every occasion.
         </p>
@@ -235,7 +235,7 @@ export const CardBoy = () => {
         />
       </div>
       <div className="p-3 flex flex-col items-center">
-        <p className="text-slate-800 text-lg font-semibold mb-1">Boys</p>
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Boys</p>
         <p className="text-slate-600 text-sm text-center">
           Explore fun and stylish outfits for boys.
         </p>
