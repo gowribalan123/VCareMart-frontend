@@ -13,6 +13,7 @@ export const Profile = () => {
     const handleLogOut = async () => {
         try {
             await axiosInstance.get("/user/logout");
+           // localStorage.removeItem('token'); // Clear token from local storage
             navigate("/"); 
         } catch (error) {
             console.error(error);
