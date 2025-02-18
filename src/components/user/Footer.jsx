@@ -14,10 +14,10 @@ const SITEMAP = [
   {
     title: "Products",
     links: [
-      { name: "Men", path: "/products/men" },
-      { name: "Women", path: "/products/women" },
-      { name: "Boys", path: "/products/boys" },
-      { name: "Girls", path: "/products/girls" },
+      { name: "Men", path: "/men" },
+      { name: "Women", path: "/women" },
+      { name: "Boys", path: "/boys" },
+      { name: "Girls", path: "/girls" },
     ],
   },
   {
