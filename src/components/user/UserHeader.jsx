@@ -22,7 +22,7 @@ export const UserHeader = () => {
                 <Link to="/boys" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Boys</Link>
                 <Link to="/girls" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Girls</Link>
                 <Link to="/product" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Products</Link>
-                <Link to="/orders" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">My Orders</Link>
+              {/**  <Link to="/orders" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">My Orders</Link>*/}
                 
                 <Link to="/user/cart" className="relative" aria-label="View Cart">
                     <ShoppingBag className="text-gray-700" />
