@@ -14,7 +14,7 @@ export const SignUp = () => {
         setLoading(true);
         try {
             const response = await axiosInstance({
-                method: "PUT",
+                method: "POST",
                 url: "/signup",
                 data: data,
             });
@@ -57,64 +57,64 @@ export const SignUp = () => {
                     <Input
                         label="Confirm Password"
                         type="password"
-                        {...register("confirmPassword", { 
+                        {...register("confirmpassword", { 
                             required: "Please confirm your password",
                             validate: (value) => value === watch('password') || "Passwords do not match"
                         })}
-                        error={!!errors.confirmPassword}
-                        helperText={errors.confirmPassword?.message}
+                        error={!!errors.confirmpassword}
+                        helperText={errors.confirmpassword?.message}
                     />
-                    {/* Shipping Address Fields */}
+                    {/* Shipping address Fields */}
                     <h5 className="text-lg font-semibold mt-6">Shipping Address</h5>
                     <Input
                         label="Street Address"
-                        {...register("shippingAddress.street", { required: "Street address is required" })}
-                        error={!!errors.shippingAddress?.street}
-                        helperText={errors.shippingAddress?.street?.message}
+                        {...register("shippingaddress.street", { required: "Street address is required" })}
+                        error={!!errors.shippingaddress?.street}
+                        helperText={errors.shippingaddress?.street?.message}
                     />
                     <Input
                         label="City"
-                        {...register("shippingAddress.city", { required: "City is required" })}
-                        error={!!errors.shippingAddress?.city}
-                        helperText={errors.shippingAddress?.city?.message}
+                        {...register("shippingaddress.city", { required: "City is required" })}
+                        error={!!errors.shippingaddress?.city}
+                        helperText={errors.shippingaddress?.city?.message}
                     />
                     <Input
                         label="State"
-                        {...register("shippingAddress.state", { required: "State is required" })}
-                        error={!!errors.shippingAddress?.state}
-                        helperText={errors.shippingAddress?.state?.message}
+                        {...register("shippingaddress.state", { required: "State is required" })}
+                        error={!!errors.shippingaddress?.state}
+                        helperText={errors.shippingaddress?.state?.message}
                     />
                     <Input
                         label="Postal Code"
-                        {...register("shippingAddress.postalCode", { required: "Postal code is required" })}
-                        error={!!errors.shippingAddress?.postalCode}
-                        helperText={errors.shippingAddress?.postalCode?.message}
+                        {...register("shippingaddress.postalcode", { required: "Postal code is required" })}
+                        error={!!errors.shippingaddress?.postalcode}
+                        helperText={errors.shippingaddress?.postalcode?.message}
                     />
-                    {/* Billing Address Fields */}
-                    <h5 className="text-lg font-semibold mt-6">Billing Address</h5>
+                    {/* Billing address Fields */}
+                    <h5 className="text-lg font-semibold mt-6">Billing address</h5>
                     <Input
-                        label="Street Address"
-                        {...register("billingAddress.street", { required: "Street address is required" })}
-                        error={!!errors.billingAddress?.street}
-                        helperText={errors.billingAddress?.street?.message}
+                        label="Street address"
+                        {...register("billingaddress.street", { required: "Street address is required" })}
+                        error={!!errors.billingaddress?.street}
+                        helperText={errors.billingaddress?.street?.message}
                     />
                     <Input
                         label="City"
-                        {...register("billingAddress.city", { required: "City is required" })}
-                        error={!!errors.billingAddress?.city}
-                        helperText={errors.billingAddress?.city?.message}
+                        {...register("billingaddress.city", { required: "City is required" })}
+                        error={!!errors.billingaddress?.city}
+                        helperText={errors.billingaddress?.city?.message}
                     />
                     <Input
                         label="State"
-                        {...register("billingAddress.state", { required: "State is required" })}
-                        error={!!errors.billingAddress?.state}
-                        helperText={errors.billingAddress?.state?.message}
+                        {...register("billingaddress.state", { required: "State is required" })}
+                        error={!!errors.billingaddress?.state}
+                        helperText={errors.billingaddress?.state?.message}
                     />
                     <Input
                         label="Postal Code"
-                        {...register("billingAddress.postalCode", { required: "Postal code is required" })}
-                        error={!!errors.billingAddress?.postalCode}
-                        helperText={errors.billingAddress?.postalCode?.message}
+                        {...register("billingaddress.postalcode", { required: "Postal code is required" })}
+                        error={!!errors.billingaddress?.postalcode}
+                        helperText={errors.billingaddress?.postalcode?.message}
                     />
                 </div>
                 <div className="flex items-center mt-4">
