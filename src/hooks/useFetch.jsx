@@ -3,28 +3,29 @@ import { axiosInstance } from "../config/axiosInstance";
 
 export const useFetch = (url, refresh) => {
     const [data, setData] = useState();
+    const [isLoading, setIsloading] = useState(true);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
-        setIsLoading(true); // Set loading state before fetching
         try {
             const response = await axiosInstance({
                 method: "GET",
                 url: url,
             });
-            setData(response?.data?.data);
+            console.log("response====", response);
+            setTimeout(() => {
+                setData(response?.data?.data);
+                setIsloading(false);
+            }, 1000);
         } catch (error) {
             console.log(error);
             setError(error);
-        } finally {
-            setIsLoading(false); // Ensure loading state is turned off after fetching
         }
     };
 
     useEffect(() => {
         fetchData();
-    }, [url, refresh]); // Add refresh to the dependency array
+    }, [refresh]);
 
     return [data, isLoading, error];
 };

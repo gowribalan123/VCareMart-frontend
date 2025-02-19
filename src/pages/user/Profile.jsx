@@ -59,9 +59,9 @@ export const Profile = () => {
                         />
                         <h2 className="text-xl font-semibold mt-2">Name: {profileData?.name}</h2>
                         <p className="text-gray-600">Email: {profileData?.email}</p>
-                        <p className="text-gray-600">Mobile: {profileData?.phone}</p>
+                    {/*   <p className="text-gray-600">Mobile: {profileData?.phone}</p>
                         <p className="text-gray-600">Date of Birth: {formattedDob}</p>
-                        <p className="text-gray-600">Address: {profileData?.shippingaddress}</p>
+                        <p className="text-gray-600">Address: {profileData?.shippingaddress}</p>*/}  
                     </div>
                     {isProfileEdit && <EditProfileForm profileData={profileData} />}
                 </div>
