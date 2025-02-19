@@ -245,11 +245,87 @@ export const CardBoy = () => {
 };
 
 
+export const CardShirt = () => {
+  return (
+    <Link to="/#shirts" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+      <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
+        <img
+          src="http://res.cloudinary.com/dvvacfrz3/image/upload/v1739172830/zwixmhumrgramxfwomf2.jpg"
+          alt="card-image"
+          className="h-48 w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <div className="p-3 flex flex-col items-center">
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Shirts</p>
+        <p className="text-slate-600 text-sm text-center">
+          Explore fun and stylish shirts for Men.
+        </p>
+      </div>
+    </Link>
+  );
+};
+
+export const CardPant = () => {
+  return (
+    <Link to="/#pants" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+      <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
+        <img
+          src="http://res.cloudinary.com/dvvacfrz3/image/upload/v1739795288/jfqd23gwoxr6spcjoqjr.jpg"
+          alt="card-image"
+          className="h-48 w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <div className="p-3 flex flex-col items-center">
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Pants</p>
+        <p className="text-slate-600 text-sm text-center">
+          Explore fun and stylish pants for Men.
+        </p>
+      </div>
+    </Link>
+  );
+};
 
 
 
+export const CardFrock = () => {
+  return (
+    <Link to="/#frocks" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+      <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
+        <img
+          src="http://res.cloudinary.com/dvvacfrz3/image/upload/v1739173732/unjo2veoojeorckr1p91.jpg"
+          alt="card-image"
+          className="h-48 w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <div className="p-3 flex flex-col items-center">
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Frocks</p>
+        <p className="text-slate-600 text-sm text-center">
+          Explore fun and stylish frocks for Girls.
+        </p>
+      </div>
+    </Link>
+  );
+};
 
-
+export const CardKurti = () => {
+  return (
+    <Link to="/#kurtis" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+      <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
+        <img
+          src="http://res.cloudinary.com/dvvacfrz3/image/upload/v1739173063/ossdrogzbth4fxquqqgp.jpg"
+          alt="card-image"
+          className="h-48 w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <div className="p-3 flex flex-col items-center">
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Kurti</p>
+        <p className="text-slate-600 text-sm text-center">
+          Explore fun and stylish kurtis for Women.
+        </p>
+      </div>
+    </Link>
+  );
+};
 
 export const CardMenDetails = ({ products }) => {
   return (

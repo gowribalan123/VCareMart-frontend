@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 export const UserHeader = () => {
     const cartItemCount = useSelector(state => state.cart.itemCount);
     
-    const [userDetails, isLoading, error] = useFetch(`/user/profile/`);
+    const [userDetails, isLoading, error] = useFetch(`/user/profile`);
 
     return (
         <div className="flex justify-between items-center w-full p-4 shadow-lg bg-white rounded-lg">

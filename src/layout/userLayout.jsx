@@ -19,9 +19,9 @@ export const UserLayout = () => {
             const response = await axiosInstance({
                 method: "GET",
                 url: "/user/check-user",
-               // headers: {
-               //     'Content-Type': 'application/json',
-               // },
+                //headers: {
+                  // 'Content-Type': 'application/json',
+                //},
             });
             dispatch(saveUser())
         } catch (error) {

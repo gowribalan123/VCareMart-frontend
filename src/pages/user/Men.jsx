@@ -5,13 +5,21 @@ import { ProductSkelton } from "../../components/shared/Skeltons";
 
 export const Men = () => {
     const [productList, isLoading, error] = useFetch("/product/get-product-by-category/67a7b4a0431705c43b02804e");
-    
+    const [shirtList] = useFetch("/product/get-product-by-subcategory/67a9abdec575e8d5efb0df52");
+
+    const handleRetry = () => {
+        // Logic to refetch data
+    };
+
     return (
         <div className="flex flex-col items-center justify-start px-4 py-16 max-w-screen-xl mx-auto bg-gray-100">
             {isLoading ? (
                 <ProductSkelton />
             ) : error ? (
-                <div className="text-red-500 text-lg font-semibold">Error: {error}</div>
+                <div className="text-red-500 text-lg font-semibold">
+                    Error: {error}
+                    <button onClick={handleRetry} className="ml-4 text-blue-600 hover:underline">Retry</button>
+                </div>
             ) : (
                 <>
                     <section className="mb-8 text-center">
@@ -25,6 +33,7 @@ export const Men = () => {
                             </div>
                         ))}
                     </section>
+ 
                 </>
             )}
         </div>
