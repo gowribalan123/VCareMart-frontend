@@ -7,25 +7,20 @@ import { Button, Input, Checkbox } from "@material-tailwind/react";
 export const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
-     
     const [loading, setLoading] = React.useState(false);
-    
+
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance({
-                method: "POST",
-                url: "/signup",
-                data: data,
-            });
+            const response = await axiosInstance.post("/user/signup", data);
             navigate("/user/profile");
         } catch (error) {
-            console.log(error);
+            console.error("Signup error:", error.response?.data?.message || error.message);
         } finally {
             setLoading(false);
         }
     };
-  
+
     return (
         <div className="relative flex flex-col rounded-xl shadow-lg p-8 max-w-md mx-auto">
             <h4 className="block text-3xl font-bold text-slate-800 text-center mb-2">Sign Up</h4>
@@ -47,6 +42,7 @@ export const SignUp = () => {
                         error={!!errors.email}
                         helperText={errors.email?.message}
                     />
+      
                     <Input
                         label="Password"
                         type="password"
@@ -64,7 +60,14 @@ export const SignUp = () => {
                         error={!!errors.confirmpassword}
                         helperText={errors.confirmpassword?.message}
                     />
-                    {/* Shipping address Fields */}
+                              {/*   <Input
+    label="Phone"
+    type="tel"
+    {...register("phone", { required: "Phone number is required" })}
+    error={!!errors.phone}
+    helperText={errors.phone?.message}
+/>
+                     Shipping Address Fields  
                     <h5 className="text-lg font-semibold mt-6">Shipping Address</h5>
                     <Input
                         label="Street Address"
@@ -90,10 +93,10 @@ export const SignUp = () => {
                         error={!!errors.shippingaddress?.postalcode}
                         helperText={errors.shippingaddress?.postalcode?.message}
                     />
-                    {/* Billing address Fields */}
-                    <h5 className="text-lg font-semibold mt-6">Billing address</h5>
+                    {/* Billing Address Fields  
+                    <h5 className="text-lg font-semibold mt-6">Billing Address</h5>
                     <Input
-                        label="Street address"
+                        label="Street Address"
                         {...register("billingaddress.street", { required: "Street address is required" })}
                         error={!!errors.billingaddress?.street}
                         helperText={errors.billingaddress?.street?.message}
@@ -116,7 +119,14 @@ export const SignUp = () => {
                         error={!!errors.billingaddress?.postalcode}
                         helperText={errors.billingaddress?.postalcode?.message}
                     />
+
+
+                      */}
+
                 </div>
+
+
+             {/* 
                 <div className="flex items-center mt-4">
                     <Checkbox
                         id="remember-me"
@@ -124,7 +134,19 @@ export const SignUp = () => {
                         label="Remember Me"
                         className="mr-2"
                     />
+
                 </div>
+               
+                 <div>
+                <label>Date of Birth:</label>
+                <input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    required
+                />
+            </div> */}
                 <Button
                     type="submit"
                     className={`mt-4 w-full ${loading ? 'bg-gray-400' : 'bg-slate-800 hover:bg-slate-700'} text-white`}
