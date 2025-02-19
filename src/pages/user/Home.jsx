@@ -7,9 +7,9 @@ import { ProductCard } from "../../components/user/Cards";
 import { ProductSkelton } from "../../components/shared/Skeltons";
 
 export const Home = () => {
-    const [user, setUser] = useState("user");
-    const [isUserAuth, setIsUserAuth] = useState(false);
-    const [productList, isLoading, error] = useFetch("/product/get-product-by-category");
+    //const [user, setUser] = useState("user");
+  //  const [isUserAuth, setIsUserAuth] = useState(false);
+   // const [productList, isLoading, error] = useFetch("/product/get-product-by-category");
     const [shirtList] = useFetch("/product/get-product-by-subcategory/67a9abdec575e8d5efb0df52");
     const [pantList] = useFetch("/product/get-product-by-subcategory/67b32b581c846ae8c1252a87");
     const [frockList] = useFetch("/product/get-product-by-subcategory/67a9af63c575e8d5efb0df63");
