@@ -34,8 +34,8 @@ export const UserLayout = () => {
 
     return (
         <div>
-           {/**  {isUserAuth ? <UserHeader /> : <Header />}*/}
-           <UserHeader /> 
+         {isUserAuth ? <UserHeader /> : <Header />}
+            
             <div className="min-h-96">
                 <Outlet />
             </div>
