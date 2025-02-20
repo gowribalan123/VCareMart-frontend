@@ -13,6 +13,7 @@ export const SignUp = () => {
         setLoading(true);
         try {
             const response = await axiosInstance.post("/user/signup", data);
+            
             navigate("/user/profile");
         } catch (error) {
             console.error("Signup error:", error.response?.data?.message || error.message);

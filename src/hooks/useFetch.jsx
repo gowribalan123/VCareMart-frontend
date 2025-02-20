@@ -11,6 +11,8 @@ export const useFetch = (url, refresh) => {
             const response = await axiosInstance({
                 method: "GET",
                 url: url,
+                
+               
             });
             console.log("response====", response);
             setTimeout(() => {
