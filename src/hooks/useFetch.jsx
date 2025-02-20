@@ -11,6 +11,9 @@ export const useFetch = (url, refresh) => {
             const response = await axiosInstance({
                 method: "GET",
                 url: url,
+                headers: {
+                    "Content-Type": "application/json",
+                  },
             });
             console.log("response====", response);
             setTimeout(() => {

@@ -23,7 +23,7 @@ export const Login = ({ role }) => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axiosInstance.put(user.login_api, data);
+            const response = await axiosInstance.post(user.login_api, data);
             dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
             navigate(user.profile_route);

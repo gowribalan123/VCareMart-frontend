@@ -12,12 +12,15 @@ export const Profile = () => {
 
     const handleLogOut = async () => {
         try {
-            await axiosInstance.get("/user/logout");
-            navigate("/"); 
+            const response = await axiosInstance({
+                method: "GET",
+                url: "/user/logout",
+            });
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     };
+
 
     if (isLoading) {
         return <div className="flex justify-center items-center h-screen"><div className="loader">Loading...</div></div>;
@@ -48,6 +51,7 @@ export const Profile = () => {
         Logout
     </button>
 </section>
+
             <section>
                 <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
                     <h1 className="text-2xl font-bold text-center mb-4">Profile</h1>
@@ -66,6 +70,7 @@ export const Profile = () => {
                     {isProfileEdit && <EditProfileForm profileData={profileData} />}
                 </div>
             </section>
+            
         </div>
     );
 };
