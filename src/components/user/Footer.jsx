@@ -22,8 +22,8 @@ const SITEMAP = [
   },
   {
     title: "Seller",
-    links: [{ name: "Sign Up", path: "/seller/signup" }],
-    links: [{ name: "Login", path: "/seller/login" }],
+    links: [{ name: "SignUp", path: "/seller/signup" },
+    { name: "Login", path: "/seller/login" }],
   },
 ];
 
