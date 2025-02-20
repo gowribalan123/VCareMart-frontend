@@ -6,7 +6,4 @@ headers: {
               'Content-Type': 'application/json',
          },
     withCredentials: true,
-
-  ////    body: JSON.stringify({ status }),
-      //credentials: "include"
 });

@@ -19,18 +19,7 @@ export const UserLayout = () => {
             const response = await axiosInstance({
                 method: "GET",
                 url: "/user/check-user",
-                
-
-
-headers: {
-              'Content-Type': 'application/json',
-         },
-   withCredentials: true,
-
-      body: JSON.stringify({ status }),
-      credentials: "include"
-});
-             
+            });
             dispatch(saveUser())
         } catch (error) {
             dispatch(clearUser())
