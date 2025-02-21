@@ -5,11 +5,11 @@ export const EditProfileForm = ({ userId }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
+       phone: '',
         dob: '',
         shippingaddress: '',
         billingaddress: '',
-        profilepic: null, // Initialize as null for file input
+        image: null, // Initialize as null for file input
     });
 
     const [loading, setLoading] = useState(true);
@@ -18,7 +18,8 @@ export const EditProfileForm = ({ userId }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axiosInstance.get(`/user/profile`);
+                const response = await axiosInstance.get("/user/profile");
+                withCredentials: true, // Include credentials in the request
                 setFormData(response.data);
                 setLoading(false);
             } catch (err) {
@@ -36,7 +37,7 @@ export const EditProfileForm = ({ userId }) => {
     };
 
     const handleFileChange = (e) => {
-        setFormData({ ...formData, profilepic: e.target.files[0] });
+        setFormData({ ...formData, image: e.target.files[0] });
     };
 
     const handleSubmit = async (e) => {
@@ -82,7 +83,7 @@ export const EditProfileForm = ({ userId }) => {
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div className="mb-4">
+             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Phone:</label>
                 <input
                     type="text"
@@ -131,20 +132,20 @@ export const EditProfileForm = ({ userId }) => {
                 <div className="flex items-center">
                     <input
                         type="file"
-                        name="profilepic"
+                        name="image"
                         accept="image/*"
                         onChange={handleFileChange}
                         className="hidden"
-                        id="profilepic"
+                        id="image"
                     />
                     <label
-                        htmlFor="profilepic"
+                        htmlFor="image"
                         className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                     >
                         Choose File
                     </label>
                     <span className="ml-4 text-gray-700">
-                        {formData.profilepic ? formData.profilepic.name : 'No file chosen'}
+                        {formData.image ? formData.image.name : 'No file chosen'}
                     </span>
                 </div>
             </div>

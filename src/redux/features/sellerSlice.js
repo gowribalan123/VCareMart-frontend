@@ -7,9 +7,9 @@ const initialState = {
     error: null, // Added error state
 };
 
-// Create the user slice
-export const userSlice = createSlice({
-    name: "user",
+// Create the seller slice
+export const sellerSlice = createSlice({
+    name: "seller",
     initialState,
     reducers: {
         saveUser: (state, action) => {
@@ -40,4 +40,4 @@ export const selectUserData = (state) => state.user.userData;
 export const selectUserError = (state) => state.user.error; // New selector for error
 
 // Export the reducer
-export default userSlice.reducer;
+export default sellerSlice.reducer;

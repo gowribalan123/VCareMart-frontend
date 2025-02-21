@@ -1,57 +1,78 @@
-import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { DarkMode } from "../shared/DarkMode";
+
+const NavLinks = () => (
+    <ul className="flex flex-col md:flex-row md:justify-center items-center gap-5 md:gap-8">
+        <li>
+            <Link to="/seller/Home" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
+        </li>
+       
+        <li>
+            <Link to="/seller/about" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">About</Link>
+        </li>
+        <li>
+            <Link to="/seller/contact" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Contact</Link>
+        </li>
+        <li>
+            <Link to="/seller/product" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Products</Link>
+        </li>
+        <li>
+            <Link to="/seller/login" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Login</Link>
+        </li>
+        <li>
+            <Link to="/seller/signup" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Sign Up</Link>
+        </li>
+    </ul>
+);
 
 export const Header = () => {
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
 
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!isMobileMenuOpen);
+    };
+
     return (
-        <div className="navbar bg-gray-800 text-white shadow-lg">
-            <div className="navbar-start">
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle text-white hover:bg-gray-700 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-                        </svg>
-                    </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content bg-gray-800 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg flex flex-col">
-                        <li className="flex">
-                            <Link to="/" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">Home</Link>
-                        </li>
-                        <li className="flex">
-                            <Link to="/portfolio" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">Portfolio</Link>
-                        </li>
-                        <li className="flex">
-                            <Link to="/about" className="hover:bg-gray-700 transition duration-300 w-full text-center p-2">About</Link>
-                        </li>
-                    </ul>
+        <header className="flex justify-between items-center p-4 pr-16 h-20 bg-white dark:bg-gray-800 shadow-md">
+           
+            <div className="flex items-center gap-3">
+                <Link to="/" className="flex items-center">
+                    <div className="text-3xl font-bold text-blue-600 dark:text-white">VCare</div>
+                  
+                </Link>
+              
+            </div>
+            <p className="text-xl font-bold text-blue-600 dark:text-white">Welcome Sellers</p>
+            <nav className="hidden md:flex justify-center items-center gap-8" role="navigation">
+                <NavLinks />
+                <div className="flex justify-center items-center gap-3">
+                    <DarkMode />
+                    <button
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+                        onClick={() => navigate('/seller/product')}
+                        aria-label="Sign up to shop with us"
+                    >
+                        Shop with Us
+                    </button>
                 </div>
-            </div>
-            <div className="navbar-end flex items-center space-x-3">
-                <Link to="/" className="btn btn-ghost text-2xl font-bold">MyApp</Link>
-                <button className="btn btn-ghost btn-circle text-white hover:bg-gray-700 transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                    </svg>
-                </button>
-                <button className="btn btn-ghost btn-circle" onClick={() => navigate('/seller/notifications')}>
-                    <div className="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white hover:bg-gray-700 transition duration-300">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                            />
-                        </svg>
-                        <span className="badge badge-xs badge-primary indicator-item"></span>
-                    </div>
-                </button>
-            </div>
-        </div>
+            </nav>
+            {/* Mobile Menu Button */}
+            <button 
+                onClick={toggleMobileMenu} 
+                className="md:hidden text-gray-700 dark:text-gray-300" 
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+                {isMobileMenuOpen ? 'Close' : 'Menu'}
+            </button>
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+                <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-md md:hidden">
+                    <NavLinks />
+                </div>
+            )}
+        </header>
     );
 };

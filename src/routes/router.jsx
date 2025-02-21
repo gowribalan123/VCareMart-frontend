@@ -21,6 +21,9 @@ import {Men} from '../pages/user/Men';
 import {Women} from '../pages/user/Women';
 import {Boys} from '../pages/user/Boys';
 import {Girls} from '../pages/user/Girls';
+import Subcategories from "../pages/user/Subcategories";
+import { Categories } from "../pages/user/Categories";
+import { ProtectedRouteAdmin } from "./ProtectedRouteAdmin";
 
 
 
@@ -62,18 +65,24 @@ export const router = createBrowserRouter([
         element: <SellerLayout />,
         errorElement: <ErrorPage role="seller" />,
         children: [
+            { path: "home", element: <Home/> },
+            { path: "about", element: <About /> },
+            { path: "contact", element: <Contact /> },
+            { path: "product", element:<ProductPage/> },
+            { path: "product-details/:productId", element: <ProductDetailsPage /> },
             { path: "login", element: <Login role="seller" /> },
             { path: "signup", element: <SignUp role="seller" /> },
+           
         ],
     },
     {
         path: "seller",
         element: <ProtectedRouteSeller />,
         children: [
-            { path: "dashboard", element: <h1>Seller Dashboard</h1> },
-            { path: "get-all-products", element: <h1>All Products</h1> },
-            { path: "profile", element: <h1>Seller Profile page</h1> },
+           
+            { path: "profile", element: <Profile/> },
             { path: "create-product", element: <CreateProduct /> },
+            { path: "product", element: <ProductPage /> },
         ],
     },
     {
@@ -83,6 +92,16 @@ export const router = createBrowserRouter([
         children: [
             { path: "login", element: <Login role="admin" /> },
             { path: "signup", element: <SignUp role="admin" /> },
+        ],
+    },
+    {
+        path: "admin",
+        element: <ProtectedRouteAdmin/>,
+        children: [
+            { path: "home", element: <Home/> },
+            { path: "create-category", element:<Categories/> },
+            { path: "create-subcategories", element: <Subcategories/> },
+            
         ],
     },
 ]);

@@ -2,7 +2,7 @@ import { Link , useNavigate} from "react-router-dom";
 import React from "react";
  
 export const ProductCard = ({ product }) => {
-    console.log("productCard=====", product);
+   // console.log("productCard=====", product);
     const navigate = useNavigate();
 
     return (

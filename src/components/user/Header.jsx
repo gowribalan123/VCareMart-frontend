@@ -7,18 +7,7 @@ const NavLinks = () => (
         <li>
             <Link to="/" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
         </li>
-        <li>
-            <Link to="/men" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Men</Link>
-        </li>
-        <li>
-            <Link to="/women" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Women</Link>
-        </li>
-        <li>
-            <Link to="/boys" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Boys</Link>
-        </li>
-        <li>
-            <Link to="/girls" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Girls</Link>
-        </li>
+     
         <li>
             <Link to="/about" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">About</Link>
         </li>
@@ -58,7 +47,7 @@ export const Header = () => {
                     <DarkMode />
                     <button
                         className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-300"
-                        onClick={() => navigate('/signup')}
+                        onClick={() => navigate('/product')}
                         aria-label="Sign up to shop with us"
                     >
                         Shop with Us
