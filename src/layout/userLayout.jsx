@@ -10,16 +10,15 @@ import { CreateProductForm } from "../components/seller/CreateProductForm";
 import { EditProfileForm } from "../components/user/EditProfileForm";
 
 export const UserLayout = () => {
-    const { isUserAuth } = useSelector((state) => state.user);
+    const { isUserAuth ,userData} = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const location = useLocation();
 
     const checkUser = async () => {
         try {
             const response = await axiosInstance.get("/user/check-user", {
-                withCredentials: true, // Include credentials if necessary
-            });
-           dispatch(saveUser(response.data)); // Save user data from response
+                   });
+           dispatch(saveUser()); // Save user data from response
         } catch (error) {
          dispatch(clearUser());
             console.error("Error checking user authentication:", error);

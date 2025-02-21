@@ -4,7 +4,7 @@ import { axiosInstance } from "../../config/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Checkbox } from "@material-tailwind/react";
 
-export const SignUp = () => {
+export const SignUp = ({role='user'}) => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const [loading, setLoading] = React.useState(false);
@@ -12,7 +12,7 @@ export const SignUp = () => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post("/user/signup", data);
+            const response = await axiosInstance.put("/user/login", data);
             
             navigate("/user/profile");
         } catch (error) {

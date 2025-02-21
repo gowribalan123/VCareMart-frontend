@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../config/axiosInstance";
 
-export const useFetch = (url, refresh) => {
+export const useFetch = (url, refresh,) => {
+  
+
     const [data, setData] = useState();
     const [isLoading, setIsloading] = useState(true);
     const [error, setError] = useState(null);
-
+    
     const fetchData = async () => {
+        //let token = localStorage.getItem('token');
         try {
             const response = await axiosInstance({
                 method: "GET",
+              // headers: {
+               //     'Content-Type': 'application/json',
+               //},
+              //  withCredentials: true, // Include credentials if necessary
                 url: url,
+
                
             });
             console.log("response====", response);
