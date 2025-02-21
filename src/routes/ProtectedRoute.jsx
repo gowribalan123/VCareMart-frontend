@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
+import { clearUser } from "../redux/features/userSlice";
 
 export const ProtectedRoute = () => {
+    const dispatch = useDispatch();
     const { isUserAuth } = useSelector((state) => state.user); // Access authentication state from Redux
-     console.log("isuserAuth=====", isUserAuth);
     const navigate = useNavigate(); // Hook for navigation
 
-   // useEffect(() => {
+    useEffect(() => {
         // Check if the user is authenticated
         if (!isUserAuth) {
+            dispatch(clearUser()); // Correctly dispatch the clearUser action
             navigate("/login"); // Redirect to login if not authenticated
-       return;
-     }
-     // Dependencies include isUserAuth and navigate
+        }
+    }, [isUserAuth, navigate, dispatch]); // Dependencies
 
-    // If the user is not authenticated, the Outlet won't render
-    return <Outlet /> ;// Render child routes if authenticated
+    // Render child routes if authenticated
+    return isUserAuth ? <Outlet /> : null; // Only render Outlet if authenticated
 };
