@@ -8,27 +8,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
 
 export const UserLayout = () => {
-    const { isUserAuth } = useSelector((state) => state.user);
+    const { isUserAuth ,userData} = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const location = useLocation();
     const [loading, setLoading] = useState(true);
 
     const checkUser = async () => {
         try {
-            const response = await axiosInstance.get("/user/check-user", {  
-                headers: {
-                     'Content-Type': 'application/json',
-                 },
-                 withCredentials: true,
-            });
+            const response = await axiosInstance.get("/user/check-user");
             dispatch(saveUser(response.data));
         } catch (error) {
             dispatch(clearUser());
-            console.error("Error checking user authentication:", error);
+            console.error("Error checking user authentication:", error.response ? error.response.data : error.message);
         } finally {
             setLoading(false); // Set loading to false after the check
         }
     };
+    
 
     useEffect(() => {
         checkUser();

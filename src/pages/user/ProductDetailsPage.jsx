@@ -113,8 +113,8 @@ export const ProductDetailsPage = () => {
                 <Typography variant="h5" className="font-semibold">Seller Details</Typography>
                 <Typography className="text-gray-700">Seller name: {productDetails?.seller.name}</Typography>
                 <Typography className="text-gray-700">Email id: {productDetails?.seller.email}</Typography>
-                <Typography className="text-gray-700">No. of Products: {productDetails?.seller.noofproducts}</Typography>
-                <Typography className="text-gray-700">Phone: {productDetails?.seller.phone}</Typography>
+           {/*      <Typography className="text-gray-700">No. of Products: {productDetails?.seller.noofproducts}</Typography>
+                <Typography className="text-gray-700">Phone: {productDetails?.seller.phone}</Typography>   */}
             </div>
         </div>
     );
