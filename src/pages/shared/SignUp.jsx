@@ -12,7 +12,7 @@ export const SignUp = ({role='user'}) => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.put("/user/login", data);
+            const response = await axiosInstance.post("/user/login", data);
             
             navigate("/user/profile");
         } catch (error) {
