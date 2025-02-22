@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { axiosInstance } from "../../config/axiosInstance";
+import { useDispatch } from "react-redux";
+import { saveUser, updateUser } from '../../redux/features/userSlice';
 
 export const EditProfileForm = ({ userId }) => {
+     const [refreshState, setRefreshState] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
        phone: '',
         dob: '',
         shippingaddress: '',
-        billingaddress: '',
+        
         image: null, // Initialize as null for file input
     });
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axiosInstance.get("/user/profile");
-                withCredentials: true, // Include credentials in the request
+                const response = await axiosInstance.get("/user/profile", refreshState);
+               // withCredentials: true, // Include credentials in the request
                 setFormData(response.data);
                 setLoading(false);
             } catch (err) {
@@ -47,7 +51,10 @@ export const EditProfileForm = ({ userId }) => {
             Object.keys(formData).forEach(key => {
                 formDataToSend.append(key, formData[key]);
             });
-            await axiosInstance.post('/user/updateprofile', formDataToSend);
+            await axiosInstance.post('/user/updateprofile', formDataToSend,refreshState);
+           
+            dispatch(updateUser());
+            setRefreshState(prev => !prev);
             alert('Profile updated successfully!');
         } catch (err) {
             setError('Error updating profile');
@@ -116,17 +123,7 @@ export const EditProfileForm = ({ userId }) => {
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Billing Address:</label>
-                <input
-                    type="text"
-                    name="billingaddress"
-                    value={formData.billingaddress}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-            </div>
+          
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Profile Picture:</label>
                 <div className="flex items-center">

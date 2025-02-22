@@ -3,9 +3,11 @@ import { useFetch } from "../../hooks/useFetch";
 import { axiosInstance } from "../../config/axiosInstance";
 import { EditProfileForm } from "../../components/user/EditProfileForm";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { format } from 'date-fns';
 
 export const Profile = () => {
-    const [profileData, isLoading, error] = useFetch("/user/profile");
+      const [refreshState, setRefreshState] = useState(false);
+    const [profileData, isLoading, error] = useFetch("/user/profile",refreshState);
     const [isProfileEdit, setIsProfileEdit] = useState(false);
     const navigate = useNavigate(); // Initialize navigate
 
@@ -34,6 +36,7 @@ export const Profile = () => {
     if (error) {
         return <div className="text-red-500 text-center">{error}</div>;
     }
+    const formattedDob = profileData?.dob ? format(new Date(profileData.dob), 'MMMM dd, yyyy') : 'N/A';
 
     return (
         <div className="container mx-auto p-5">
@@ -67,11 +70,11 @@ export const Profile = () => {
                         <h2 className="text-xl font-semibold mt-2">Name: {profileData?.name}</h2>
                         <p className="text-gray-600">Email: {profileData?.email}</p>
                         {/* Uncomment below lines to display additional information */}
-                        {/*
+                       
                         <p className="text-gray-600">Mobile: {profileData?.phone || 'N/A'}</p>
                         <p className="text-gray-600">Date of Birth: {formattedDob}</p>
                         <p className="text-gray-600">Address: {profileData?.shippingaddress || 'N/A'}</p>
-                        */}
+                        
                     </div>
                     {isProfileEdit && <EditProfileForm profileData={profileData} />}
                 </div>
