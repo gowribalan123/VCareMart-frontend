@@ -17,7 +17,12 @@ export const UserLayout = () => {
     const checkUser = async () => {
         try {
             const response = await axiosInstance.get("/user/check-user", {
-                   });
+                method: "GET",
+                headers: {
+                     'Content-Type': 'application/json',
+                 },
+                 withCredentials: true, // Include credentials if necessary
+                        });
            dispatch(saveUser()); // Save user data from response
         } catch (error) {
          dispatch(clearUser());
