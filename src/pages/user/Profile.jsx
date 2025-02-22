@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { EditProfileForm } from "../../components/user/EditProfileForm";
 import { format } from 'date-fns';
 
+
+
 export const Profile = () => {
     const [profileData, setProfileData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isProfileEdit, setIsProfileEdit] = useState(false);
     const navigate = useNavigate();
@@ -14,8 +16,10 @@ export const Profile = () => {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const response = await axiosInstance.get("/user/profile", {
-                    withCredentials: true, // Include credentials in the request
+                const response = await axiosInstance.get("/user/profile", { headers: {
+                    'Content-Type': 'application/json',
+                },
+                  withCredentials: true, // Include credentials in the request
                 });
                 setProfileData(response.data);
             } catch (err) {
@@ -31,9 +35,13 @@ export const Profile = () => {
     const handleLogOut = async () => {
         try {
             const status = "logged out"; // Example status
-            await axiosInstance.post('/user/logout', 
-                JSON.stringify({ status }), 
-                { withCredentials: true }
+            await axiosInstance.get('/user/logout',{ headers: {
+                'Content-Type': 'application/json',
+            },
+              withCredentials: true, // Include credentials in the request
+            } 
+               
+                
             );
             navigate('/login'); // Redirect to login page after logout
         } catch (error) {

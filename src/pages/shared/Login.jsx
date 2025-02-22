@@ -23,7 +23,12 @@ export const Login = ({ role }) => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axiosInstance.post(user.login_api, data,);
+            const response = await axiosInstance.post(user.login_api,data,{  
+                headers: {
+                     'Content-Type': 'application/json',
+                 },
+                 withCredentials: true, // Include credentials if necessary
+             });
             
             dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
