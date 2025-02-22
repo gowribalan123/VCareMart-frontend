@@ -12,9 +12,9 @@ export const SignUp = ({role='user'}) => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post("/user/login", data);
+            const response = await axiosInstance.post("/user/signup", data);
             
-            navigate("/user/profile");
+            navigate("/login");
         } catch (error) {
             console.error("Signup error:", error.response?.data?.message || error.message);
         } finally {
