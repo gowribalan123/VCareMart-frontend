@@ -51,10 +51,10 @@ export const EditProfileForm = ({ userId }) => {
             Object.keys(formData).forEach(key => {
                 formDataToSend.append(key, formData[key]);
             });
-            await axiosInstance.post('/user/updateprofile', formDataToSend,refreshState);
+            await axiosInstance.post('/user/updateprofile', formDataToSend);
            
-            dispatch(updateUser());
-            setRefreshState(prev => !prev);
+           // dispatch(updateUser());
+          //  setRefreshState(prev => !prev);
             alert('Profile updated successfully!');
         } catch (err) {
             setError('Error updating profile');
