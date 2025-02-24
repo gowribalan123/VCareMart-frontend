@@ -18,6 +18,9 @@ headers: {
               }`,
               'Content-Type': 'application/json',
               Accept: "application/json",
+              
          },
+         body: JSON.stringify({ status }),
          withCredentials:true,
+            credentials: "include"
 });
