@@ -24,12 +24,10 @@ export const Login = ({ role }) => {
     const onSubmit = async (data) => {
         try {
             const response = await axiosInstance.post(user.login_api,data,{  
-                headers: { 
-                    Authorization: `Bearer ${token}`,
-          
+                headers: {
                      'Content-Type': 'application/json',
-                },
-                withCredentials:true,
+                 },
+                 withCredentials: true, // Include credentials if necessary
              });
             
             dispatch(saveUser(response?.data?.data));
