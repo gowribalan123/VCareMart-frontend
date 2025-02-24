@@ -17,7 +17,7 @@ export const Profile = () => {
         try {
             await axiosInstance.get('/user/logout', {
                 headers: { 
-                    Authorization: `Bearer ${token}`,
+                //    Authorization: `Bearer ${token}`,
           
                      'Content-Type': 'application/json',
                 },
