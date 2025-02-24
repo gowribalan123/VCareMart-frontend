@@ -24,6 +24,7 @@ import {Girls} from '../pages/user/Girls';
 import Subcategories from "../pages/user/Subcategories";
 import { Categories } from "../pages/user/Categories";
 import { ProtectedRouteAdmin } from "./ProtectedRouteAdmin";
+import { PaymentSuccess } from "../pages/user/PaymentSuccess";
 
 
 
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
             { path: "contact", element: <Contact /> },
             { path: "product", element: <ProductPage /> },
             { path: "product-details/:productId", element: <ProductDetailsPage /> },
-          //  { path: "product/get-product-by-subcategory/:subcategoryid", element: <Men /> },
+     
           { path: "men", element: <Men /> },
             { path: "women", element: <Women /> },
             { path: "boys", element: <Boys /> },
@@ -51,11 +52,17 @@ export const router = createBrowserRouter([
                 path: "user",
                 children: [
                     { path: "home", element: <Home/> },
+                    { path: "men", element: <Men /> },
+                    { path: "women", element: <Women /> },
+                    { path: "boys", element: <Boys /> },
+                    { path: "girls", element: <Girls /> },
+                    { path: "product", element: <ProductPage /> },
+                    { path: "product-details/:productId", element: <ProductDetailsPage /> }, 
                     { path: "whishlist", element: <h1>Wishlist</h1> },
                     { path: "profile", element: <Profile /> },
                     { path: "cart", element: <Cart /> },
-                    { path: "orders", element: <Orders /> },
-                    { path: "payment/success", element: <h2>Payment success</h2> },
+                    { path: "order", element: <Orders /> },
+                    { path: "payment/success", element: <PaymentSuccess/> },
                 ],
             },
         ],

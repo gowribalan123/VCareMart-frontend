@@ -4,6 +4,8 @@ import { axiosInstance } from "../../config/axiosInstance";
 import { EditProfileForm } from "../../components/user/EditProfileForm";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+
 
 export const Profile = () => {
       const [refreshState, setRefreshState] = useState(false);
@@ -41,9 +43,11 @@ export const Profile = () => {
     return (
         <div className="container mx-auto p-5">
             <section className="flex justify-center gap-10 mb-4">
+            <Link to="/user/order">
                 <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300">
                     Orders
                 </button>
+            </Link>
                 <button 
                     className="bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300" 
                     onClick={() => setIsProfileEdit(!isProfileEdit)}

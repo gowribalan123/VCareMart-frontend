@@ -127,7 +127,74 @@ export const Card3 = () => {
   );
 };
 
-export const CartCards = ({ item, handleRemove }) => {
+
+export const CartCards = ({ item, handleRemove, updateQuantity }) => {
+    if (!item) {
+        return <div className="text-red-500">Item not available</div>;
+    }
+
+    const { productId, quantity } = item; // Assuming item has a quantity property
+
+    const handleIncrease = () => {
+        updateQuantity(productId._id, quantity + 1);
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            updateQuantity(productId._id, quantity - 1);
+        }
+    };
+
+    return (
+        <div className="flex w-full h-52 items-center gap-6 bg-gray-100 shadow-lg rounded-lg p-4 mb-6 transition-transform transform hover:scale-105">
+            <img 
+                src={productId.image || "placeholder-image-url.jpg"} 
+                alt={productId.name || "cart-item"} 
+                className="w-35 h-50 object-cover rounded-md" 
+                loading="lazy" 
+            />
+
+            <div className="flex-1">
+                <h2 className="text-lg font-semibold text-gray-800">Name: {productId.name}</h2>
+                <h3 className="text-md font-medium text-gray-600">Price: ₹{productId.price}</h3>
+                <h2 className="text-md font-medium text-gray-600">Description: {productId.description}</h2>
+                <h3 className="text-md font-medium text-gray-600">Size: {productId.size}</h3>
+                <h3 className="text-md font-medium text-gray-600">Stock: {productId.stock}</h3>
+                <h3 className="text-md font-medium text-gray-600">Rating: {productId.rating}</h3>
+                <h3 className="text-md font-medium text-gray-600">Color: {productId.color}</h3>
+{/** 
+                <div className="flex items-center mt-2">
+                    <button 
+                        className="bg-gray-300 text-black font-bold py-1 px-2 rounded hover:bg-gray-400"
+                        onClick={handleDecrease}
+                        aria-label={`Decrease quantity of ${productId.name}`}
+                    >
+                        -
+                    </button>
+                    <span className="mx-2 text-lg">{quantity}</span>
+                    <button 
+                        className="bg-gray-300 text-black font-bold py-1 px-2 rounded hover:bg-gray-400"
+                        onClick={handleIncrease}
+                        aria-label={`Increase quantity of ${productId.name}`}
+                    >
+                        +
+                    </button>
+                </div>
+
+                */}
+            </div>
+
+            <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition-colors duration-200"
+                onClick={() => handleRemove(productId._id)}
+                aria-label={`Remove ${productId.name} from cart`}
+            >
+                Remove
+            </button>
+        </div>
+    );
+};
+export const CartCards1 = ({ item, handleRemove }) => {
   if (!item || !item) {
     return <div className="text-red-500">Item not available</div>;
   }
