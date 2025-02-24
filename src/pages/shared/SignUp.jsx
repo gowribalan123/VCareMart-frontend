@@ -12,7 +12,14 @@ export const SignUp = ({role='user'}) => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post("/user/signup", data);
+            const response = await axiosInstance.post("/user/signup", data,{
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+          
+                     'Content-Type': 'application/json',
+                },
+                withCredentials:true,
+            });
             
             navigate("/login");
         } catch (error) {

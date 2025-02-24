@@ -16,10 +16,12 @@ export const Profile = () => {
     const handleLogOut = async () => {
         try {
             await axiosInstance.get('/user/logout', {
-                headers: {
-                    'Content-Type': 'application/json',
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+          
+                     'Content-Type': 'application/json',
                 },
-                withCredentials: true,
+                withCredentials:true,
             });
             navigate('/login'); // Redirect to login page after logout
         } catch (error) {
