@@ -9,7 +9,13 @@ import { Link } from 'react-router-dom';
 
 export const Profile = () => {
       const [refreshState, setRefreshState] = useState(false);
-    const [profileData, isLoading, error] = useFetch("/user/profile",refreshState);
+    const [profileData, isLoading, error] = useFetch("/user/profile",{  headers: { 
+        //    Authorization: `Bearer ${token}`,
+  
+             'Content-Type': 'application/json',
+        },
+        withCredentials:true}
+        ,refreshState);
     const [isProfileEdit, setIsProfileEdit] = useState(false);
     const navigate = useNavigate(); // Initialize navigate
 
