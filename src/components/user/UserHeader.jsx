@@ -3,7 +3,7 @@ import { CircleUser, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { useSelector } from "react-redux";
-
+//import { itemCount} from "../../redux/features/cartSlice";
 export const UserHeader = () => {
     const cartItemCount = useSelector(state => state.cart.itemCount);
     
@@ -27,7 +27,7 @@ export const UserHeader = () => {
                 <Link to="/user/cart" className="relative" aria-label="View Cart">
                     <ShoppingBag className="text-gray-700" />
                     <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-                     {/** {cartItemCount || 0} */}  
+                  {/**  {cartItemCount || 0} */}   
                     </span>
                 </Link>
                 

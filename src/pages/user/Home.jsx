@@ -86,7 +86,7 @@ export const Home = () => {
                     </Link>
                 </div>
             </section>
-
+{/**
             <section className="my-8 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-4 text-center">Trending Mobiles</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -95,7 +95,7 @@ export const Home = () => {
                     <Card3 />
                 </div>
             </section>
-
+ */}
             <section id="shirts" className="my-8 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-2">Shirts</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">

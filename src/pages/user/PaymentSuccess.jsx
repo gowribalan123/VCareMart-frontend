@@ -7,6 +7,7 @@ import { clearCart } from "../../redux/features/cartSlice";
 export const PaymentSuccess = () => {
     const location = useLocation();
     const dispatch = useDispatch();
+     // const [paymentdetails, isLoading, error] = useFetch("/payment/");
     
     const { transactionId = 'N/A', amount = 0 } = location.state || {};
 
