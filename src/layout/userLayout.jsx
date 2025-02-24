@@ -13,7 +13,12 @@ export const UserLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
+    
+    const getTokenFromLocalStorage = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+  
+  
     const checkUser = async () => {
         try {
             const response = await axiosInstance.get("/user/check-user",
