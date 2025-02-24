@@ -11,7 +11,7 @@ export const Profile = () => {
       const [refreshState, setRefreshState] = useState(false);
     const [profileData, isLoading, error] = useFetch("/user/profile",{  headers: { 
         //    Authorization: `Bearer ${token}`,
-  
+        'Access-Control-Allow-Credentials':true,
              'Content-Type': 'application/json',
         },
         withCredentials:true}
