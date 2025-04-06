@@ -8,20 +8,21 @@ export const SignUp = ({role='user'}) => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const [loading, setLoading] = React.useState(false);
+   // const token = localStorage.getItem('authToken'); // Retrieve the token from local storage or your authentication logic
 
     const onSubmit = async (data) => {
         setLoading(true);
         try {
             const response = await axiosInstance.post("/user/signup", data,{
-                headers: { 
-                 //   Authorization: `Bearer ${token}`,
+               headers: { 
+              //   Authorization: `Bearer ${token}`,
           
-                     'Content-Type': 'application/json',
-                },
-                withCredentials:true,
+                    'Content-Type': 'application/json',
+               },
+             withCredentials:true,
             });
             
-            navigate("/login");
+            navigate("/product");
         } catch (error) {
             console.error("Signup error:", error.response?.data?.message || error.message);
         } finally {

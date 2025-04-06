@@ -162,7 +162,8 @@ export const CartCards = ({ item, handleRemove, updateQuantity }) => {
                 <h3 className="text-md font-medium text-gray-600">Stock: {productId.stock}</h3>
                 <h3 className="text-md font-medium text-gray-600">Rating: {productId.rating}</h3>
                 <h3 className="text-md font-medium text-gray-600">Color: {productId.color}</h3>
-{/** 
+                 
+
                 <div className="flex items-center mt-2">
                     <button 
                         className="bg-gray-300 text-black font-bold py-1 px-2 rounded hover:bg-gray-400"
@@ -181,7 +182,7 @@ export const CartCards = ({ item, handleRemove, updateQuantity }) => {
                     </button>
                 </div>
 
-                */}
+              
             </div>
 
             <button

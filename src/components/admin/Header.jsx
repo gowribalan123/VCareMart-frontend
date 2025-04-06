@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkMode } from "../shared/DarkMode";
+
+import { CircleUser, ShoppingBag } from "lucide-react";
+
 const NavLinks = () => (
     <ul className="flex flex-col md:flex-row md:justify-center items-center gap-5 md:gap-8">
         <li>
-            <Link to="/seller" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
+            <Link to="/admin" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
         </li>
     
        {/* <li>
@@ -37,17 +40,16 @@ export const Header = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
     };
 
+
     return (
         <header className="flex justify-between items-center p-4 pr-16 h-20 bg-white dark:bg-gray-800 shadow-md">
-           
             <div className="flex items-center gap-3">
                 <Link to="/" className="flex items-center">
                     <div className="text-3xl font-bold text-blue-600 dark:text-white">VCare</div>
-                  
                 </Link>
-              
             </div>
-           
+            
+            
             <nav className="hidden md:flex justify-center items-center gap-8" role="navigation">
                 <NavLinks />
                 <div className="flex justify-center items-center gap-3">

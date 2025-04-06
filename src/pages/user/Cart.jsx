@@ -5,7 +5,7 @@ import { CartCards } from "../../components/user/Cards";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
-import { removeItem ,clearCart} from "../../redux/features/cartSlice";
+import { removeItem, clearCart, addQuantityToItem, subtractQuantityFromItem } from "../../redux/features/cartSlice";
 
 export const Cart = () => {
     const [refreshState, setRefreshState] = useState(false);
@@ -24,13 +24,13 @@ export const Cart = () => {
         }
     };
 
-    const updateQuantity = async (productId, delta) => {
-        const updatedProducts = cartDetails.products.map(product => {
-            if (product.productId._id === productId) {
-                const newQuantity = Math.max(1, product.quantity + delta);
-                return { ...product, quantity: newQuantity };
+    const addQuantityToItem = async (productId, delta) => {
+        const updatedProducts = cartDetails.products.map(item => {
+            if (item.productId._id === productId) {
+                const newQuantity = Math.max(1, item.quantity + delta);
+                return { ...item, quantity: newQuantity };
             }
-            return product;
+            return item;
         });
 
         await axiosInstance.put('/cart/update-quantity', { products: updatedProducts });
@@ -82,12 +82,13 @@ export const Cart = () => {
                                 <CartCards 
                                     item={item} 
                                     handleRemove={handleRemoveCartItem} 
-                                    updateQuantity={updateQuantity} 
+                                    addQuantity={addQuantityToItem} 
+                                    subtractQuantity={subtractQuantityFromItem}
                                 />
                                 <div className="flex items-center justify-between mt-2 border p-2 rounded-lg shadow-md bg-white">
                                     <div className="flex items-center">
                                         <button 
-                                            onClick={() => updateQuantity(item.productId._id, -1)} 
+                                            onClick={() => dispatch(subtractQuantityFromItem())} 
                                             className="bg-red-500 text-white font-bold py-1 px-3 rounded hover:bg-red-600 transition duration-200"
                                             disabled={item.quantity <= 1}
                                         >
@@ -95,7 +96,7 @@ export const Cart = () => {
                                         </button>
                                         <span className="mx-2 text-lg font-semibold">{item.quantity}</span>
                                         <button 
-                                            onClick={() => updateQuantity(item.productId._id, 1)} 
+                                            onClick={() => dispatch(addQuantityToItem(item.productId._id, +1))} 
                                             className="bg-green-500 text-white font-bold py-1 px-3 rounded hover:bg-green-600 transition duration-200"
                                         >
                                             +

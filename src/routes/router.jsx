@@ -15,8 +15,11 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
-import { CreateProduct } from "../pages/seller/CreateProduct";
-
+ 
+import { Seller_SignUp } from "../pages/seller/Seller_SignUp";
+import {Seller_Login} from "../pages/seller/Seller_Login";
+import {Seller_profile} from "../pages/seller/Seller_profile";
+import {CreateProductForm} from "../components/seller/CreateProductForm";
 import {Men} from '../pages/user/Men';
 import {Women} from '../pages/user/Women';
 import {Boys} from '../pages/user/Boys';
@@ -26,8 +29,11 @@ import { Categories } from "../pages/user/Categories";
 import { ProtectedRouteAdmin } from "./ProtectedRouteAdmin";
 import { PaymentSuccess } from "../pages/user/PaymentSuccess";
 
-
-
+ 
+import { Admin_Login } from "../pages/admin/Admin_Login";
+import { Admin_profile } from "../pages/admin/Admin_profile";
+import {CreateCategory} from "../pages/admin/CreateCategory";
+import { AdminLayout } from "../layout/adminLayout";
 export const router = createBrowserRouter([
     {
         path: "",
@@ -41,6 +47,9 @@ export const router = createBrowserRouter([
             { path: "contact", element: <Contact /> },
             { path: "product", element: <ProductPage /> },
             { path: "product-details/:productId", element: <ProductDetailsPage /> },
+           // { path: "Admin_Login", element: <Admin_Login role="admin" /> },
+          //  { path: "Seller_Login", element: <Seller_Login  /> },
+            //{ path: "Seller_SignUp", element: <Seller_SignUp  /> },
      
           { path: "men", element: <Men /> },
             { path: "women", element: <Women /> },
@@ -52,6 +61,7 @@ export const router = createBrowserRouter([
                 path: "user",
                 children: [
                     { path: "home", element: <Home/> },
+                    
                     { path: "men", element: <Men /> },
                     { path: "women", element: <Women /> },
                     { path: "boys", element: <Boys /> },
@@ -68,47 +78,77 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        path: "seller",
+        path: "",
         element: <SellerLayout />,
         errorElement: <ErrorPage role="seller" />,
         children: [
-            { path: "home", element: <Home/> },
+            { path: "/seller", element: <Home/> },
             { path: "about", element: <About /> },
             { path: "contact", element: <Contact /> },
-            { path: "product", element:<ProductPage/> },
-            { path: "product-details/:productId", element: <ProductDetailsPage /> },
-            { path: "login", element: <Login role="seller" /> },
-            { path: "signup", element: <SignUp role="seller" /> },
+        //    { path: "men", element: <Men /> },
+          //  { path: "women", element: <Women /> },
+          //  { path: "boys", element: <Boys /> },
+          //  { path: "girls", element: <Girls /> },
+           { path: "product", element: <ProductPage /> },
+          //  { path: "product-details/:productId", element: <ProductDetailsPage /> }, 
+            { path: "Seller_Login", element: <Seller_Login role="seller" /> },
+            { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
            
-        ],
-    },
+     
     {
-        path: "seller",
+        
         element: <ProtectedRouteSeller />,
+       
+    
         children: [
            
-            { path: "profile", element: <Profile/> },
-            { path: "create-product", element: <CreateProduct /> },
-            { path: "product", element: <ProductPage /> },
+            { path: "/seller/Seller_profile", element: <Seller_profile/> },
+            { path: "/seller/create-product", element: <CreateProductForm/> },
+            { path: "/seller/products", element: <ProductPage /> },
         ],
     },
-    {
-        path: "admin",
-        element: <SellerLayout />,
-        errorElement: <ErrorPage role="admin" />,
-        children: [
-            { path: "login", element: <Login role="admin" /> },
-            { path: "signup", element: <SignUp role="admin" /> },
-        ],
+],
     },
     {
-        path: "admin",
-        element: <ProtectedRouteAdmin/>,
+        path: "",
+        element:<AdminLayout/>,
+        errorElement: <ErrorPage role="admin"/>,
         children: [
-            { path: "home", element: <Home/> },
-            { path: "create-category", element:<Categories/> },
-            { path: "create-subcategories", element: <Subcategories/> },
+            { path: "/admin", element: <Home /> },
+            { path: "/admin/signup", element: <SignUp /> },
+            { path: "/admin/login", element: <Login /> },
+            { path: "/admin/about", element: <About /> },
+            { path: "/admin/contact", element: <Contact /> },
+            { path: "/admin/product", element: <ProductPage /> },
+            { path: "/admin/product-details/:productId", element: <ProductDetailsPage /> },
+
+
+          
+          { path: "/admin/men", element: <Men /> },
+            { path: "/admin/women", element: <Women /> },
+            { path: "/admin/boys", element: <Boys /> },
+            { path: "/admin/girls", element: <Girls /> },
+
+            { path: "Admin_Login", element: <Admin_Login role="admin" /> },
+          
+
             
-        ],
-    },
+        {
+      
+      
+         element: <ProtectedRouteAdmin/>,
+        // path: "",
+       /// errorElement: <ErrorPage role="admin"/>,
+        
+        
+         children: [
+            { path: "/admin/home", element:  <Home />},
+           
+               { path: "/admin/Admin_profile", element:  <Admin_profile />},
+
+              { path: "/admin/create-category", element:<CreateCategory/> },
+            ],
+        },
+    ],
+},
 ]);

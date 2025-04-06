@@ -1,9 +1,9 @@
-import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state
 const initialState = {
-    isUserAuth: false,
-    userData: {},
+    isSellerAuth: false,
+    sellerData: {},
     error: null, // Added error state
 };
 
@@ -12,18 +12,21 @@ export const sellerSlice = createSlice({
     name: "seller",
     initialState,
     reducers: {
-        saveUser: (state, action) => {
-            state.isUserAuth = true;
-            state.userData = action.payload;
+        setSellerAuth: (state, action) => {
+            state.isSellerAuth = action.payload;
+        },
+        saveSeller: (state, action) => {
+            state.isSellerAuth = true;
+            state.sellerData = action.payload;
             state.error = null; // Clear error on successful login
         },
-        clearUser: (state) => {
-            state.isUserAuth = false;
-            state.userData = {};
+        clearSeller: (state) => {
+            state.isSellerAuth = false;
+            state.sellerData = {};
             state.error = null; // Clear error on logout
         },
-        updateUser: (state, action) => {
-            state.userData = { ...state.userData, ...action.payload };
+        updateSeller: (state, action) => {
+            state.sellerData = { ...state.sellerData, ...action.payload };
         },
         setError: (state, action) => {
             state.error = action.payload; // Set error message
@@ -32,12 +35,13 @@ export const sellerSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { saveUser, clearUser, updateUser, setError } = userSlice.actions;
+export const { saveSeller, clearSeller, updateSeller, setError } = sellerSlice.actions;
 
 // Selectors
-export const selectIsUserAuth = (state) => state.user.isUserAuth;
-export const selectUserData = (state) => state.user.userData;
-export const selectUserError = (state) => state.user.error; // New selector for error
+export const { setSellerAuth } = sellerSlice.actions;
+export const selectIsSellerAuth = (state) => state.seller.isSellerAuth;
+export const selectSellerData = (state) => state.seller.sellerData;
+export const selectSellerError = (state) => state.seller.error; // New selector for error
 
 // Export the reducer
 export default sellerSlice.reducer;

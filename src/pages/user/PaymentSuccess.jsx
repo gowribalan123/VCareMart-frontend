@@ -17,6 +17,9 @@ export const PaymentSuccess = () => {
         toast.success("Cart cleared successfully!");
     };
 
+  
+
+
     useEffect(() => {
         handleClearCart();
     }, []);

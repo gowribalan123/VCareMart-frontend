@@ -10,8 +10,14 @@ export const ErrorPage = ({ role = "user" }) => {
             return;
         }
         if(role=='seller'){
-            navigate('/seller')
+            navigate('/seller');
+            return;
         }
+        if(role=='admin'){
+            navigate('/admin');
+            return;
+        }
+        
     };
 
     return (

@@ -10,7 +10,7 @@ export const Home = () => {
   //const [user, setUser] = useState("user");
   //const [isUserAuth, setIsUserAuth] = useState(false);
    const [productList, isLoading, error] = useFetch("/category/get-all-category");
-   const [shirtList] = useFetch("/product/get-product-by-subcategory/67a9abdec575e8d5efb0df52");
+ //  const [shirtList] = useFetch("/product/get-product-by-subcategory/67a9abdec575e8d5efb0df52");
     const [pantList] = useFetch("/product/get-product-by-subcategory/67b32b581c846ae8c1252a87");
     const [frockList] = useFetch("/product/get-product-by-subcategory/67a9af63c575e8d5efb0df63");
     const [kurtisList] = useFetch("/product/get-product-by-subcategory/67a9acc6c575e8d5efb0df54");
@@ -72,9 +72,7 @@ export const Home = () => {
             <section className="my-1 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-4 text-center">Fashion by Sub Category</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <Link to="/" onClick={() => scrollToSection('shirts')}>
-                        <CardShirt />
-                    </Link>
+                   
                     <Link to="/" onClick={() => scrollToSection('pants')}>
                         <CardPant />
                     </Link>
@@ -95,17 +93,7 @@ export const Home = () => {
                     <Card3 />
                 </div>
             </section>
- */}
-            <section id="shirts" className="my-8 w-full">
-                <h1 className="text-2xl font-bold text-blue-600 mb-2">Shirts</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-                    {shirtList?.map((product) => (
-                        <div key={product?.subcategoryid} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-                            <ProductCard product={product} />
-                        </div>
-                    ))}
-                </div>
-            </section>
+ */} 
 
             <section id="pants" className="my-8 w-full">
                 <h1 className="text-2xl font-bold text-blue-600 mb-2">Pants</h1>

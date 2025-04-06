@@ -6,7 +6,7 @@ import { clearUser } from "../redux/features/userSlice";
 export const ProtectedRoute = () => {
     const dispatch = useDispatch();
     const { isUserAuth} = useSelector((state) => state.user); // Access authentication state from Redux
-    console.log(isUserAuth);
+    
     const navigate = useNavigate(); // Hook for navigation
 
     useEffect(() => {

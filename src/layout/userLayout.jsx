@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/user/Header";
+
 import { Footer } from "../components/user/Footer";
 import { Outlet, useLocation,useNavigate } from "react-router-dom";
 import { UserHeader } from "../components/user/UserHeader";
+import { Header } from "../components/user/Header";
 import { axiosInstance } from "../config/axiosInstance";
 import { useSelector, useDispatch} from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
@@ -13,10 +14,10 @@ export const UserLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    
-    const getTokenFromLocalStorage = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+
+   // const getTokenFromLocalStorage = localStorage.getItem("user")
+    //? JSON.parse(localStorage.getItem("user"))
+   // : null;
   
   
     const checkUser = async () => {
@@ -24,19 +25,19 @@ export const UserLayout = () => {
             const response = await axiosInstance.get("/user/check-user",
              {headers: { 
                 //Authorization: `Bearer ${token}`,
-                Authorization: `Bearer ${
-                   getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-                 }`,
+         //   Authorization: `Bearer ${
+     //            getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+              // }`,
                  'Content-Type': 'application/json',
-                 Accept: "application/json",
+              Accept: "application/json",
                  
-            },
+           },
 
 
-                body: JSON.stringify({ status }),
+               // body: JSON.stringify({ status }),
                 withCredentials:true,
-                   credentials: "include"
-             }
+                //  credentials: "include"
+          }
 
 
 
@@ -61,7 +62,7 @@ export const UserLayout = () => {
 
     return (
         <div>
-            {isUserAuth ? <UserHeader /> : <Header />} 
+            {isUserAuth ? <UserHeader/> : <Header/>} 
             <div className="min-h-96">
                 <Outlet />
             </div>

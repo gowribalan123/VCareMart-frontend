@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
 export const Login = ({ role }) => {
+ 
     const { register, handleSubmit } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
@@ -19,22 +20,25 @@ export const Login = ({ role }) => {
         profile_route: role === "seller" ? "/seller/profile" : "/user/profile",
         home_route: "/user/home",
         signup_route: role === "seller" ? "/seller/signup" : "/signup",
+     
     };
 
     const onSubmit = async (data) => {
-        try {
+        try {    
             const response = await axiosInstance.post(user.login_api,data,{  
-                headers: {
-                     'Content-Type': 'application/json',
-                 },
-                 withCredentials: true, // Include credentials if necessary
+                credentials : 'include',
+              headers: {
+                   'Content-Type': 'application/json',
+            },
+             withCredentials: true, // Include credentials if necessary
+             body : JSON.stringify(data)
              });
             
             dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
             navigate(user.profile_route);
              //Redirect to the previous location or default to home
-            const from = location.state?.from || "/";
+            const from = location.state?.from || "/user/profile";
              navigate(from);
         } catch (error) {
             dispatch(clearUser());
@@ -67,8 +71,11 @@ export const Login = ({ role }) => {
                             className="input input-bordered"
                             required
                         />
+ 
+                        
 
                         
+              
                         <label className="label">
                             <Link to={user.signup_route} className="text-sm text-blue-500 underline">
                                 New User?
