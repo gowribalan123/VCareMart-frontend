@@ -27,22 +27,23 @@ export const UserLayout = () => {
   
     const checkUser = async () => {
         try {
-            const response = await axiosInstance.get("/user/check-user",
-             {headers: { 
+            const response = await axiosInstance.get("/user/check-user"
+                //,
+           ////  {headers: { 
                 //Authorization: `Bearer ${token}`,
         //   Authorization: `Bearer ${
                // getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
              // }`,
-                 'Content-Type': 'application/json',
-              Accept: "application/json",
+               //  'Content-Type': 'application/json',
+             // Accept: "application/json",
                  
-           },
+           //},
 
 
                // body: JSON.stringify({ status }),
-                withCredentials:true,
+             //   withCredentials:true,
                 //  credentials: "include"
-          }
+         // }
 
 
 
