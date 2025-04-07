@@ -9,7 +9,7 @@ import { useSelector, useDispatch} from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
 
 export const UserLayout = () => {
-    const { isUserAuth ,userData} = useSelector((state) => state.user);
+    const { isUserAuth } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
