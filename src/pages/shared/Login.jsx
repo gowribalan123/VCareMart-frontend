@@ -38,7 +38,7 @@ export const Login = ({ role }) => {
             
             dispatch(saveUser(response?.data?.data));
             toast.success("Log-in success");
-            navigate(user.profile_route);
+            //navigate(user.profile_route);
              //Redirect to the previous location or default to home
             const from = location.state?.from || "/user/profile";
              navigate(from);
