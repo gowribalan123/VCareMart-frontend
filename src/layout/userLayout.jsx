@@ -20,9 +20,9 @@ export const UserLayout = () => {
     
 
 
-    const getTokenFromLocalStorage = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+   // const getTokenFromLocalStorage = localStorage.getItem("user")
+   // ? JSON.parse(localStorage.getItem("user"))
+   // : null;
   
   
     const checkUser = async () => {
@@ -30,9 +30,9 @@ export const UserLayout = () => {
             const response = await axiosInstance.get("/user/check-user",
              {headers: { 
                 //Authorization: `Bearer ${token}`,
-           Authorization: `Bearer ${
-                getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-              }`,
+        //   Authorization: `Bearer ${
+               // getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+             // }`,
                  'Content-Type': 'application/json',
               Accept: "application/json",
                  

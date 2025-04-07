@@ -26,7 +26,7 @@ export const Login = ({ role }) => {
     const onSubmit = async (data) => {
         try {    
             const response = await axiosInstance.post(user.login_api,data,{  
-                credentials : 'include',
+             //   credentials : 'include',
               headers: {
                    'Content-Type': 'application/json',
             },
