@@ -14,6 +14,11 @@ export const UserLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+   
+       // Retrieve the token from local storage or your authentication logic
+    const token = localStorage.getItem('authToken'); 
+    
+
 
     //const getTokenFromLocalStorage = localStorage.getItem("user")
     //? JSON.parse(localStorage.getItem("user"))
@@ -25,9 +30,9 @@ export const UserLayout = () => {
             const response = await axiosInstance.get("/user/check-user",
              {headers: { 
                 //Authorization: `Bearer ${token}`,
-          //  Authorization: `Bearer ${
-            ///    getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-            //  }`,
+           Authorization: `Bearer ${
+                getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+              }`,
                  'Content-Type': 'application/json',
               Accept: "application/json",
                  
