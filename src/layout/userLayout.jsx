@@ -16,13 +16,13 @@ export const UserLayout = () => {
     const [loading, setLoading] = useState(true);
    
        // Retrieve the token from local storage or your authentication logic
-    const token = localStorage.getItem('authToken'); 
+    //const token = localStorage.getItem('authToken'); 
     
 
 
-    //const getTokenFromLocalStorage = localStorage.getItem("user")
-    //? JSON.parse(localStorage.getItem("user"))
-    //: null;
+    const getTokenFromLocalStorage = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
   
   
     const checkUser = async () => {

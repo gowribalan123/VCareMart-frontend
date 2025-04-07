@@ -1,11 +1,11 @@
 import axios from "axios";
 
 
-const token = localStorage.getItem('authToken'); // Retrieve the token from local storage or your authentication logic
+//const token = localStorage.getItem('authToken'); // Retrieve the token from local storage or your authentication logic
 
-//const getTokenFromLocalStorage = localStorage.getItem("user")
-  //? JSON.parse(localStorage.getItem("user"))
- // : null;
+const getTokenFromLocalStorage = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+ : null;
 
 
 export const axiosInstance = axios.create({
