@@ -25,12 +25,12 @@ export const Admin_Login = ({ role }) => {
         try {
              
             const response = await axiosInstance.post("/admin/login",data,{  
-                credentials : 'include',
+               // credentials : 'include',
               headers: {
                    'Content-Type': 'application/json',
             },
              withCredentials: true, // Include credentials if necessary
-             body : JSON.stringify(data)
+             //body : JSON.stringify(data)
              });
             
             dispatch(saveAdmin(response?.data?.data));
