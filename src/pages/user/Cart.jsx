@@ -24,29 +24,23 @@ export const Cart = () => {
         }
     };
 
-    const addQuantityToItem = async (productId, delta) => {
-        const updatedProducts = cartDetails.products.map(item => {
-            if (item.productId._id === productId) {
-                const newQuantity = Math.max(1, item.quantity + delta);
-                return { ...item, quantity: newQuantity };
-            }
-            return item;
-        });
-
-        await axiosInstance.put('/cart/update-quantity', { products: updatedProducts });
-        setRefreshState(prev => !prev);
-    };
-
+    
     const makePayment = async () => {
         try {
             const stripe = await loadStripe(import.meta.env.VITE_STRIPE_Publishable_key);
-            const session = await axiosInstance.post("/payment/create-checkout-session", {
-                products: cartDetails?.products,
+            const session = await axiosInstance.post("/payment/create-checkout-session", {data :
+              {  products: cartDetails?.products}
             });
 
             const result = await stripe.redirectToCheckout({
                 sessionId: session.data.sessionId,
             });
+            const clearcart= await axiosInstance.delete("/cart/clear-cart");
+            toast.success("Cart cleared successfully");
+
+            if (clearcart.error) {
+                toast.error(clearcart.error.message);
+            }
 
             if (result.error) {
                 toast.error(result.error.message);
