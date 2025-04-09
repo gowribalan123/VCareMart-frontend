@@ -14,10 +14,10 @@ export const useFetch = (url, refresh,) => {
             const response = await axiosInstance(
                 {
                 method: "GET",
-              headers: {
-               //Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
+            //  headers: {
+           //    Authorization: `Bearer ${token}`,
+             //   'Content-Type': 'application/json',
+           //   },
               withCredentials: true, // Include credentials if necessary
                 url: url,
 

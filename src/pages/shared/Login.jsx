@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState} from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -12,8 +12,10 @@ export const Login = ({ role }) => {
     const { register, handleSubmit } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
+   
     const user = {
         role: role === "seller" ? "seller" : "user",
         login_api: role === "seller" ? "/seller/login" : "/user/login",
@@ -26,17 +28,18 @@ export const Login = ({ role }) => {
     const onSubmit = async (data) => {
         try {    
             const response = await axiosInstance.post("/user/login",data
-              //  ,{  
+               ,{   
              //   credentials : 'include',
-            //  headers: {
-              //     'Content-Type': 'application/json',
-           // },
-             //withCredentials: true, // Include credentials if necessary
+             headers: {
+                  'Content-Type': 'application/json',
+           },
+             withCredentials: true, // Include credentials if necessary
             // body : JSON.stringify(data)
-             //}
+             }
              );
-            
+             localStorage.setItem("token", response?.data?.token);
             dispatch(saveUser(response?.data?.data));
+         
             toast.success("Log-in success");
             //navigate(user.profile_route);
              //Redirect to the previous location or default to home
@@ -44,7 +47,7 @@ export const Login = ({ role }) => {
              navigate(from);
         } catch (error) {
             dispatch(clearUser());
-            toast.error("Log-in failed");
+            toast.error(error.response?.data?.message || "Log-in failed");
             console.error(error);
         }
     };
