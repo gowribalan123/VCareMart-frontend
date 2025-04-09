@@ -22,7 +22,7 @@ export const SignUp = ({role='user'}) => {
              withCredentials:true,
             });
             
-            navigate("/product");
+            navigate("/login");
         } catch (error) {
             console.error("Signup error:", error.response?.data?.message || error.message);
         } finally {
