@@ -41,7 +41,7 @@ export const PaymentSuccess = () => {
                 ) : (
                     <p className="mt-4 text-green-500">Your cart has been cleared.</p>
                 )}
-                <Link to="/products" className="mt-6 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
+                <Link to="/user/product" className="mt-6 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
                     Continue Shopping
                 </Link>
             </div>

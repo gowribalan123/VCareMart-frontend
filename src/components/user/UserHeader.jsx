@@ -45,9 +45,9 @@ export const UserHeader = () => {
                 
                 <Link to="/user/cart" className="relative" aria-label="View Cart">
                     <ShoppingBag className="text-gray-700" />
-                    <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-                        {cartItemCount || 0}
-                    </span>
+                 {/**  <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+                        {cartItemCount }
+                    </span> */} 
                 </Link>
                 
                 <Link to="/user/profile" aria-label="View Profile">
