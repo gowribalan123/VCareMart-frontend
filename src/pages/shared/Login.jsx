@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Login = ({ role="user" }) => {
+export const Login = ( {role}) => {
  
     const { register, handleSubmit } = useForm();
     const location = useLocation();
@@ -23,9 +23,15 @@ export const Login = ({ role="user" }) => {
     };
 
     if (role == "seller") {
-        user.role = "seller";   
-        user.loginAPI = "/seller/login";
-        (user.profileRoute = "/seller/profile"), (user.signupRoute = "/seller/signup");
+        user.role = "seller";
+        user.loginAPI = "/user/login";
+        (user.profileRoute = "/user/profile"), (user.signupRoute = "/user/signup");
+    }
+    
+    if (role == "admin") {
+        user.role = "admin";
+        user.loginAPI = "/user/login";
+        (user.profileRoute = "/user/profile"), (user.signupRoute = "/user/signup");
     }
 
     const onSubmit = async (data) => {

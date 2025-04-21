@@ -8,8 +8,8 @@ export const CreateProduct = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [subcategories, setSubCategories] = useState([]);
+    const [selectedSubCategory, setSelectedSubCategory] = useState("");
     const {
         register,
         handleSubmit,
@@ -19,43 +19,43 @@ export const CreateProduct = () => {
 
     // Fetch categories and subcategories
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchSubCategories = async () => {
             setLoading(true);
             try {
-                const response = await axiosInstance.get("/category/get-all-category");
+                const response = await axiosInstance.get("/subcategory/get-all-subcategory");
                 if (response.data && Array.isArray(response.data.data)) {
-                    setCategories(response.data.data);
+                    setSubCategories(response.data.data);
                 } else {
-                    throw new Error('Categories data is not an array');
+                    throw new Error('Sub Categories data is not an array');
                 }
             } catch (err) {
-                setError('Error fetching categories: ' + err.message);
+                setError('Error fetching sub categories: ' + err.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCategories();
+        fetchSubCategories();
     }, []);
 
-    // Handle category change
-    const handleCategoryChange = async (e) => {
-        const categoryId = e.target.value;
-        setSelectedCategory(categoryId);
-        try {
-            const response = await axiosInstance.get(`/subcategory/get-subcategory-by-category`,
-            {
-                params: { categoryId } // Fetch subcategories based on selected category
-            });
-            if (response.data && Array.isArray(response.data.data)) {
-                setSubcategories(response.data.data);
-            } else {
-                throw new Error('Subcategories data is not an array');
-            }
-        } catch (err) {
-            setError('Error fetching subcategories: ' + err.message);
-        }
-    };
+    // Handle sub category change
+   // const handleSubCategoryChange = async (e) => {
+     //   const subcategoryId = e.target.value;
+       // setSelectedSubCategory(subcategoryId);
+  //      try {
+    //        const response = await axiosInstance.get(`/subcategory/get-subcategory-by-category`,
+      //      {
+        //        params: { categoryId } // Fetch subcategories based on selected category
+          //  });
+            //if (response.data && Array.isArray(response.data.data)) {
+              //  setSubcategories(response.data.data);
+            //} else {
+              //  throw new Error('Subcategories data is not an array');
+           // }
+        //} catch (err) {
+          //  setError('Error fetching subcategories: ' + err.message);
+       // }
+    //};
 
     const onSubmit = async (data) => {
         setLoading(true);
@@ -70,7 +70,7 @@ export const CreateProduct = () => {
             formData.append("color", data.color);
             formData.append("weight", data.weight);
             formData.append("image", data.image[0]); // Ensure single file upload
-            formData.append("category", selectedCategory);
+      //      formData.append("category", selectedCategory);
             formData.append("subcategory", data.subcategory);
 
             await axiosInstance.post("/product/create-product", formData);
@@ -87,34 +87,36 @@ export const CreateProduct = () => {
     return (
         <div className="p-8 bg-gray-50 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create New Product</h2>
+
+
         <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Category Selection */}
             <div className="form-control">
                 <label className="label">
-                    <span className="label-text text-gray-700">Category</span>
+                    <span className="label-text text-gray-700">Sub Category</span>
                 </label>
                 <select
-                    id="category-select"
-                    value={selectedCategory}
-                    onChange={handleCategoryChange}
-                    className={`select select-bordered ${errors.category ? "border-red-500" : "border-gray-300"}`}
+                    id="subcategory-select"
+                    value={selectedSubCategory}
+                   
+                    className={`select select-bordered ${errors.subcategory ? "border-red-500" : "border-gray-300"}`}
                 >
-                    <option value="">Select Category</option> {/* Default option */}
-                    {categories.length > 0 ? (
-                        categories.map((category) => (
-                            <option key={category._id} value={category._id}>
-                                {category.name}
+                    <option value="">Select SubCategory</option> {/* Default option */}
+                    {subcategories.length > 0 ? (
+                        subcategories.map((subcategory) => (
+                            <option key={subcategory._id} value={subcategory._id}>
+                                {subcategory.name}
                             </option>
                         ))
                     ) : (
-                        <option disabled>No categories available</option>
+                        <option disabled>No subcategories available</option>
                     )}
                 </select>
-                {errors.category && <span className="text-red-500 text-sm mt-1">{errors.category.message}</span>}
+                {errors.subcategory && <span className="text-red-500 text-sm mt-1">{errors.subcategory.message}</span>}
             </div>
 
             {/* Subcategory Selection */}
-            <div className="form-control">
+{/*<div className="form-control">
                 <label className="label">
                     <span className="label-text text-gray-700">Subcategory</span>
                 </label>
@@ -131,7 +133,7 @@ export const CreateProduct = () => {
                 </select>
                 {errors.subcategory && <span className="text-red-500 text-sm mt-1">{errors.subcategory.message}</span>}
             </div>                   
-
+            */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text text-gray-700">Product Name</span>

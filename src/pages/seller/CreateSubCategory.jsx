@@ -110,6 +110,21 @@ export const CreateSubCategory = () => {
         <form className="max-w-md mx-auto p-6 border rounded-lg shadow-md bg-white" onSubmit={handleSubmit}>
             <h2 className="text-2xl font-bold mb-4">Create Subcategory</h2>
             <div className="mb-4">
+                <label htmlFor="categoryId" className="block text-sm font-medium mb-1">Select Category:</label>
+                <select
+                    name="categoryId"
+                    value={formData.categoryId}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">Select a category</option>
+                    {categories.map(category => (
+                        <option key={category._id} value={category._id}>{category.name}</option>
+                    ))}
+                </select>
+            </div>
+            <div className="mb-4">
                 <label htmlFor="subcategory" className="block text-sm font-medium mb-1">Subcategory:</label>
                 <input
                     type="text"
@@ -130,21 +145,7 @@ export const CreateSubCategory = () => {
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div className="mb-4">
-                <label htmlFor="categoryId" className="block text-sm font-medium mb-1">Select Category:</label>
-                <select
-                    name="categoryId"
-                    value={formData.categoryId}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value="">Select a category</option>
-                    {categories.map(category => (
-                        <option key={category._id} value={category._id}>{category.name}</option>
-                    ))}
-                </select>
-            </div>
+            
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Subcategory Image:</label>
                 <div className="flex items-center">

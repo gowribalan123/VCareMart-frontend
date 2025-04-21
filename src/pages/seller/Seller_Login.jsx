@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Seller_Login = ({ role}) => {
+export const Seller_Login = ({role="seller"}) => {
  
     const { register, handleSubmit } = useForm();
     const location = useLocation();
@@ -25,7 +25,8 @@ export const Seller_Login = ({ role}) => {
 
     const onSubmit = async (data) => {
         try {    
-            const response = await axiosInstance.post(user.loginAPI,data
+          //  const response = await axiosInstance.post("/user/login",data
+             const response = await axiosInstance.post(`/user/login?role=${role}`,data,role
                ,{   
              //   credentials : 'include',
              headers: {
