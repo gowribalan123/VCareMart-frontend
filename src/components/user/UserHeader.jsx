@@ -30,7 +30,13 @@ export const UserHeader = () => {
 
     return (
         <div className="flex justify-between items-center w-full p-4 shadow-lg bg-white rounded-lg">
-            <Link to="/" className="text-xl font-bold text-blue-600">
+            
+             <Link to="/" className="flex items-center">
+                            <div className="text-4xl font-bold text-blue-400 hover:text-blue-300 transition duration-300">VCare</div>
+            </Link>
+                       
+                        
+            <Link to="/user/profile" className="text-xl font-bold text-blue-600">
                 Welcome {isLoading ? <span className="loader" /> : error ? "User" : userDetails?.name || "User"}
             </Link>
             
@@ -54,6 +60,7 @@ export const UserHeader = () => {
                     <CircleUser className="text-gray-700" />
                 </Link>
             </div>
+           
         </div>
     );
 };

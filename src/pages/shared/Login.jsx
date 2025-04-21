@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Login = ({ role }) => {
+export const Login = ({ role="user" }) => {
  
     const { register, handleSubmit } = useForm();
     const location = useLocation();
@@ -15,19 +15,23 @@ export const Login = ({ role }) => {
 
     const dispatch = useDispatch();
 
-   
     const user = {
-        role: role === "seller" ? "seller" : "user",
-        login_api: role === "seller" ? "/seller/login" : "/user/login",
-        profile_route: role === "seller" ? "/seller/profile" : "/user/profile",
-        home_route: "/user/home",
-        signup_route: role === "seller" ? "/seller/signup" : "/signup",
-     
+        role: "user",
+        loginAPI: "/user/login",
+        profileRoute: "/user/profile",
+        signupRoute: "/signup",
     };
+
+    if (role == "seller") {
+        user.role = "seller";   
+        user.loginAPI = "/seller/login";
+        (user.profileRoute = "/seller/profile"), (user.signupRoute = "/seller/signup");
+    }
 
     const onSubmit = async (data) => {
         try {    
-            const response = await axiosInstance.post("/user/login",data
+           
+            const response = await axiosInstance.post(`/user/login?role=${role}`,data,role
                ,{   
              //   credentials : 'include',
              headers: {
@@ -43,7 +47,7 @@ export const Login = ({ role }) => {
             toast.success("Log-in success");
             //navigate(user.profile_route);
              //Redirect to the previous location or default to home
-            const from = location.state?.from || "/user/profile";
+            const from = location.state?.from || user.profileRoute;
              navigate(from);
         } catch (error) {
             dispatch(clearUser());
@@ -82,7 +86,7 @@ export const Login = ({ role }) => {
                         
               
                         <label className="label">
-                            <Link to={user.signup_route} className="text-sm text-blue-500 underline">
+                            <Link to={user.signupRoute} className="text-sm text-blue-500 underline">
                                 New User?
                             </Link>
                         </label>

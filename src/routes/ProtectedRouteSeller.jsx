@@ -1,23 +1,22 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
-import { clearSeller } from "../redux/features/sellerSlice";
+import { clearUser } from "../redux/features/userSlice";
 
 export const ProtectedRouteSeller = () => {
     const dispatch = useDispatch();
- const seller= useSelector((state) => state.seller)  ;
+    const { isUserAuth} = useSelector((state) => state.user); // Access authentication state from Redux
     
     const navigate = useNavigate(); // Hook for navigation
 
     useEffect(() => {
         // Check if the seller is authenticated
-        const isSellerAuth = seller.isSellerAuth; // Ensure you get the auth state here
-        if (!isSellerAuth) {
-           dispatch(clearSeller()); // Correctly dispatch the clearUser action
+        if (!isUserAuth) {
+           dispatch(clearUser()); // Correctly dispatch the clearSeller action
             navigate("/Seller_Login"); // Redirect to login if not authenticated
         }
-    }, [seller.isSellerAuth, navigate, dispatch]); // Dependencies
+    }, [isUserAuth, navigate, dispatch]); // Dependencies
 
     // Render child routes if authenticated
-    return seller.isSellerAuth ? <Outlet /> : null; // Only render Outlet if authenticated
+    return isUserAuth ? <Outlet /> : null; // Only render Outlet if authenticated
 };

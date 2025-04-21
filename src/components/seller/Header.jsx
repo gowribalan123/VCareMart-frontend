@@ -4,7 +4,7 @@ import { DarkMode } from "../shared/DarkMode";
 const NavLinks = () => (
     <ul className="flex flex-col md:flex-row md:justify-center items-center gap-5 md:gap-8">
         <li>
-            <Link to="/seller" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
+            <Link to="/" className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition duration-300">Home</Link>
         </li>
     
        {/* <li>

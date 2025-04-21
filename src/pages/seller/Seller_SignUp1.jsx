@@ -2,37 +2,38 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../config/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Checkbox } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 
-export const Seller_SignUp = ({role='seller'}) => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
-    const navigate = useNavigate();
-    const [loading, setLoading] = React.useState(false);
-   // const token = localStorage.getItem('authToken'); // Retrieve the token from local storage or your authentication logic
-
-    const onSubmit = async (data) => {
-        setLoading(true);
-        try {
-            const response = await axiosInstance.post("/user/signup", data,{
-               headers: { 
-              //   Authorization: `Bearer ${token}`,
-          
-                    'Content-Type': 'application/json',
-               },
-             withCredentials:true,
-            });
-            
-            navigate("/Seller_Login");
-        } catch (error) {
-            console.error("Signup error:", error.response?.data?.message || error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+export const Seller_SignUp1 = ({role='seller'}) => {
+        const { register, handleSubmit, formState: { errors }, watch } = useForm();
+        const navigate = useNavigate();
+        const [loading, setLoading] = React.useState(false);
+    //    const token = localStorage.getItem('authToken'); // Retrieve the token from local storage or your authentication logic
+    
+        const onSubmit = async (data) => {
+            setLoading(true);
+            try {
+                const response = await axiosInstance.post("/seller/signup", data,{
+                   headers: { 
+                  //   Authorization: `Bearer ${token}`,
+              
+                        'Content-Type': 'application/json',
+                   },
+                 withCredentials:true,
+                });
+                
+                navigate("/seller/Seller_profile");
+            } catch (error) {
+                console.error("Signup error:", error.response?.data?.message || error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
 
     return (
         <div className="relative flex flex-col rounded-xl shadow-lg p-8 max-w-md mx-auto">
-            <h4 className="block text-3xl font-bold text-slate-800 text-center mb-2">Sign Up</h4>
+            <h4 className="block text-3xl font-bold text-slate-800 text-center mb-2">Sign Up page for Seller</h4>
             <p className="text-slate-500 font-light text-center mb-6">
                 Nice to meet you! Enter your details to register.
             </p>
@@ -52,6 +53,12 @@ export const Seller_SignUp = ({role='seller'}) => {
                         helperText={errors.email?.message}
                     />
                     <Input
+                        label="Phone"
+                        {...register("phone", { required: "Phone number is required" })}
+                        error={!!errors.phone}
+                        helperText={errors.phone?.message}
+                    />
+                    <Input
                         label="Password"
                         type="password"
                         {...register("password", { required: "Password is required" })}
@@ -68,29 +75,26 @@ export const Seller_SignUp = ({role='seller'}) => {
                         error={!!errors.confirmpassword}
                         helperText={errors.confirmpassword?.message}
                     />
-  {/* Role Selection */}
-  <div className="flex flex-col mt-4">
-                        <label className="font-semibold">Select Role:</label>
-                        <div className="flex items-center">
-                            <input
-                                type="radio"
-                                value="seller"
-                                {...register("role", { required: "Role is required" })}
-                                className="mr-2"
-                            />
-                            <label className="mr-4">Seller</label>
-                            <input
-                                type="radio"
-                                value="admin"
-                                {...register("role", { required: "Role is required" })}
-                                className="mr-2"
-                            />
-                            <label>Admin</label>
-                        </div>
-                        {errors.role && <span className="text-red-500">{errors.role.message}</span>}
-                    </div>
-
-                  
+                    <Input
+                        label="Date of Birth"
+                        type="date"
+                        {...register("dob", { required: "Date of Birth is required" })}
+                        error={!!errors.dob}
+                        helperText={errors.dob?.message}
+                    />
+                    <Input
+                        label="Shipping Address"
+                        {...register("shippingaddress", { required: "Shipping address is required" })}
+                        error={!!errors.shippingaddress}
+                        helperText={errors.shippingaddress?.message}
+                    />
+                    <Input
+                        label="Number of Products"
+                        type="number"
+                        {...register("noofproducts", { required: "Number of products is required" })}
+                        error={!!errors.noofproducts}
+                        helperText={errors.noofproducts?.message}
+                    />
                     <Button
                         type="submit"
                         className={`mt-4 w-full ${loading ? 'bg-gray-400' : 'bg-slate-800 hover:bg-slate-700'} text-white`}

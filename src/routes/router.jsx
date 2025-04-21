@@ -32,7 +32,9 @@ import { PaymentSuccess } from "../pages/user/PaymentSuccess";
  
 import { Admin_Login } from "../pages/admin/Admin_Login";
 import { Admin_profile } from "../pages/admin/Admin_profile";
-import {CreateCategory} from "../pages/admin/CreateCategory";
+import {CreateCategory} from "../pages/seller/CreateCategory";
+import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
+import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
 export const router = createBrowserRouter([
     {
@@ -75,8 +77,15 @@ export const router = createBrowserRouter([
                     { path: "payment/success", element: <PaymentSuccess/> },
                 ],
             },
+
+
+           
+
+
         ],
     },
+   
+
     {
         path: "",
         element: <SellerLayout />,
@@ -95,18 +104,20 @@ export const router = createBrowserRouter([
             { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
            
      
-    {
+            {
         
-        element: <ProtectedRouteSeller />,
-       
-    
-        children: [
-           
-            { path: "/seller/Seller_profile", element: <Seller_profile/> },
-            { path: "/seller/create-product", element: <CreateProductForm/> },
-            { path: "/seller/products", element: <ProductPage /> },
-        ],
-    },
+                element: <ProtectedRouteSeller />,
+               
+                path: "",
+                children: [
+                   
+                    { path: "/seller/Seller_profile", element: <Seller_profile/> },
+                    { path: "/seller/create-category", element:<CreateCategory/> },
+                    { path: "/seller/create-subcategory", element:<CreateSubCategory/> },
+                    { path: "/seller/create-product", element: <CreateProduct/> },
+                    { path: "/seller/products", element: <ProductPage /> },
+                ],
+            },
 ],
     },
     {
@@ -114,22 +125,22 @@ export const router = createBrowserRouter([
         element:<AdminLayout/>,
         errorElement: <ErrorPage role="admin"/>,
         children: [
-            { path: "/admin", element: <Home /> },
-            { path: "/admin/signup", element: <SignUp /> },
-            { path: "/admin/login", element: <Login /> },
-            { path: "/admin/about", element: <About /> },
-            { path: "/admin/contact", element: <Contact /> },
-            { path: "/admin/product", element: <ProductPage /> },
-            { path: "/admin/product-details/:productId", element: <ProductDetailsPage /> },
+            { path: "/", element: <Home /> },
+            { path: "/signup", element: <SignUp /> },
+            { path: "/login", element: <Login /> },
+            { path: "/about", element: <About /> },
+            { path: "/contact", element: <Contact /> },
+            { path: "/product", element: <ProductPage /> },
+          //  { path: "/product-details/:productId", element: <ProductDetailsPage /> },
 
 
           
-          { path: "/admin/men", element: <Men /> },
-            { path: "/admin/women", element: <Women /> },
-            { path: "/admin/boys", element: <Boys /> },
-            { path: "/admin/girls", element: <Girls /> },
+         // { path: "/admin/men", element: <Men /> },
+         //   { path: "/admin/women", element: <Women /> },
+          ///  { path: "/admin/boys", element: <Boys /> },
+          //  { path: "/admin/girls", element: <Girls /> },
 
-            { path: "Admin_Login", element: <Admin_Login role="admin" /> },
+           { path: "Admin_Login", element: <Admin_Login role="admin" /> },
           
 
             
@@ -137,16 +148,17 @@ export const router = createBrowserRouter([
       
       
          element: <ProtectedRouteAdmin/>,
-        // path: "",
+         path: "admin",
        /// errorElement: <ErrorPage role="admin"/>,
         
         
          children: [
-            { path: "/admin/home", element:  <Home />},
+           // { path: "/admin/home", element:  <Home />},
            
                { path: "/admin/Admin_profile", element:  <Admin_profile />},
 
-              { path: "/admin/create-category", element:<CreateCategory/> },
+              
+              
             ],
         },
     ],

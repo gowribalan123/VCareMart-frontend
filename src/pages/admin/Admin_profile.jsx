@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { axiosInstance } from "../../config/axiosInstance";
  
@@ -8,30 +8,44 @@ import { Link } from 'react-router-dom';
 
 
 export const Admin_profile = () => {
-      const [refreshState, setRefreshState] = useState(false);
-    const [profileData, isLoading, error] = useFetch("/admin/profile",{  headers: { 
-       //  Authorization: `Bearer ${token}`,
-        //'Access-Control-Allow-Credentials':true,
-          //   'Content-Type': 'application/json',
-        },
-        withCredentials:true}
-        ,refreshState);
-    const [isProfileEdit, setIsProfileEdit] = useState(false);
-    const navigate = useNavigate(); // Initialize navigate
-console.log(profileData);
-    const handleLogOut = async () => {
+     const [profileData, setProfileData] = useState(null);
+        const [isLoading, setIsLoading] = useState(true);
+        const [error, setError] = useState(null);
+        const [isProfileEdit, setIsProfileEdit] = useState(false);
+        const navigate = useNavigate();
+    
+        useEffect(() => {
+            const fetchProfileData = async () => {
+                try {
+                    const response = await axiosInstance.get("/user/profile", {
+                        withCredentials: true,
+                    });
+                    setProfileData(response.data);
+                } catch (err) {
+                    console.error("Error fetching profile data:", err);
+                    setError(err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+    
+            fetchProfileData();
+        }, []);
+
+  const handleLogOut = async () => {
         try {
-            await axiosInstance.get('/admin/logout', {
+            const response = await axiosInstance.get('/user/logout', {
                 headers: { 
-                //    Authorization: `Bearer ${token}`,
-          
-                     'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                withCredentials:true,
+                withCredentials: true,
             });
-            navigate('/Admin_Login'); // Redirect to login page after logout
+            if (response.status === 200) {
+                localStorage.removeItem('token');
+                navigate('/Admin_Login');
+            }
         } catch (error) {
-            console.log(error);
+            console.error("Logout error:", error);
         }
     };
 

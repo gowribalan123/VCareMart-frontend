@@ -9,13 +9,13 @@ export const useFetch = (url, refresh,) => {
     const [error, setError] = useState(null);
     
     const fetchData = async () => {
-     //   let token = localStorage.getItem('token');
+     //  let token = localStorage.getItem('token');
         try {
             const response = await axiosInstance(
                 {
                 method: "GET",
             //  headers: {
-           //    Authorization: `Bearer ${token}`,
+           //  Authorization: `Bearer ${token}`,
              //   'Content-Type': 'application/json',
            //   },
               withCredentials: true, // Include credentials if necessary

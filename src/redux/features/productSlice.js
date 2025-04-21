@@ -9,7 +9,7 @@ export const fetchProductDetails = createAsyncThunk(
     }
 );
 
-const productSlice = createSlice({
+export const productSlice = createSlice({
     name: 'products',
     initialState: {
         productDetails: null,
@@ -39,4 +39,4 @@ const productSlice = createSlice({
 });
 
 export const { clearSelectedProduct } = productSlice.actions;
-export default productSlice.reducer;
+ export default  productSlice.reducer;

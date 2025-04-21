@@ -1,62 +1,42 @@
 import React, { useEffect, useState } from "react";
-
 import { Footer } from "../components/user/Footer";
-import { Outlet, useLocation,useNavigate } from "react-router-dom";
-import { SellerHeader } from "../components/seller/SellerHeader";
-import { Header } from "../components/seller/Header";
- 
+import { Outlet, useLocation } from "react-router-dom";
+//import { UserHeader } from "../components/user/UserHeader";
+import { Header } from "../components/user/Header";
+import { SellerHeader } from "../components/seller/SellerHeader"; // Import SellerHeader if needed
 import { axiosInstance } from "../config/axiosInstance";
-import { useSelector, useDispatch} from "react-redux";
-import { clearSeller, saveSeller} from "../redux/features/sellerSlice";
-import toast from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
+import { clearUser, saveUser } from "../redux/features/userSlice";
 
 export const SellerLayout = () => {
-//const  { isSellerAuth ,sellerData} = useSelector((state) => state.seller);
-const { isSellerAuth } = useSelector((state) => state.seller ) ;
-  
-   const dispatch = useDispatch();
+    const { isUserAuth, data: user } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const location = useLocation();
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
-   //const getTokenFromLocalStorage = localStorage.getItem("seller")
-    //? JSON.parse(localStorage.getItem("seller"))
-    //: null;
-  
-  
-   const checkSeller = async () => {
- //const token = localStorage.getItem("seller"); // Assuming you store the token in local storage
-    try {
-        const response = await axiosInstance.get("/seller/check-seller", {
-            headers: {
-             //  Authorization: `Bearer ${token}`,
-               'Content-Type': 'application/json',
-               // 'Accept': "application/json",
-            },  withCredentials:true,
-        });
-        dispatch(saveSeller(response.data));
-    } catch (error) {
-       dispatch(clearSeller());
-        const errorMessage = error.response ? error.response.data.message : "Error checking authentication";
-        toast.error(errorMessage);
-       console.error("Error checking seller authentication:", errorMessage);
-    } finally {
-        setLoading(false);
-    }
-};
-
+   
+       const checkUser = async () => {
+           try {
+               const response = await axiosInstance.get("/user/check-user");
+               dispatch(saveUser(response.data.user)); // Save user data
+           } catch (error) {
+               dispatch(clearUser());
+               console.error("Error checking user:", error);
+           } finally {
+               setLoading(false); // Set loading to false after checking
+           }
+       };
 
     useEffect(() => {
-        checkSeller();
+        checkUser();
     }, [location.pathname]);
 
     if (loading) {
-        return <div>Loading...</div>; // Show loading state while checking seller
+        return <div>Loading...</div>; // Loading state
     }
 
     return (
         <div>
-            {isSellerAuth ? <SellerHeader /> : <Header/>} 
+            {isUserAuth?<SellerHeader/>:<Header/>} 
             <div className="min-h-96">
                 <Outlet />
             </div>

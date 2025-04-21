@@ -5,47 +5,52 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { saveAdmin,clearAdmin } from "../../redux/features/adminSlice";
+//import { saveAdmin,clearAdmin } from "../../redux/features/adminSlice";
+import { saveUser,clearUser } from "../../redux/features/userSlice";
+
 
 export const Admin_Login = ({ role }) => {
+   
     const { register, handleSubmit } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
-   {/** const admin = {
-        role  :  "admin"    ,
-        login_api :  "/admin/login"  ,
-        profile_route :  "/admin/profile" ,
-        home_route :  "/admin/home",
-        signup_route :  "/admin/signup" ,
-    }; */}
+    const user = {
+        role: "admin",
+        loginAPI: "/user/login",
+        profileRoute: "/user/profile",
+        signupRoute: "/user/signup",
+    };
+
 
     const onSubmit = async (data) => {
-        try {
-             
-            const response = await axiosInstance.post("/admin/login",data,{  
-               // credentials : 'include',
-              headers: {
-                   'Content-Type': 'application/json',
-            },
+        try {    
+          const response = await axiosInstance.post(`/user/login?role=${role}`,data,role
+               ,{   
+             //   credentials : 'include',
+             headers: {
+                  'Content-Type': 'application/json',
+           },
              withCredentials: true, // Include credentials if necessary
-             //body : JSON.stringify(data)
-             });
-            
-            dispatch(saveAdmin(response?.data?.data));
+            // body : JSON.stringify(data)
+             }
+           
+             );
+             if((response?.data?.role)!="Admin"){"Not admin"}
+             localStorage.setItem("token", response?.data?.token);
+            dispatch(saveUser(response?.data?.data));
+         
             toast.success("Log-in success");
-            navigate("/admin/Admin_profile");
-            navigate(location.state?.from || "/admin/Admin_profile");
-           // navigate(admin.profile_route);
+            //navigate(user.profile_route);
              //Redirect to the previous location or default to home
-            //const from = location.state?.from || "/";
-             //navigate(from);
+            const from = location.state?.from || "/admin/Admin_profile";
+             navigate(from);
         } catch (error) {
-            dispatch(clearAdmin());
-            const errorMessage = error.response?.data?.message || "Log-in failed. Please try again.";
-        toast.error(errorMessage);
-        console.error(error);
+            dispatch(clearUser());
+            toast.error(error.response?.data?.message || "Log-in failed");
+            console.error(error);
         }
     };
 
