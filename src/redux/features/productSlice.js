@@ -1,42 +1,43 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../config/axiosInstance';
+import { createSlice } from "@reduxjs/toolkit";
 
-export const fetchProductDetails = createAsyncThunk(
-    'products/fetchProductDetails',
-    async (productId) => {
-        const response = await axiosInstance.get(`/product/product-details/${productId}`);
-        return response.data;
-    }
-);
+// Initial state
+const initialState = {
+   products: [],
+    error: null, // Added error state
+};
 
+// Create the category slice
 export const productSlice = createSlice({
-    name: 'products',
-    initialState: {
-        productDetails: null,
-        isLoading: false,
-        error: null,
-    },
+    name: "product",
+    initialState,
     reducers: {
-        clearSelectedProduct: (state) => {
-            state.productDetails = null;
+        addProduct: (state, action) => {
+            state.products.push(action.payload); // Add new product
+            state.error = null; // Clear error on successful addition
         },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchProductDetails.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(fetchProductDetails.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.productDetails = action.payload;
-            })
-            .addCase(fetchProductDetails.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.error.message;
-            });
+        removeProduct: (state, action) => {
+            state.products = state.products.filter(product => product.id !== action.payload.id); // Remove product by ID
+            state.error = null; // Clear error on successful removal
+        },
+        updateProduct: (state, action) => {
+            const index = state.products.findIndex(product=> product.id === action.payload.id);
+            if (index !== -1) {
+                state.products[index] = { ...state.products[index], ...action.payload }; // Update product data
+            }
+            state.error = null; // Clear error on successful update
+        },
+        setError: (state, action) => {
+            state.error = action.payload; // Set error message
+        },
     },
 });
 
-export const { clearSelectedProduct } = productSlice.actions;
- export default  productSlice.reducer;
+// Action creators are generated for each case reducer function
+export const { addProduct, removeProduct, updateProduct, setError } = productSlice.actions;
+
+// Selectors
+export const selectProduct = (state) => state.product.products; // Get all Products
+export const selectSProductError = (state) => state.product.error; // New selector for error
+
+// Export the reducer
+export default productSlice.reducer;

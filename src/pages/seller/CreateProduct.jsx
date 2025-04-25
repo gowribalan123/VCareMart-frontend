@@ -1,24 +1,59 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { axiosInstance } from "../../config/axiosInstance";
+import { addProduct } from '../../redux/features/productSlice';
 import toast from "react-hot-toast";
 
 export const CreateProduct = () => {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        price: '',
+        stock: '',
+        rating: '',
+        age_group: '',
+        size: '',
+        color: '',
+        weight: '',
+        image: null,
+        userID: '',
+        subcategoryid: '',
+        categoryid:'',
+         
+    });
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [subcategories, setSubCategories] = useState([]);
-    const [selectedSubCategory, setSelectedSubCategory] = useState("");
+    const dispatch = useDispatch();
+
     const {
         register,
-        handleSubmit,
         formState: { errors },
-        setError, // Ensure setError is imported
     } = useForm();
 
-    // Fetch categories and subcategories
+    // Fetch user data and subcategories
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axiosInstance.get("/user/profile", {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true,
+                });
+                setFormData(prevData => ({
+                    ...prevData,
+                    userID: response.data._id || '',
+                }));
+                setLoading(false);
+            } catch (err) {
+                setError('Error fetching user data');
+                setLoading(false);
+            }
+        };
+
         const fetchSubCategories = async () => {
             setLoading(true);
             try {
@@ -26,233 +61,265 @@ export const CreateProduct = () => {
                 if (response.data && Array.isArray(response.data.data)) {
                     setSubCategories(response.data.data);
                 } else {
-                    throw new Error('Sub Categories data is not an array');
+                    throw new Error('Subcategories data is not an array');
                 }
             } catch (err) {
-                setError('Error fetching sub categories: ' + err.message);
+                setError('Error fetching subcategories: ' + err.message);
             } finally {
                 setLoading(false);
             }
         };
 
+        fetchUserData();
         fetchSubCategories();
     }, []);
 
-    // Handle sub category change
-   // const handleSubCategoryChange = async (e) => {
-     //   const subcategoryId = e.target.value;
-       // setSelectedSubCategory(subcategoryId);
-  //      try {
-    //        const response = await axiosInstance.get(`/subcategory/get-subcategory-by-category`,
-      //      {
-        //        params: { categoryId } // Fetch subcategories based on selected category
-          //  });
-            //if (response.data && Array.isArray(response.data.data)) {
-              //  setSubcategories(response.data.data);
-            //} else {
-              //  throw new Error('Subcategories data is not an array');
-           // }
-        //} catch (err) {
-          //  setError('Error fetching subcategories: ' + err.message);
-       // }
-    //};
+  
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-    const onSubmit = async (data) => {
-        setLoading(true);
+        // Check if the selected field is subcategory
+        if (name === 'subcategoryid') {
+            const selectedSubcategory = subcategories.find(sub => sub._id === value);
+            if (selectedSubcategory) {
+                // Update categoryid based on selected subcategory
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                    categoryid: selectedSubcategory.categoryId, // Assuming categoryID is the key for category ID
+                });
+            } else {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                    categoryid: '', // Reset category ID if no subcategory is selected
+                });
+            }
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+    const handleFileChange = (e) => {
+        setFormData({ ...formData, image: e.target.files[0] });
+    };
+
+    const handleRemoveFile = () => {
+        setFormData({ ...formData, image: null });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
         try {
-            const formData = new FormData();
-            formData.append("name", data.name);
-            formData.append("description", data.description);
-            formData.append("price", data.price);
-            formData.append("stock", data.stock);
-            formData.append("age_group", data.age_group);
-            formData.append("size", data.size);
-            formData.append("color", data.color);
-            formData.append("weight", data.weight);
-            formData.append("image", data.image[0]); // Ensure single file upload
-      //      formData.append("category", selectedCategory);
-            formData.append("subcategory", data.subcategory);
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach(key => {
+                formDataToSend.append(key, formData[key]);
+            });
 
-            await axiosInstance.post("/product/create-product", formData);
-            toast.success("Product created successfully");
-            navigate('/products');
-        } catch (error) {
-            console.error(error);
-            toast.error("Error while creating product");
+            await axiosInstance.post('/product/create-product', formDataToSend, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            dispatch(addProduct());
+            toast.success('Product created successfully!'); // Using toast for success message
+            
+            // Reset form
+            setFormData({
+                name: '',
+                description: '',
+                price: '',
+                stock: '',
+                rating: '',
+                age_group: '',
+                size: '',
+                color: '',
+                weight: '',
+                image: null,
+                userID: '',
+                subcategoryid: '',
+                categoryid:'',
+              
+            });
+        } catch (err) {
+            console.error('Error creating Product:', err);
+            setError(err.response?.data?.message || 'Error creating Product');
         } finally {
-            setLoading(false);
+            setIsSubmitting(false);
         }
     };
 
+    if (loading) return <p className="text-center">Loading...</p>;
+    if (error) return <p className="text-red-500 text-center">{error}</p>;
+
     return (
         <div className="p-8 bg-gray-50 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create New Product</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create New Product</h2>
 
+            <form className="max-w-md mx-auto p-6 border rounded-lg shadow-md bg-white" onSubmit={handleSubmit}>
+                <div className="mb-4">
+                    <label htmlFor="subcategoryid" className="block text-sm font-medium mb-1">Select Sub Category:</label>
+                    <select
+                        name="subcategoryid"
+                        value={formData.subcategoryid}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">Select a subcategory</option>
+                        {subcategories.map(subcategory => (
+                            <option key={subcategory._id} value={subcategory._id}>{subcategory.name}</option>
+                        ))}
+                    </select>
+                </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Category Selection */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text text-gray-700">Sub Category</span>
-                </label>
-                <select
-                    id="subcategory-select"
-                    value={selectedSubCategory}
-                   
-                    className={`select select-bordered ${errors.subcategory ? "border-red-500" : "border-gray-300"}`}
-                >
-                    <option value="">Select SubCategory</option> {/* Default option */}
-                    {subcategories.length > 0 ? (
-                        subcategories.map((subcategory) => (
-                            <option key={subcategory._id} value={subcategory._id}>
-                                {subcategory.name}
-                            </option>
-                        ))
-                    ) : (
-                        <option disabled>No subcategories available</option>
+                <div className="mb-4">
+                    <label htmlFor="categoryid" className="block text-sm font-medium mb-1"> Category:</label>
+                   <input
+                        name="categoryid"
+                        value={formData.categoryid}
+                        onChange={handleChange}
+                        required readOnly
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    
+                        ></input> 
+                       
+</div>
+                <div className="mb-4">
+                    <label htmlFor="product" className="block text-sm font-medium mb-1">Product:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm font-medium mb-1">Product Image:</label>
+                    <div className="flex items-center">
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className={`input text-sm ${error.image ? "input-error" : ""}`}
+                        />
+                        {formData.image && (
+                            <button type="button" onClick={handleRemoveFile} className="ml-2 text-red-500">
+                                Remove
+                            </button>
+                        )}
+                    </div>
+                    {formData.image && (
+                        <div className="mt-2">
+                            <img
+                                src={URL.createObjectURL(formData.image)}
+                                alt="Preview"
+                                className="w-32 h-32 object-cover"
+                            />
+                        </div>
                     )}
-                </select>
-                {errors.subcategory && <span className="text-red-500 text-sm mt-1">{errors.subcategory.message}</span>}
-            </div>
-
-            {/* Subcategory Selection */}
-{/*<div className="form-control">
-                <label className="label">
-                    <span className="label-text text-gray-700">Subcategory</span>
-                </label>
-                <select
-                    className={`select select-bordered ${errors.subcategory ? "border-red-500" : "border-gray-300"}`}
-                    {...register("subcategory", { required: "Subcategory is required" })}
-                >
-                    <option value="">Select Subcategory</option>
-                    {subcategories.map(subcategory => (
-                        <option key={subcategory._id} value={subcategory._id}>
-                            {subcategory.name}
-                        </option>
-                    ))}
-                </select>
-                {errors.subcategory && <span className="text-red-500 text-sm mt-1">{errors.subcategory.message}</span>}
-            </div>                   
-            */}
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Product Name</span>
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Enter Product Name"
-                        className={`input input-bordered ${errors.name ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("name", { required: "Name is required" })}
-                    />
-                    {errors.name && <span className="text-red-500 text-sm mt-1">{errors.name.message}</span>}
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Upload Image</span>
-                    </label>
-                    <input
-                        type="file"
-                        className={`input ${errors.image ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("image", { required: "Image is required" })}
-                    />
-                    {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
-                </div>
-
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Price</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="price" className="block text-sm font-medium mb-1">Price:</label>
                     <input
                         type="number"
-                        placeholder="Enter price"
-                        className={`input input-bordered ${errors.price ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("price", { required: "Price is required", min: { value: 0, message: "Price must be positive" } })}
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.price && <span className="text-red-500 text-sm mt-1">{errors.price.message}</span>}
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Stock</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="stock" className="block text-sm font-medium mb-1">Stock:</label>
                     <input
                         type="number"
-                        placeholder="Enter stock quantity"
-                        className={`input input-bordered ${errors.stock ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("stock", { required: "Stock is required", min: { value: 0, message: "Stock must be non-negative" } })}
+                        name="stock"
+                        value={formData.stock}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.stock && <span className="text-red-500 text-sm mt-1">{errors.stock.message}</span>}
                 </div>
 
-                {/* Right Column */}
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Age Group</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="rating" className="block text-sm font-medium mb-1">Rating:</label>
+                    <input
+                        type="number"
+                        name="rating"
+                        value={formData.rating}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="age_group" className="block text-sm font-medium mb-1">Age Group:</label>
                     <input
                         type="text"
-                        placeholder="Enter age group"
-                        className={`input input-bordered ${errors.age_group ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("age_group", { required: "Age group is required" })}
+                        name="age_group"
+                        value={formData.age_group}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.age_group && <span className="text-red-500 text-sm mt-1">{errors.age_group.message}</span>}
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Size</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="size" className="block text-sm font-medium mb-1">Size:</label>
                     <input
                         type="text"
-                        placeholder="Enter size"
-                        className={`input input-bordered ${errors.size ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("size", { required: "Size is required" })}
+                        name="size"
+                        value={formData.size}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.size && <span className="text-red-500 text-sm mt-1">{errors.size.message}</span>}
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Color</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="color" className="block text-sm font-medium mb-1">Color:</label>
                     <input
                         type="text"
-                        placeholder="Enter color"
-                        className={`input input-bordered ${errors.color ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("color", { required: "Color is required" })}
+                        name="color"
+                        value={formData.color}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.color && <span className="text-red-500 text-sm mt-1">{errors.color.message}</span>}
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Weight</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="weight" className="block text-sm font-medium mb-1">Weight:</label>
                     <input
                         type="text"
-                        placeholder="Enter weight (e.g., 500gm)"
-                        className={`input input-bordered ${errors.weight ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("weight", { required: "Weight is required" })}
+                        name="weight"
+                        value={formData.weight}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.weight && <span className="text-red-500 text-sm mt-1">{errors.weight.message}</span>}
                 </div>
 
-                <div className="form-control col-span-2">
-                    <label className="label">
-                        <span className="label-text text-gray-700">Description</span>
-                    </label>
+                <div className="mb-4">
+                    <label htmlFor="description" className="block text-sm font-medium mb-1">Description:</label>
                     <textarea
-                        placeholder="Description"
-                        className={`input input-bordered ${errors.description ? "border-red-500" : "border-gray-300"} p-3 rounded-md`}
-                        {...register("description", { required: "Description is required" })}
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.description && <span className="text-red-500 text-sm mt-1">{errors.description.message}</span>}
                 </div>
 
                 <div className="form-control col-span-2 mt-8">
-                    <button type="submit" className="btn btn-primary w-full md:w-1/2 mx-auto bg-blue-600 text-white hover:bg-blue-700 transition duration-200 ease-in-out">
-                        {loading ? <span className="loading loading-dots loading-lg"></span> : "Create Product"}
+                    <button type="submit" className="btn btn-primary w-full md:w-1/2 mx-auto bg-blue-600 text-white hover:bg-blue-700 transition duration-200 ease-in-out" disabled={isSubmitting}>
+                        {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Product"}
                     </button>
                 </div>
             </form>
