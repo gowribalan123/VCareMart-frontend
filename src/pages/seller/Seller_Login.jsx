@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Seller_Login = ({role="seller"}) => {
+export const Seller_Login = ({role}) => {
  
     const { register, handleSubmit } = useForm();
     const location = useLocation();
