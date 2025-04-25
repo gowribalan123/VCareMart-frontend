@@ -36,6 +36,7 @@ import {CreateCategory} from "../pages/seller/CreateCategory";
 import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
 import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
+import { CategoryPage } from "../pages/seller/CategoryPage";
 export const router = createBrowserRouter([
     {
         path: "",
@@ -91,15 +92,14 @@ export const router = createBrowserRouter([
         element: <SellerLayout />,
         errorElement: <ErrorPage role="seller" />,
         children: [
-            { path: "/seller", element: <Home/> },
-            { path: "about", element: <About /> },
-            { path: "contact", element: <Contact /> },
-        //    { path: "men", element: <Men /> },
-          //  { path: "women", element: <Women /> },
-          //  { path: "boys", element: <Boys /> },
-          //  { path: "girls", element: <Girls /> },
-           { path: "product", element: <ProductPage /> },
-          //  { path: "product-details/:productId", element: <ProductDetailsPage /> }, 
+            { path: "/", element: <Home /> },
+            { path: "/signup", element: <SignUp /> },
+            { path: "/login", element: <Login /> },
+            { path: "/about", element: <About /> },
+            { path: "/contact", element: <Contact /> },
+            { path: "/product", element: <ProductPage /> },
+
+
           { path: "Seller_Login", element: <Seller_Login role="seller" /> },
          //   { path: "login", element: <Login  role="seller"  /> },
           { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
@@ -116,6 +116,7 @@ export const router = createBrowserRouter([
                     { path: "/seller/create-category", element:<CreateCategory/> },
                     { path: "/seller/create-subcategory", element:<CreateSubCategory/> },
                     { path: "/seller/create-product", element: <CreateProduct/> },
+                    { path: "/seller/categories", element: <CategoryPage/> },
                     { path: "/seller/products", element: <ProductPage /> },
                 ],
             },

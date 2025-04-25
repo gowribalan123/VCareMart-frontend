@@ -46,6 +46,7 @@ export const SellerHeader = () => {
             <Link to="/seller/create-subcategory" className="hover:text-blue-500 transition duration-300">Create SubCategory</Link>
                 <Link to="/seller/create-product" className="hover:text-blue-500 transition duration-300">Create Products</Link>
                 <Link to="/seller/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
+                <Link to="/seller/categories" className="hover:text-blue-500 transition duration-300">View Categories</Link>
                 <Link to="/seller/Seller_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
             </nav>
             

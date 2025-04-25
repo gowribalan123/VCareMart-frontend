@@ -29,6 +29,35 @@ export const ProductCard = ({ product }) => {
     );
 };
 
+export const CategoryCard = ({ category }) => {
+  
+   const navigate = useNavigate();
+
+   return (
+       <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+           <figure>
+               <img 
+                   src={category?.image} 
+                   alt={category?.name} 
+                   className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+               />
+           </figure>
+           <div className="card-body p-4">
+               <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{category?.name}</h2>
+             {/**
+               <div className="card-actions justify-end mt-4">
+                   <Link to={`/category-details/${category?._id}`}>
+                       <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
+                           More Details
+                       </button>
+                   </Link>
+               </div>
+                */} 
+           </div>
+       </div>
+   );
+};
+
 export const Card1 =  () => {
     //console.log("productCard=====", product);
   //  const navigate = useNavigate();
