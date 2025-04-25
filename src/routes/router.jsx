@@ -100,9 +100,10 @@ export const router = createBrowserRouter([
           //  { path: "girls", element: <Girls /> },
            { path: "product", element: <ProductPage /> },
           //  { path: "product-details/:productId", element: <ProductDetailsPage /> }, 
-            { path: "Seller_Login", element: <Seller_Login role="seller" /> },
-            { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
-           
+          { path: "Seller_Login", element: <Seller_Login role="seller" /> },
+         //   { path: "login", element: <Login  role="seller"  /> },
+          { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
+         // { path: "signup", element: <SignUp  role="seller"   /> },
      
             {
         
