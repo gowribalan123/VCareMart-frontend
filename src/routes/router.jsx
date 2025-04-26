@@ -109,7 +109,7 @@ export const router = createBrowserRouter([
      
             {
         
-                element: <ProtectedRouteSeller />,
+                element: <ProtectedRoute/>,
                
                 path: "",
                 children: [
@@ -151,7 +151,7 @@ export const router = createBrowserRouter([
         {
       
       
-         element: <ProtectedRouteAdmin/>,
+         element: <ProtectedRoute/>,
          path: "admin",
        /// errorElement: <ErrorPage role="admin"/>,
         
