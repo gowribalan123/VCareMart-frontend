@@ -25,9 +25,10 @@ export const Admin_Login = ({ role }) => {
     };
 
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data,role) => {
         try {    
-          const response = await axiosInstance.post(`/user/login?role=${role}`,data,role
+          const response = await axiosInstance.post(`/user/login?role=${user.role}`,data,role
+            
                ,{   
              //   credentials : 'include',
              headers: {

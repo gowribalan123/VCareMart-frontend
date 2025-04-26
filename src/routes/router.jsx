@@ -37,6 +37,8 @@ import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
 import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
 import { CategoryPage } from "../pages/seller/CategoryPage";
+
+
 export const router = createBrowserRouter([
     {
         path: "",
