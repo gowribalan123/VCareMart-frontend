@@ -26,9 +26,9 @@ export const Seller_Login = ({role}) => {
     const onSubmit = async (data) => {
         try {    
          //  const response = await axiosInstance.post("/user/login",data
-            // const response = await axiosInstance.post(`/user/login?role=${user.role}`,data,role
-              //// ,{   
-                const response = await axiosInstance.post(`${user.loginAPI}?role=${user.role}`, data, {
+            const response = await axiosInstance.post(`/user/login?role=${user.role}`,data,role
+               ,{   
+               /// const response = await axiosInstance.post(`$${user.loginAPI}?role=${user.role}`, data, {
              headers: {
                   'Content-Type': 'application/json',
            },
