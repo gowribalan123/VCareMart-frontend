@@ -37,8 +37,6 @@ import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
 import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
 import { CategoryPage } from "../pages/seller/CategoryPage";
-
-
 export const router = createBrowserRouter([
     {
         path: "",
@@ -91,7 +89,7 @@ export const router = createBrowserRouter([
 
     {
         path: "",
-        element: <UserLayout />,
+        element: <SellerLayout />,
         errorElement: <ErrorPage role="seller" />,
         children: [
             { path: "/", element: <Home /> },
@@ -102,14 +100,14 @@ export const router = createBrowserRouter([
             { path: "/product", element: <ProductPage /> },
 
 
-          { path: "Seller_Login", element: <Seller_Login  /> },
+          { path: "Seller_Login", element: <Seller_Login role="seller" /> },
          //   { path: "login", element: <Login  role="seller"  /> },
           { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
          // { path: "signup", element: <SignUp  role="seller"   /> },
      
             {
         
-                element: <ProtectedRoute/>,
+                element: <ProtectedRouteSeller />,
                
                 path: "",
                 children: [
@@ -151,7 +149,7 @@ export const router = createBrowserRouter([
         {
       
       
-         element: <ProtectedRoute/>,
+         element: <ProtectedRouteAdmin/>,
          path: "admin",
        /// errorElement: <ErrorPage role="admin"/>,
         
