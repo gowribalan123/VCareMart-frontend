@@ -92,16 +92,16 @@ export const router = createBrowserRouter([
         element: <SellerLayout />,
         errorElement: <ErrorPage role="seller" />,
         children: [
-            { path: "/", element: <Home /> },
-            { path: "/signup", element: <SignUp /> },
-            { path: "/login", element: <Login /> },
-            { path: "/about", element: <About /> },
-            { path: "/contact", element: <Contact /> },
-            { path: "/product", element: <ProductPage /> },
+            { path: "", element: <Home /> },
+            { path: "signup", element: <SignUp /> },
+            { path: "login", element: <Login /> },
+            { path: "about", element: <About /> },
+            { path: "contact", element: <Contact /> },
+            { path: "product", element: <ProductPage /> },
 
 
-          { path: "Seller_Login", element: <Seller_Login role="seller" /> },
-         //   { path: "login", element: <Login  role="seller"  /> },
+        { path: "Seller_Login", element: <Seller_Login role="seller" /> },
+        // { path: "login", element: <Login  role="seller"  /> },
           { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
          // { path: "signup", element: <SignUp  role="seller"   /> },
      
