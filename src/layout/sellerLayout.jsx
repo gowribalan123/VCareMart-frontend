@@ -8,7 +8,7 @@ import { axiosInstance } from "../config/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../redux/features/userSlice";
 
-export const SellerLayout = () => {
+export const    SellerLayout = () => {
     const { isUserAuth, data: user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const location = useLocation();
