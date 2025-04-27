@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { axiosInstance } from "../../config/axiosInstance";
 import { useDispatch } from "react-redux";
-import { addSubCategory } from '../../redux/features/subCategorySlice';
+import { addSubCategory } from "../../redux/features/subcategorySlice";
 
 export const CreateSubCategory = () => {
     const [formData, setFormData] = useState({
