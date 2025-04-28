@@ -1,5 +1,6 @@
 import { Link , useNavigate} from "react-router-dom";
-import React from "react";
+import React, { useState } from 'react';
+
  
 export const ProductCard = ({ product }) => {
    // console.log("productCard=====", product);
@@ -56,6 +57,34 @@ export const CategoryCard = ({ category }) => {
            </div>
        </div>
    );
+};
+export const SubCategoryCard = ({ subcategory }) => {
+  
+  const navigate = useNavigate();
+
+  return (
+      <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+          <figure>
+              <img 
+                  src={subcategory?.image} 
+                  alt={subcategory?.name} 
+                  className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+              />
+          </figure>
+          <div className="card-body p-4">
+              <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{subcategory?.name}</h2>
+            {/**
+              <div className="card-actions justify-end mt-4">
+                  <Link to={`/subcategory-details/${subcategory?._id}`}>
+                      <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
+                          More Details
+                      </button>
+                  </Link>
+              </div>
+               */} 
+          </div>
+      </div>
+  );
 };
 
 export const Card1 =  () => {
@@ -423,6 +452,25 @@ export const CardKurti = () => {
     </Link>
   );
 };
+export const CardSaree = () => {
+  return (
+    <Link to="/#Sarees" className="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-80 hover:shadow-lg transition-shadow duration-300">
+      <div className="relative p-2 h-48 overflow-hidden rounded-lg bg-clip-border">
+        <img
+          src="http://res.cloudinary.com/dvvacfrz3/image/upload/v1739795347/qdoqwrauyc30bxd5kjsa.jpg"
+          alt="card-image"
+          className="h-48 w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <div className="p-3 flex flex-col items-center">
+        <p className="text-slate-800 text-lg font-semibold text-blue-600 mb-1">Saree</p>
+        <p className="text-slate-600 text-sm text-center">
+          Explore fun and stylish Sarees for Women.
+        </p>
+      </div>
+    </Link>
+  );
+};
 
 export const CardMenDetails = ({ products }) => {
   return (
@@ -441,4 +489,243 @@ export const CardMenDetails = ({ products }) => {
           ))}
       </div>
   );
+};export const UserCard1 = ({ item, handleRemove }) => {
+  if (!item) {
+    return <div className="text-red-500">Item not available</div>;
+  }
+
+  return (
+      <div className="flex w-full h-52 items-center gap-6 bg-gray-100 shadow-lg rounded-lg p-4 mb-6 transition-transform transform hover:scale-105">
+          <img 
+              src={item.image || "placeholder-image-url.jpg"} 
+              alt={item.name || "User"} 
+              className="w-35 h-50 object-cover rounded-md" 
+              loading="lazy"
+          />
+ 
+          <div className="flex-1">
+              <h2 className="text-lg font-semibold text-gray-800">Name: {item.name || "Unnamed User"}</h2>
+              <p className="text-gray-600">Email: {item.email || "No email provided"}</p>
+          </div>
+
+          <button
+              className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition-colors duration-200"
+              onClick={() => handleRemove(item._id)}
+              aria-label={`Remove ${item.name || "user"} from list`}
+          >
+              Remove
+          </button>
+      </div>
+  );
+};
+ 
+
+export const UserCard = ({ user, handleRemove }) => {
+  
+  const navigate = useNavigate();
+
+  return (
+      <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+          <figure>
+              <img 
+                  src={user?.image || "placeholder-image-url.jpg"} 
+                  alt={user?.name || "User Image"} 
+                  className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+              />
+          </figure>
+          <div className="card-body p-4">
+              <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{user?.name || "Unnamed User"}</h2>
+              <div className="card-actions justify-end mt-4">
+                  <button 
+                      className="btn btn-danger bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition duration-300 ease-in-out"
+                      onClick={() => handleRemove(user?._id)}
+                  >
+                      Remove User
+                  </button>
+                  <button 
+                      className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
+                      onClick={() => navigate(`/user-details/${user?._id}`)}
+                  >
+                      More Details
+                  </button>
+              </div>
+          </div>
+      </div>
+  );
+}
+ 
+
+ 
+
+export const UserCard2 = ({ user, onRemove, onUpdate }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedUser, setEditedUser] = useState(user);
+
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditedUser({ ...editedUser, [name]: value });
+    };
+
+    const handleSave = () => {
+        onUpdate(editedUser);
+        setIsEditing(false);
+    };
+
+    return (
+        <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
+            <div className="flex-shrink-0 w-1/3">
+                <img src={user.image} alt={`${user.name}'s profile`} className="w-full h-auto rounded-full mb-4" />
+                {/* Uncomment below to enable editing */}
+               {/*  <button 
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg transition duration-200" 
+                    onClick={() => setIsEditing(true)}
+                >
+                    Edit
+                </button>
+                */}
+                <button 
+                    className="bg-red-600 hover:bg-red-700 text-white px-10 py-1.5 rounded-lg transition duration-200" 
+                    onClick={() => onRemove(user._id)}
+                >
+                    Delete
+                </button>
+            </div>
+            <div className="w-2/3 pl-4">
+                <h3 className="text-xl font-semibold text-gray-800">{user.name}</h3>
+                <ul className="mt-4 text-gray-600">
+                    <li>Email: <span className="font-medium">{user.email}</span></li>
+                    {user.phone && <li>Phone: <span className="font-medium">{user.phone}</span></li>}
+                    {user.role && <li>Role: <span className="font-medium">{user.role}</span></li>}
+                    <li>Status: <span className={`font-semibold text-${user.isActive ? 'green' : 'red'}-500`}>{user.isActive ? 'ACTIVE' : 'INACTIVE'}</span></li>
+                    <li>Date of Birth: <span className="font-medium">{new Date(user.dob).toLocaleDateString()}</span></li>
+                    <li>Shipping Address: <span className="font-medium">{user.shippingaddress}</span></li>
+                </ul>
+            </div>
+
+            {isEditing && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Edit User</h2>
+                        <label>
+                            Name:
+                            <input type="text" name="name" value={editedUser.name} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Email:
+                            <input type="email" name="email" value={editedUser.email} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Phone:
+                            <input type="text" name="phone" value={editedUser.phone} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Role:
+                            <input type="text" name="role" value={editedUser.role} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <div className="flex justify-between mt-4">
+                            <button 
+                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={handleSave}
+                            >
+                                Save
+                            </button>
+                            <button 
+                                className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={() => setIsEditing(false)}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+ 
+
+export const SellerCard2 = ({ user, onRemove, onUpdate }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedUser, setEditedUser] = useState(user);
+
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditedUser({ ...editedUser, [name]: value });
+    };
+
+    const handleSave = () => {
+        onUpdate(editedUser);
+        setIsEditing(false);
+    };
+
+    return (
+        <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
+            <div className="flex-shrink-0 w-1/3">
+                <img src={user.image} alt={`${user.name}'s profile`} className="w-full h-auto rounded-full mb-4" />
+                <button 
+                    className="bg-red-600 hover:bg-red-700 text-white px-10 py-1.5 rounded-lg transition duration-200" 
+                    onClick={() => onRemove(user._id)}
+                >
+                    Delete
+                </button>
+            </div>
+            <div className="w-2/3 pl-4">
+                <h3 className="text-xl font-semibold text-gray-800">{user.name}</h3>
+                <ul className="mt-4 text-gray-600">
+                    <li>Email: <span className="font-medium">{user.email}</span></li>
+                    {user.phone && <li>Phone: <span className="font-medium">{user.phone}</span></li>}
+                    {user.role && <li>Role: <span className="font-medium">{user.role}</span></li>}
+                    <li>Status: <span className={`font-semibold text-${user.isActive ? 'green' : 'red'}-500`}>{user.isActive ? 'ACTIVE' : 'INACTIVE'}</span></li>
+                    <li>Date of Birth: <span className="font-medium">{new Date(user.dob).toLocaleDateString()}</span></li>
+                    <li>Shipping Address: <span className="font-medium">{user.shippingaddress}</span></li>
+                    <li>No of products: <span className="font-medium">{user.noofproducts}</span></li>
+                </ul>
+            {/**    <button 
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg mt-4 transition duration-200" 
+                    onClick={() => setIsEditing(true)}
+                >
+                    Edit
+                </button>*/} 
+            </div>
+
+            {isEditing && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Edit User</h2>
+                        <label>
+                            Name:
+                            <input type="text" name="name" value={editedUser.name} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Email:
+                            <input type="email" name="email" value={editedUser.email} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Phone:
+                            <input type="text" name="phone" value={editedUser.phone} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Role:
+                            <input type="text" name="role" value={editedUser.role} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <div className="flex justify-between mt-4">
+                            <button 
+                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={handleSave}
+                            >
+                                Save
+                            </button>
+                            <button 
+                                className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={() => setIsEditing(false)}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 };

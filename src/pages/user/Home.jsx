@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import { Carrousel } from "../../components/user/Carrousel";
-import { Card1, Card2, Card3, CardMen, CardWomen, CardBoy, CardGirl, CardShirt, CardKurti, CardPant, CardFrock } from "../../components/user/Cards";
+import { Card1, Card2, Card3, CardMen, CardWomen, CardBoy, CardGirl, CardShirt, CardKurti,CardSaree, CardPant, CardFrock,ProductCard,SubCategoryCard,CategoryCard } from "../../components/user/Cards";
 import { useFetch } from "../../hooks/useFetch";
-import { ProductCard } from "../../components/user/Cards";
+ 
 import { ProductSkelton } from "../../components/shared/Skeltons";
+ 
+ 
 
 export const Home = () => {
   //const [user, setUser] = useState("user");
   //const [isUserAuth, setIsUserAuth] = useState(false);
-   const [productList, isLoading, error] = useFetch("/category/get-all-category");
+  // const [categoryList, isLoading, error] = useFetch("/category/get-all-category");
   const [shirtList] = useFetch("/product/get-product-by-subcategory/680893fdf6d6f0d701ce2d53");
     const [pantList] = useFetch("/product/get-product-by-subcategory/67b32b581c846ae8c1252a87");
     const [frockList] = useFetch("/product/get-product-by-subcategory/67a9af63c575e8d5efb0df63");
     const [kurtisList] = useFetch("/product/get-product-by-subcategory/67a9acc6c575e8d5efb0df54");
+    const [SareesList] = useFetch("/product/get-product-by-subcategory/67b32b931c846ae8c1252a89");
+
       
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
@@ -81,10 +85,17 @@ export const Home = () => {
                     <Link to="/" onClick={() => scrollToSection('kurtis')}>
                         <CardKurti />
                     </Link>
+                    <Link to="/" onClick={() => scrollToSection('sarees')}>
+                        <CardSaree />
+                    </Link>
                     <Link to="/" onClick={() => scrollToSection('frocks')}>
                         <CardFrock />
                     </Link>
                 </div>
+            </section>
+
+            <section className="my-1 w-full">
+            <h1 className="text-2xl font-bold text-blue-600 mb-4 text-center">Fashion by Products</h1>
             </section>
 {/**
             <section className="my-8 w-full">
@@ -132,6 +143,17 @@ export const Home = () => {
                 <h1 className="text-2xl font-bold text-blue-600 mb-2">Kurtis</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
                     {kurtisList?.map((product) => (
+                        <div key={product?.subcategoryid} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+                            <ProductCard product={product} />
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section id="sarees" className="my-8 w-full">
+                <h1 className="text-2xl font-bold text-blue-600 mb-2">Sarees</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+                    {SareesList?.map((product) => (
                         <div key={product?.subcategoryid} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
                             <ProductCard product={product} />
                         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../config/axiosInstance";
-//import { EditProfileForm } from "../../components/seller/EditProfileForm";
+import { Seller_EditProfileForm } from "../../pages/seller/Seller_EditProfileForm";
 import { useNavigate } from "react-router-dom";
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -94,7 +94,7 @@ export const Seller_profile = () => {
                         <p className="text-gray-600">Date of Birth: {formattedDob}</p>
                         <p className="text-gray-600">Address: {profileData?.shippingaddress || 'N/A'}</p>
                     </div>
-                    {isProfileEdit && <EditProfileForm profileData={profileData} />}
+                    {isProfileEdit && <Seller_EditProfileForm profileData={profileData} />}
                 </div>
             </section>
         </div>

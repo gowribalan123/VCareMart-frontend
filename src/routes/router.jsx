@@ -32,11 +32,18 @@ import { PaymentSuccess } from "../pages/user/PaymentSuccess";
  
 import { Admin_Login } from "../pages/admin/Admin_Login";
 import { Admin_profile } from "../pages/admin/Admin_profile";
+import{ViewCategory} from "../pages/admin/ViewCategory";
+import{ViewSubCategory} from "../pages/admin/ViewSubCategory";
+import{ViewUsers} from "../pages/admin/ViewUsers";
+import{ViewSellers} from "../pages/admin/ViewSellers";
+
+
 import {CreateCategory} from "../pages/seller/CreateCategory";
 import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
 import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
 import { CategoryPage } from "../pages/seller/CategoryPage";
+import { SubCategoryPage } from "../pages/seller/SubCategoryPage";
 export const router = createBrowserRouter([
     {
         path: "",
@@ -117,6 +124,7 @@ export const router = createBrowserRouter([
                     { path: "/seller/create-subcategory", element:<CreateSubCategory/> },
                     { path: "/seller/create-product", element: <CreateProduct/> },
                     { path: "/seller/categories", element: <CategoryPage/> },
+                    { path: "/seller/subcategories", element: <SubCategoryPage/> },
                     { path: "/seller/products", element: <ProductPage /> },
                 ],
             },
@@ -158,6 +166,10 @@ export const router = createBrowserRouter([
            // { path: "/admin/home", element:  <Home />},
            
                { path: "/admin/Admin_profile", element:  <Admin_profile />},
+               { path: "/admin/category", element:  <CategoryPage />},
+               { path: "/admin/subcategory", element:  <SubCategoryPage/>},
+               { path: "/admin/sellers", element:  <ViewSellers />},
+               { path: "/admin/users", element:  <ViewUsers/>},
 
               
               
