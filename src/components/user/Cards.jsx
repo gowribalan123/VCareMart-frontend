@@ -570,7 +570,12 @@ export const UserCard2 = ({ user, onRemove, onUpdate }) => {
         onUpdate(editedUser);
         setIsEditing(false);
     };
-
+    const handleDelete = () => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+      if (confirmDelete) {
+          onRemove(user._id);
+      }
+  };
     return (
         <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
             <div className="flex-shrink-0 w-1/3">
@@ -585,7 +590,7 @@ export const UserCard2 = ({ user, onRemove, onUpdate }) => {
                 */}
                 <button 
                     className="bg-red-600 hover:bg-red-700 text-white px-10 py-1.5 rounded-lg transition duration-200" 
-                    onClick={() => onRemove(user._id)}
+                       onClick={handleDelete}  // Updated to use handleDelete
                 >
                     Delete
                 </button>
@@ -658,6 +663,12 @@ export const SellerCard2 = ({ user, onRemove, onUpdate }) => {
         onUpdate(editedUser);
         setIsEditing(false);
     };
+    const handleDelete = () => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this seller?");
+      if (confirmDelete) {
+          onRemove(user._id);
+      }
+  };
 
     return (
         <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
@@ -665,7 +676,7 @@ export const SellerCard2 = ({ user, onRemove, onUpdate }) => {
                 <img src={user.image} alt={`${user.name}'s profile`} className="w-full h-auto rounded-full mb-4" />
                 <button 
                     className="bg-red-600 hover:bg-red-700 text-white px-10 py-1.5 rounded-lg transition duration-200" 
-                    onClick={() => onRemove(user._id)}
+                    onClick={handleDelete}  // Updated to use handleDelete
                 >
                     Delete
                 </button>
