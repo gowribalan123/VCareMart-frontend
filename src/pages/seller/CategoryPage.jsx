@@ -1,17 +1,33 @@
-import React from "react";
+import React,{useState} from "react";
 import { axiosInstance } from "../../config/axiosInstance";
-import { CategoryCard} from "../../components/user/Cards";
+import { CategoryCard } from "../../components/user/Cards";
 import { useFetch } from "../../hooks/useFetch";
 import { CategorySkelton } from "../../components/shared/Skeltons";
+import toast from "react-hot-toast";
 
 export const CategoryPage = () => {
-    const [CategoryList, isLoading, error] = useFetch("/category/get-all-category");
-    
+    const [refreshState, setRefreshState] = useState(false);
+    const [CategoryList, isLoading, error, setCategoryList] = useFetch("/category/get-all-category", refreshState);
+
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this category?");
+        if (confirmDelete) {
+            try {
+                await axiosInstance.delete(`/category/category-delete/${id}`);
+                toast.success("Category removed succesfully");
+                setRefreshState(prev => !prev);
+                // Update the CategoryList by filtering out the deleted category
+                setCategoryList((prevCategories) => prevCategories.filter(category => category._id !== id));
+            } catch (err) {
+                console.error("Failed to delete category:", err);
+            }
+        }
+    };
 
     return (
         <div className="flex flex-col items-center justify-start px-4 py-16 max-w-screen-xl mx-auto">
             {isLoading ? (
-                <CategorySkelton/>
+                <CategorySkelton />
             ) : error ? (
                 <div className="text-red-500 text-lg font-semibold">Error: {error}</div>
             ) : (
@@ -25,6 +41,7 @@ export const CategoryPage = () => {
                             <CategoryCard
                                 key={category?._id}
                                 category={category}
+                                onDelete={handleDelete}  // Pass the delete handler
                                 className="transition-transform transform hover:scale-105"
                             />
                         ))}

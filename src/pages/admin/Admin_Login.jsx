@@ -39,7 +39,12 @@ export const Admin_Login = ({ role }) => {
              }
            
              );
-             if((response?.data?.role)!="Admin"){"Not admin"}
+             if (response?.data?.role !== "admin") {
+                toast.error("Login failed: Not an admin");
+                return;
+            }
+
+              
              localStorage.setItem("token", response?.data?.token);
             dispatch(saveUser(response?.data?.data));
          

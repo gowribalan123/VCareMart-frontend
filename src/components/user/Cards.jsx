@@ -30,7 +30,7 @@ export const ProductCard = ({ product }) => {
     );
 };
 
-export const CategoryCard = ({ category }) => {
+export const CategoryCard = ({ category, onDelete  }) => {
   
    const navigate = useNavigate();
 
@@ -45,15 +45,12 @@ export const CategoryCard = ({ category }) => {
            </figure>
            <div className="card-body p-4">
                <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{category?.name}</h2>
-             {/**
-               <div className="card-actions justify-end mt-4">
-                   <Link to={`/category-details/${category?._id}`}>
-                       <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
-                           More Details
-                       </button>
-                   </Link>
-               </div>
-                */} 
+               <button 
+                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg mt-2"
+                onClick={() => onDelete(category._id)}
+            >
+                Delete
+            </button>
            </div>
        </div>
    );

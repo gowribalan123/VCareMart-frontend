@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -7,12 +7,10 @@ import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { clearUser, saveUser } from "../../redux/features/userSlice";
 
-export const Login = ( {role}) => {
- 
+export const Login = ({ role }) => {
     const { register, handleSubmit } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const user = {
@@ -21,40 +19,33 @@ export const Login = ( {role}) => {
         profileRoute: "/user/profile",
         signupRoute: "/signup",
     };
-
-    if (role == "seller") {
-        user.role = "seller";
-        user.loginAPI = "/user/login";
-        (user.profileRoute = "/user/profile"), (user.signupRoute = "/user/signup");
+    if (role === "seller" || role === "admin") {
+        // Prevent login for roles other than user
+        toast.error("Only users can log in.");
+        return null; // or navigate to an appropriate page
     }
-    
-    if (role == "admin") {
-        user.role = "admin";
-        user.loginAPI = "/user/login";
-        (user.profileRoute = "/user/profile"), (user.signupRoute = "/user/signup");
-    }
+  
 
     const onSubmit = async (data) => {
-        try {    
-           
-            const response = await axiosInstance.post(`/user/login?role=${role}`,data,role
-               ,{   
-             //   credentials : 'include',
-             headers: {
-                  'Content-Type': 'application/json',
-           },
-             withCredentials: true, // Include credentials if necessary
-            // body : JSON.stringify(data)
-             }
-             );
-             localStorage.setItem("token", response?.data?.token);
+        try {
+            const response = await axiosInstance.post(`/user/login?role=${user.role}`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+            });
+
+            if (response?.data?.role !== "user") {
+                            toast.error("Login failed: Not a user");
+                            return;
+                        }
+            
+            localStorage.setItem("token", response?.data?.token);
             dispatch(saveUser(response?.data?.data));
-         
+
             toast.success("Log-in success");
-            //navigate(user.profile_route);
-             //Redirect to the previous location or default to home
             const from = location.state?.from || user.profileRoute;
-             navigate(from);
+            navigate(from);
         } catch (error) {
             dispatch(clearUser());
             toast.error(error.response?.data?.message || "Log-in failed");
@@ -86,11 +77,6 @@ export const Login = ( {role}) => {
                             className="input input-bordered"
                             required
                         />
- 
-                        
-
-                        
-              
                         <label className="label">
                             <Link to={user.signupRoute} className="text-sm text-blue-500 underline">
                                 New User?
