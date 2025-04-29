@@ -1,12 +1,29 @@
-import React from "react";
+import React,{useState} from "react";
 import { axiosInstance } from "../../config/axiosInstance";
 import { SubCategoryCard} from "../../components/user/Cards";
 import { useFetch } from "../../hooks/useFetch";
 import { SubCategorySkelton } from "../../components/shared/Skeltons";
+import toast from "react-hot-toast";
 
 export const SubCategoryPage = () => {
-    const [SubCategoryList, isLoading, error] = useFetch("/subcategory/get-all-subcategory");
-    
+    const [refreshState, setRefreshState] = useState(false);
+    const [SubCategoryList, isLoading, error,setSubCategoryList] = useFetch("/subcategory/get-all-subcategory", refreshState);
+
+
+    const handleDelete = async (id) => {
+            const confirmDelete = window.confirm("Are you sure you want to delete this subcategory?");
+            if (confirmDelete) {
+                try {
+                    await axiosInstance.delete(`/subcategory/subcategory-delete/${id}`);
+                    toast.success("SubCategory removed succesfully");
+                    setRefreshState(prev => !prev);
+                    // Update the CategoryList by filtering out the deleted category
+                    setSubCategoryList((prevSubCategories) => prevSubCategories.filter(subcategory => subcategory._id !== id));
+                } catch (err) {
+                    console.error("Failed to delete sub category:", err);
+                }
+            }
+        };
 
     return (
         <div className="flex flex-col items-center justify-start px-4 py-16 max-w-screen-xl mx-auto">
@@ -25,6 +42,7 @@ export const SubCategoryPage = () => {
                             <SubCategoryCard
                                 key={subcategory?._id}
                                 subcategory={subcategory}
+                                onDelete={handleDelete}  // Pass the delete handler
                                 className="transition-transform transform hover:scale-105"
                             />
                         ))}
