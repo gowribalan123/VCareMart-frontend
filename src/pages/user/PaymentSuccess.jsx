@@ -31,8 +31,8 @@ export const PaymentSuccess = () => {
     }, []); // Empty dependency array to run once when the component mounts
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div className="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-2">
+            <div className="bg-white shadow-md rounded-lg p-16 max-w-md w-full">
                 <h1 className="text-2xl font-semibold text-center text-green-600">Payment Successful!</h1>
                 <p className="mt-4 text-lg text-gray-700">Thank you for your purchase!</p>
 {/** 
@@ -40,10 +40,16 @@ export const PaymentSuccess = () => {
                 <p className="mt-2 text-lg text-gray-700">Amount: <span className="font-bold">₹{amount}</span></p>
 */}
                 <p className="mt-4 text-green-500">Your cart has been cleared.</p>
-                <Link to="/user/product" className="mt-6 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
+                
+            </div>
+            <div>
+                
+            <Link to="/user/product" className="mt-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
                     Continue Shopping
                 </Link>
             </div>
+            
         </div>
+
     );
 };

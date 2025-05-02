@@ -1,9 +1,9 @@
 import React from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { ProductCard } from "../../components/user/Cards";
+import { ProductCard1 ,ProductCard} from "../../components/user/Cards";
 import { ProductSkelton } from "../../components/shared/Skeltons";
 
-export const Men = () => {
+export const Men = ({role}) => {
     const [productList, isLoading, error] = useFetch("/product/get-product-by-category/67a7b4a0431705c43b02804e");
     const [shirtList] = useFetch("/product/get-product-by-subcategory/67a9abdec575e8d5efb0df52");
 
@@ -29,7 +29,12 @@ export const Men = () => {
                     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
                         {productList?.map((product) => (
                             <div key={product?.categoryid} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-                                <ProductCard product={product} />
+                         
+                                                      {role === 'admin' ? (
+                                                            <ProductCard1 product={product} /> // Render AdminProductCard for admins
+                                                        ) : (
+                                                            <ProductCard product={product} /> // Render ProductCard for regular users
+                                                        )}
                             </div>
                         ))}
                     </section>

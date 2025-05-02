@@ -42,13 +42,9 @@ export const SellerHeader = () => {
             
             <nav className="flex gap-8 items-center font-semibold text-gray-300">
              
-            <Link to="/seller/create-category" className="hover:text-blue-500 transition duration-300">Create Category</Link>
-            <Link to="/seller/create-subcategory" className="hover:text-blue-500 transition duration-300">Create SubCategory</Link>
-                <Link to="/seller/create-product" className="hover:text-blue-500 transition duration-300">Create Products</Link>
-                <Link to="/seller/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
-                <Link to="/seller/categories" className="hover:text-blue-500 transition duration-300">View Categories</Link>
-                <Link to="/seller/subcategories" className="hover:text-blue-500 transition duration-300">View SubCategories</Link>
-                <Link to="/seller/Seller_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
+                 <Link to="/seller/create-product" className="hover:text-blue-500 transition duration-300">Create Products</Link>
+                 <Link to="/seller/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
+                 <Link to="/seller/Seller_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
             </nav>
             
             

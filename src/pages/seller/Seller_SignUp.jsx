@@ -70,22 +70,21 @@ export const Seller_SignUp = ({role='seller'}) => {
                     />
   {/* Role Selection */}
   <div className="flex flex-col mt-4">
-                        <label className="font-semibold">Select Role:</label>
+                        
                         <div className="flex items-center">
+                        <label className="font-semibold p-2"> Role : </label>
                             <input
                                 type="radio"
                                 value="seller"
                                 {...register("role", { required: "Role is required" })}
                                 className="mr-2"
-                            />
-                            <label className="mr-4">Seller</label>
-                            <input
-                                type="radio"
-                                value="admin"
-                                {...register("role", { required: "Role is required" })}
-                                className="mr-2"
-                            />
-                            <label>Admin</label>
+                            /> 
+                            
+                            <span className="ml-2">{watch("role") || "No role selected"}</span>
+                       
+                        
+                         
+                            
                         </div>
                         {errors.role && <span className="text-red-500">{errors.role.message}</span>}
                     </div>

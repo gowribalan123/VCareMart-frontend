@@ -1,8 +1,40 @@
 import { Link , useNavigate} from "react-router-dom";
 import React, { useState } from 'react';
 
- 
-export const ProductCard = ({ product }) => {
+export const ProductCard1 = ({ product,onDelete }) => {
+  // console.log("productCard=====", product);
+   const navigate = useNavigate();
+
+   return (
+       <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+           <figure>
+               <img 
+                   src={product?.image} 
+                   alt={product?.name} 
+                   className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+               />
+           </figure>
+           <div className="card-body p-4">
+               <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{product?.name}</h2>
+               <p className="text-gray-600 text-xl font-bold"> ₹{product?.price.toFixed(2)}</p>
+               <div className="card-actions justify-end mt-4">
+                   <Link to={`/admin/product-details/${product?._id}`}>
+                       <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
+                           More Details
+                       </button>
+                       </Link>
+                       
+              <button 
+               className="m-2 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg mt-2"
+               onClick={() => onDelete(product._id)} >Delete</button>
+         
+                   
+               </div>
+           </div>
+       </div>
+   );
+};
+export const ProductCard = ({ product}) => {
    // console.log("productCard=====", product);
     const navigate = useNavigate();
 
@@ -23,38 +55,68 @@ export const ProductCard = ({ product }) => {
                         <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
                             More Details
                         </button>
+              
                     </Link>
+           
                 </div>
             </div>
         </div>
     );
 };
 
-export const CategoryCard = ({ category, onDelete  }) => {
-  
-   const navigate = useNavigate();
 
-   return (
-       <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
-           <figure>
-               <img 
-                   src={category?.image} 
-                   alt={category?.name} 
-                   className="h-64 w-full object-cover" // Adjust height for better aspect ratio
-               />
-           </figure>
-           <div className="card-body p-4">
-               <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{category?.name}</h2>
-               <button 
-                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg mt-2"
-                onClick={() => onDelete(category._id)}
-            >
-                Delete
-            </button>
-           </div>
-       </div>
-   );
+
+export const CategoryCard = ({ category, onDelete }) => {
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        // Navigate based on category ID
+        switch (category?.name) {
+            case 'men':
+                navigate('/admin/men');
+                break;
+            case 'women':
+                navigate('/admin/women');
+                break;
+            case 'girls':
+                navigate('/admin/girls');
+                break;
+            case 'boys':
+                  navigate('/admin/boys');
+                  break;
+            default:
+                navigate('/admin/category'); // Fallback if no match
+        }
+    };
+
+    return (
+        <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+            <figure>
+                <img 
+                    src={category?.image} 
+                    alt={category?.name} 
+                    className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+                />
+            </figure>
+            <div className="card-body p-4">
+                <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{category?.name}</h2>
+                <button 
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg mt-2"
+                    onClick={() => onDelete(category._id)}
+                >
+                    Delete
+                </button>
+                <button 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 ml-2"
+                    onClick={handleNavigate}
+                >
+                   View
+                </button>
+            </div>
+        </div>
+    );
 };
+
 export const SubCategoryCard = ({ subcategory, onDelete  }) => {
   
   const navigate = useNavigate();
@@ -267,9 +329,9 @@ export const CartCards1 = ({ item, handleRemove }) => {
               <h2 className="text-md font-medium text-gray-600">Description: {item.productId.description}</h2>
               <h3 className="text-md font-medium text-gray-600">Size: {item.productId.size}</h3>
               <h3 className="text-md font-medium text-gray-600">Stock: {item.productId.stock}</h3>
-              <h3 className="text-md font-medium text-gray-600">Rating: {item.productId.rating}</h3>
+              <h3 className="text-md font-medium text-gray-600">Rating: {item.productId.rating}⭐</h3>
               <h3 className="text-md font-medium text-gray-600">Color: {item.productId.color}</h3>
-              
+             
               
           </div>
 

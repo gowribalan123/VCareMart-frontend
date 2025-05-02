@@ -78,7 +78,7 @@ export const Seller_Login = ({ role }) => {
                             className="input input-bordered"
                         />
                         <label className="label">
-                            <Link to={user.signupRoute} className="text-sm text-blue-500 underline">
+                            <Link to="/Seller_SignUp" className="text-sm text-blue-500 underline">
                                 New Seller? Sign Up
                             </Link>
                         </label>

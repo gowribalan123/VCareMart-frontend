@@ -1,56 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from "react";
+import { useFetch } from "../../hooks/useFetch";
+import { Button, Card, Typography } from "@material-tailwind/react"; // Import Material Tailwind components
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import { addItem, removeItem, clearOrder, addQuantityToItem, subtractQuantityFromItem } from '../../redux/features/orderSlice';
 
-export const  Orders = () => {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+export const Orders = () => {
+  const { userId } = useParams();
+  const [orderDetails, isLoading, error] = useFetch(`/order/getUserOrders/67f56b1fe77da88e2f19dad3`);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get('/order/myOrder');
-                setOrders(response.data);
-            } catch (err) {
-                setError('Failed to fetch orders.');
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    if (error) {
+      toast.error("Failed to fetch order details");
+    }
+  }, [error]);
 
-        fetchOrders();
-    }, []);
+  if (isLoading) {
+    return <div>Loading order details...</div>;
+  }
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
-
-    return (
-        <div>
-            <h1>My Orders</h1>
-            {/* 
-            <ul>
-                {orders.map(order => (
-                    <li key={order._id}>
-                        <h2>Order ID: {order._id}</h2>
-                        <p>Status: {order.isPaid ? 'Paid' : 'Pending'}</p>
-                        <p>Total: ₹{order.totalPrice}</p>
-                        <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
-                        <h3>Items:</h3>
-                        <ul>
-                            {order.products.map(product => (
-                                <li key={product.productId}>
-                                    {product.quantity} x {product.price} (Product ID: {product.productId})
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
-            */}
-        </div>
-    );
+  return (
+    <div className="p-4">
+      <section>
+        <Typography variant="h4" className="text-center mb-4">Order Summary</Typography>
+      </section>
+      <section>
+        {orderDetails?.items?.length > 0 ? (
+          orderDetails.items.map((item) => (
+            <Card key={item.productId} className="mb-4 p-4">
+              <Typography variant="h5">{item.productName}</Typography>
+              <Typography>Price: ₹{item.price}</Typography>
+              <Typography>Quantity: {item.quantity}</Typography>
+            </Card>
+          ))
+        ) : (
+          <Typography>No items in this order.</Typography>
+        )}
+      </section>
+      <section className="mt-4">
+        <Typography variant="h6">Total Price: ₹{orderDetails?.totalPrice}</Typography>
+        <Button className="mt-4" color="green">Track Order</Button>
+      </section>
+    </div>
+  );
 };
-
-
-
- 

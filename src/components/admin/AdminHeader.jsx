@@ -49,8 +49,15 @@ export const AdminHeader = () => {
                 <Link to="/admin/category" className="hover:text-blue-500 transition duration-300">View Category</Link>
  
                 <Link to="/admin/subcategory" className="hover:text-blue-500 transition duration-300">View SubCategory</Link>
+               
+                <Link to="/admin/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
+              
                 <Link to="/admin/sellers" className="hover:text-blue-500 transition duration-300">View Sellers</Link>
                 <Link to="/admin/users" className="hover:text-blue-500 transition duration-300">View Users</Link>
+                <Link to="/admin/create-category" className="hover:text-blue-500 transition duration-300">Add Category</Link>
+ 
+                <Link to="/admin/create-subcategory" className="hover:text-blue-500 transition duration-300">Add SubCategory</Link>
+             
      
             </nav>
         </div>

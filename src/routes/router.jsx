@@ -15,7 +15,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
- 
+ import {ViewProductPage}  from "../pages/seller/ViewProductPage"
 import { Seller_SignUp } from "../pages/seller/Seller_SignUp";
 import {Seller_Login} from "../pages/seller/Seller_Login";
 import {Seller_profile} from "../pages/seller/Seller_profile";
@@ -36,6 +36,7 @@ import{ViewCategory} from "../pages/admin/ViewCategory";
 import{ViewSubCategory} from "../pages/admin/ViewSubCategory";
 import{ViewUsers} from "../pages/admin/ViewUsers";
 import{ViewSellers} from "../pages/admin/ViewSellers";
+import{ViewProductDetailsPage} from "../pages/admin/ViewProductDetailsPage"
 
 
 import {CreateCategory} from "../pages/seller/CreateCategory";
@@ -107,10 +108,10 @@ export const router = createBrowserRouter([
             { path: "product", element: <ProductPage /> },
 
 
-        { path: "Seller_Login", element: <Seller_Login role="seller"  /> },
-        // { path: "login", element: <Login  role="seller"  /> },
-          { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
-         // { path: "signup", element: <SignUp  role="seller"   /> },
+     { path: "Seller_Login", element: <Seller_Login  role="seller" /> },
+       // { path: "login", element: <Login  role="seller"  /> },
+        { path: "Seller_SignUp", element: <Seller_SignUp role="seller" /> },
+       //  { path: "signup", element: <SignUp  role="seller"   /> },
      
             {
         
@@ -120,12 +121,10 @@ export const router = createBrowserRouter([
                 children: [
                    
                     { path: "/seller/Seller_profile", element: <Seller_profile/> },
-                    { path: "/seller/create-category", element:<CreateCategory/> },
-                    { path: "/seller/create-subcategory", element:<CreateSubCategory/> },
+                   
                     { path: "/seller/create-product", element: <CreateProduct/> },
-                    { path: "/seller/categories", element: <CategoryPage/> },
-                    { path: "/seller/subcategories", element: <SubCategoryPage/> },
-                    { path: "/seller/products", element: <ProductPage /> },
+                  
+                    { path: "/seller/products", element: <ViewProductPage /> },
                 ],
             },
 ],
@@ -141,14 +140,9 @@ export const router = createBrowserRouter([
             { path: "/about", element: <About /> },
             { path: "/contact", element: <Contact /> },
             { path: "/product", element: <ProductPage /> },
-          //  { path: "/product-details/:productId", element: <ProductDetailsPage /> },
+       
 
-
-          
-         // { path: "/admin/men", element: <Men /> },
-         //   { path: "/admin/women", element: <Women /> },
-          ///  { path: "/admin/boys", element: <Boys /> },
-          //  { path: "/admin/girls", element: <Girls /> },
+      
 
            { path: "Admin_Login", element: <Admin_Login role="admin" /> },
           
@@ -166,10 +160,22 @@ export const router = createBrowserRouter([
            // { path: "/admin/home", element:  <Home />},
            
                { path: "/admin/Admin_profile", element:  <Admin_profile />},
+               { path: "/admin/create-category", element:<CreateCategory/> },
+               { path: "/admin/create-subcategory", element:<CreateSubCategory/> },
+               
                { path: "/admin/category", element:  <CategoryPage />},
                { path: "/admin/subcategory", element:  <SubCategoryPage/>},
+               { path: "/admin/products", element:  <ViewProductPage/>},
                { path: "/admin/sellers", element:  <ViewSellers />},
                { path: "/admin/users", element:  <ViewUsers/>},
+                   
+            { path: "/admin/men", element: <Men role="admin"/> },
+            { path: "/admin/women", element: <Women  role="admin"/> },
+            { path: "/admin/boys", element: <Boys role="admin"/> },
+            { path: "/admin/girls", element: <Girls role="admin" /> },
+
+               { path: "/admin/product-details/:productId", element: <ViewProductDetailsPage /> },
+
 
               
               
