@@ -4,11 +4,12 @@ import { ProductCard1 } from "../../components/user/Cards";
 import { useFetch } from "../../hooks/useFetch";
 import { ProductSkelton } from "../../components/shared/Skeltons";
 
-export const ViewProductPage = () => {
+export const ViewProductPage = ({role}) => {
      const [refreshState, setRefreshState] = useState(false);
     const [productList, isLoading, error,setProductList] = useFetch("/product/get-all-products",refreshState);
     console.log('products===', productList);
-    
+     
+
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this product?");
         if (confirmDelete) {
@@ -39,8 +40,10 @@ export const ViewProductPage = () => {
                         {productList?.map((product) => (
                             <ProductCard1
                                 key={product?._id}
-                                product={product}
-                                onDelete={handleDelete}  // Pass the delete handler
+                                product={product} 
+                                onDelete={handleDelete}  
+                                // Pass the delete handler
+                                role ={role}
                                 className="transition-transform transform hover:scale-105"
                             />
                         ))}

@@ -1,10 +1,16 @@
 import { Link , useNavigate} from "react-router-dom";
 import React, { useState } from 'react';
 
-export const ProductCard1 = ({ product,onDelete }) => {
+export const ProductCard1 = ({ product,onDelete ,role}) => {
   // console.log("productCard=====", product);
    const navigate = useNavigate();
 
+    // Determine the correct path based on the user's role
+    const detailsPath = role === 'seller' 
+        ? `/seller/product-details/${product?._id}` 
+        : role === 'admin' 
+        ? `/admin/product-details/${product?._id}` 
+        : `/product-details/${product?._id}`; // Default path if role is neither
    return (
        <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
            <figure>
@@ -18,7 +24,7 @@ export const ProductCard1 = ({ product,onDelete }) => {
                <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{product?.name}</h2>
                <p className="text-gray-600 text-xl font-bold"> ₹{product?.price.toFixed(2)}</p>
                <div className="card-actions justify-end mt-4">
-                   <Link to={`/admin/product-details/${product?._id}`}>
+                   <Link to={detailsPath}>
                        <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
                            More Details
                        </button>

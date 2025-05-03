@@ -124,7 +124,8 @@ export const router = createBrowserRouter([
                    
                     { path: "/seller/create-product", element: <CreateProduct/> },
                   
-                    { path: "/seller/products", element: <ViewProductPage /> },
+                    { path: "/seller/products", element: <ViewProductPage role="seller" /> },
+                    { path: "/seller/product-details/:productId", element: <ViewProductDetailsPage /> },
                 ],
             },
 ],
@@ -165,7 +166,7 @@ export const router = createBrowserRouter([
                
                { path: "/admin/category", element:  <CategoryPage />},
                { path: "/admin/subcategory", element:  <SubCategoryPage/>},
-               { path: "/admin/products", element:  <ViewProductPage/>},
+               { path: "/admin/products", element:  <ViewProductPage role="admin" />},
                { path: "/admin/sellers", element:  <ViewSellers />},
                { path: "/admin/users", element:  <ViewUsers/>},
                    
@@ -174,7 +175,7 @@ export const router = createBrowserRouter([
             { path: "/admin/boys", element: <Boys role="admin"/> },
             { path: "/admin/girls", element: <Girls role="admin" /> },
 
-               { path: "/admin/product-details/:productId", element: <ViewProductDetailsPage /> },
+               { path: "/admin/product-details/:productId", element: <ViewProductDetailsPage  /> },
 
 
               

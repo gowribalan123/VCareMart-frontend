@@ -317,8 +317,8 @@ export const CreateProduct = () => {
                     />
                 </div>
 
-                <div className="form-control col-span-2 mt-8">
-                    <button type="submit" className="btn btn-primary w-full md:w-1/2 mx-auto bg-blue-600 text-white hover:bg-blue-700 transition duration-200 ease-in-out" disabled={isSubmitting}>
+                <div className="form-control col-span-2 mt-8 flex items-center justify-center" >
+                    <button type="submit" className="p-2 btn btn-primary w-full md:w-1/2 mx-auto bg-blue-600 text-white hover:bg-blue-700 transition duration-200 ease-in-out" disabled={isSubmitting}>
                         {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Product"}
                     </button>
                 </div>
