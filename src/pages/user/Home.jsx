@@ -14,7 +14,7 @@ export const Home = () => {
   // const [categoryList, isLoading, error] = useFetch("/category/get-all-category");
   const [shirtList] = useFetch("/product/get-product-by-subcategory/680893fdf6d6f0d701ce2d53");
     const [pantList] = useFetch("/product/get-product-by-subcategory/67b32b581c846ae8c1252a87");
-    const [frockList] = useFetch("/product/get-product-by-subcategory/67a9af63c575e8d5efb0df63");
+    const [frockList] = useFetch("/product/get-product-by-subcategory/6813cfa7542575025778fa7e");
     const [kurtisList] = useFetch("/product/get-product-by-subcategory/67a9acc6c575e8d5efb0df54");
     const [SareesList] = useFetch("/product/get-product-by-subcategory/67b32b931c846ae8c1252a89");
 

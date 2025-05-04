@@ -34,7 +34,7 @@ export const PaymentSuccess = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-2">
             <div className="bg-white shadow-md rounded-lg p-16 max-w-md w-full">
                 <h1 className="text-2xl font-semibold text-center text-green-600">Payment Successful!</h1>
-                <p className="mt-4 text-lg text-gray-700 p-4">Thank you for your purchase!</p>
+                <p className="mt-4 text-lg text-gray-700 p-4">Thank you for shopping with us❤️!</p>
 
             {/** <p className="mt-2 text-lg text-gray-700">Transaction ID: <span className="font-bold">{transactionId}</span></p>
                 <p className="mt-2 text-lg text-gray-700">Amount: <span className="font-bold">₹{amount}</span></p>

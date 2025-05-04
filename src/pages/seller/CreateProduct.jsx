@@ -20,8 +20,7 @@ export const CreateProduct = () => {
         image: null,
         userID: '',
         subcategoryid: '',
-        categoryid:'',
-         
+        categoryid: '',
     });
 
     const [loading, setLoading] = useState(true);
@@ -74,31 +73,20 @@ export const CreateProduct = () => {
         fetchSubCategories();
     }, []);
 
-  
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        // Check if the selected field is subcategory
         if (name === 'subcategoryid') {
             const selectedSubcategory = subcategories.find(sub => sub._id === value);
-            if (selectedSubcategory) {
-                // Update categoryid based on selected subcategory
-                setFormData({
-                    ...formData,
-                    [name]: value,
-                    categoryid: selectedSubcategory.categoryId, // Assuming categoryID is the key for category ID
-                });
-            } else {
-                setFormData({
-                    ...formData,
-                    [name]: value,
-                    categoryid: '', // Reset category ID if no subcategory is selected
-                });
-            }
+            setFormData({
+                ...formData,
+                [name]: value,
+                categoryid: selectedSubcategory ? selectedSubcategory.categoryId : '',
+            });
         } else {
             setFormData({ ...formData, [name]: value });
         }
     };
+
     const handleFileChange = (e) => {
         setFormData({ ...formData, image: e.target.files[0] });
     };
@@ -120,9 +108,7 @@ export const CreateProduct = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             dispatch(addProduct());
-            toast.success('Product created successfully!'); // Using toast for success message
-            
-            // Reset form
+            toast.success('Product created successfully!');
             setFormData({
                 name: '',
                 description: '',
@@ -136,8 +122,7 @@ export const CreateProduct = () => {
                 image: null,
                 userID: '',
                 subcategoryid: '',
-                categoryid:'',
-              
+                categoryid: '',
             });
         } catch (err) {
             console.error('Error creating Product:', err);
@@ -153,8 +138,8 @@ export const CreateProduct = () => {
     return (
         <div className="p-8 bg-gray-50 rounded-lg shadow-md">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create New Product</h2>
-
             <form className="max-w-md mx-auto p-6 border rounded-lg shadow-md bg-white" onSubmit={handleSubmit}>
+                {/* Subcategory Selection */}
                 <div className="mb-4">
                     <label htmlFor="subcategoryid" className="block text-sm font-medium mb-1">Select Sub Category:</label>
                     <select
@@ -171,20 +156,20 @@ export const CreateProduct = () => {
                     </select>
                 </div>
 
+                {/* Category Field */}
                 <div className="mb-4">
-                    <label htmlFor="categoryid" className="block text-sm font-medium mb-1"> Category:</label>
-                   <input
+                    <label htmlFor="categoryid" className="block text-sm font-medium mb-1">Category:</label>
+                    <input
                         name="categoryid"
                         value={formData.categoryid}
-                        onChange={handleChange}
-                        required readOnly
+                        readOnly
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    
-                        ></input> 
-                       
-</div>
+                    />
+                </div>
+
+                {/* Product Name Field */}
                 <div className="mb-4">
-                    <label htmlFor="product" className="block text-sm font-medium mb-1">Product:</label>
+                    <label htmlFor="name" className="block text-sm font-medium mb-1">Product Name:</label>
                     <input
                         type="text"
                         name="name"
@@ -195,6 +180,7 @@ export const CreateProduct = () => {
                     />
                 </div>
 
+                {/* File Upload */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium mb-1">Product Image:</label>
                     <div className="flex items-center">
@@ -222,90 +208,22 @@ export const CreateProduct = () => {
                     )}
                 </div>
 
-                <div className="mb-4">
-                    <label htmlFor="price" className="block text-sm font-medium mb-1">Price:</label>
-                    <input
-                        type="number"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+                {/* Other Fields */}
+                {['price', 'stock', 'rating', 'age_group', 'size', 'color', 'weight'].map(field => (
+                    <div className="mb-4" key={field}>
+                        <label htmlFor={field} className="block text-sm font-medium mb-1">{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                        <input
+                            type={field === 'price' || field === 'stock' || field === 'rating' ? 'number' : 'text'}
+                            name={field}
+                            value={formData[field]}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                ))}
 
-                <div className="mb-4">
-                    <label htmlFor="stock" className="block text-sm font-medium mb-1">Stock:</label>
-                    <input
-                        type="number"
-                        name="stock"
-                        value={formData.stock}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="rating" className="block text-sm font-medium mb-1">Rating:</label>
-                    <input
-                        type="number"
-                        name="rating"
-                        value={formData.rating}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="age_group" className="block text-sm font-medium mb-1">Age Group:</label>
-                    <input
-                        type="text"
-                        name="age_group"
-                        value={formData.age_group}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="size" className="block text-sm font-medium mb-1">Size:</label>
-                    <input
-                        type="text"
-                        name="size"
-                        value={formData.size}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="color" className="block text-sm font-medium mb-1">Color:</label>
-                    <input
-                        type="text"
-                        name="color"
-                        value={formData.color}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="weight" className="block text-sm font-medium mb-1">Weight:</label>
-                    <input
-                        type="text"
-                        name="weight"
-                        value={formData.weight}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
+                {/* Description Field */}
                 <div className="mb-4">
                     <label htmlFor="description" className="block text-sm font-medium mb-1">Description:</label>
                     <textarea
@@ -317,7 +235,8 @@ export const CreateProduct = () => {
                     />
                 </div>
 
-                <div className="form-control col-span-2 mt-8 flex items-center justify-center" >
+                {/* Submit Button */}
+                <div className="form-control col-span-2 mt-8 flex items-center justify-center">
                     <button type="submit" className="p-2 btn btn-primary w-full md:w-1/2 mx-auto bg-blue-600 text-white hover:bg-blue-700 transition duration-200 ease-in-out" disabled={isSubmitting}>
                         {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Product"}
                     </button>

@@ -29,12 +29,15 @@ export const ProductCard1 = ({ product,onDelete ,role}) => {
                            More Details
                        </button>
                        </Link>
-                             
-       {/**      <button 
-               className="m-2 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg mt-2"
-               onClick={() => onDelete(product._id)} >Delete</button>
-           
-                   */}  
+      {/* Show delete button only to sellers and admins */}
+      {(role === 'seller' || role === 'admin') && (
+                        <button 
+                            className="m-2 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg mt-2"
+                            onClick={() => onDelete(product._id)}
+                        >
+                            Delete
+                        </button>
+                    )}
                </div>
            </div>
        </div>
