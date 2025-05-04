@@ -127,6 +127,16 @@ export const SubCategoryCard = ({ subcategory, onDelete  }) => {
   
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    // Navigate based on category ID
+    const scrollToSection = (sectionId) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+      }
+  };
+  }
+
   return (
       <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
           <figure>
@@ -144,6 +154,8 @@ export const SubCategoryCard = ({ subcategory, onDelete  }) => {
             >
                 Delete
             </button>
+
+          
           </div>
       </div>
   );

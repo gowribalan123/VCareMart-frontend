@@ -164,8 +164,8 @@ export const router = createBrowserRouter([
                { path: "/admin/create-category", element:<CreateCategory/> },
                { path: "/admin/create-subcategory", element:<CreateSubCategory/> },
                
-               { path: "/admin/category", element:  <CategoryPage />},
-               { path: "/admin/subcategory", element:  <SubCategoryPage/>},
+               { path: "/admin/category", element:  <CategoryPage  role="admin"/>},
+               { path: "/admin/subcategory", element:  <SubCategoryPage role="admin"/>},
                { path: "/admin/products", element:  <ViewProductPage role="admin" />},
                { path: "/admin/sellers", element:  <ViewSellers />},
                { path: "/admin/users", element:  <ViewUsers/>},

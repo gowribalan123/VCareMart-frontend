@@ -7,7 +7,7 @@ import { addItem, removeItem, clearOrder, addQuantityToItem, subtractQuantityFro
 
 export const Orders = () => {
   const { userId } = useParams();
-  const [orderDetails, isLoading, error] = useFetch(`/order/getUserOrders/67f56b1fe77da88e2f19dad3`);
+  const [orderDetails, isLoading, error] = useFetch(`/order/getUserOrders/6791cf92a3c4ef39228fcbe6`);
 
   useEffect(() => {
     if (error) {
@@ -28,7 +28,7 @@ export const Orders = () => {
         {orderDetails?.items?.length > 0 ? (
           orderDetails.items.map((item) => (
             <Card key={item.productId} className="mb-4 p-4">
-              <Typography variant="h5">{item.productName}</Typography>
+              <Typography variant="h5">{item.ProductName}</Typography>
               <Typography>Price: ₹{item.price}</Typography>
               <Typography>Quantity: {item.quantity}</Typography>
             </Card>

@@ -21,12 +21,8 @@ export const Girls = ({role}) => {
                     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
                         {productList?.map((product) => (
                             <div key={product?.categoryid} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-                              
-                              {role === 'admin' ? (
-                                    <ProductCard1 product={product} /> // Render AdminProductCard for admins
-                                ) : (
-                                    <ProductCard product={product} /> // Render ProductCard for regular users
-                                )}
+                            <ProductCard1 product={product} role={role} />  
+                            
                               
                             </div>
                         ))}

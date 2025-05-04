@@ -10,7 +10,7 @@ export const PaymentSuccess = () => {
     // Retrieve token from local storage
     const token = localStorage.getItem('token');
 
-    const clearCart = async () => {
+   {/**  const clearCart = async () => {
         try {
             const response = await axiosInstance({
                 method: "DELETE",
@@ -25,9 +25,9 @@ export const PaymentSuccess = () => {
             toast.error("Failed to clear cart.");
         }
     };
-
+*/}
     useEffect(() => {
-        clearCart(); // Call the clearCart function on component mount
+      //  clearCart(); // Call the clearCart function on component mount
     }, []); // Empty dependency array to run once when the component mounts
 
     return (
