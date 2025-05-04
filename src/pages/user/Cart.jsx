@@ -102,7 +102,7 @@ export const Cart = () => {
                                 <Button 
                                     onClick={() => handleUpdateQuantity(value.productId)} 
                                     color="blue" 
-                                    className="mt-2"
+                                    className="mt-4"
                                 >
                                     Update Quantity
                                 </Button>

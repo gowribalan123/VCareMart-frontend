@@ -7,7 +7,7 @@ import { addItem, removeItem, clearOrder, addQuantityToItem, subtractQuantityFro
 
 export const Orders = () => {
   const { userId } = useParams();
-  const [orderDetails, isLoading, error] = useFetch(`/order/getUserOrders/6791cf92a3c4ef39228fcbe6`);
+  const [orderDetails, isLoading, error] = useFetch(`/order/getUserOrders/${userId}`);
 
   useEffect(() => {
     if (error) {

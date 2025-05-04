@@ -10,7 +10,7 @@ export const PaymentSuccess = () => {
     // Retrieve token from local storage
     const token = localStorage.getItem('token');
 
-   {/**  const clearCart = async () => {
+  const clearCart = async () => {
         try {
             const response = await axiosInstance({
                 method: "DELETE",
@@ -25,20 +25,20 @@ export const PaymentSuccess = () => {
             toast.error("Failed to clear cart.");
         }
     };
-*/}
+
     useEffect(() => {
-      //  clearCart(); // Call the clearCart function on component mount
+       clearCart(); // Call the clearCart function on component mount
     }, []); // Empty dependency array to run once when the component mounts
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-2">
             <div className="bg-white shadow-md rounded-lg p-16 max-w-md w-full">
                 <h1 className="text-2xl font-semibold text-center text-green-600">Payment Successful!</h1>
-                <p className="mt-4 text-lg text-gray-700">Thank you for your purchase!</p>
-{/** 
-                <p className="mt-2 text-lg text-gray-700">Transaction ID: <span className="font-bold">{transactionId}</span></p>
+                <p className="mt-4 text-lg text-gray-700 p-4">Thank you for your purchase!</p>
+
+            {/** <p className="mt-2 text-lg text-gray-700">Transaction ID: <span className="font-bold">{transactionId}</span></p>
                 <p className="mt-2 text-lg text-gray-700">Amount: <span className="font-bold">₹{amount}</span></p>
-*/}
+ */}
                 <p className="mt-4 text-green-500">Your cart has been cleared.</p>
                 
             </div>
