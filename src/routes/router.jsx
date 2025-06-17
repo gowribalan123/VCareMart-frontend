@@ -12,6 +12,7 @@ import { Profile } from "../pages/user/Profile";
 import { Cart } from "../pages/user/Cart";
 import { Orders } from "../pages/user/Orders";
 import { ProtectedRoute } from "./ProtectedRoute";
+ 
 
 import { SellerLayout } from "../layout/sellerLayout";
 import { ProtectedRouteSeller } from "./ProtectedRouteSeller";
@@ -45,6 +46,11 @@ import {CreateProduct} from "../pages/seller/CreateProduct";
 import { AdminLayout } from "../layout/adminLayout";
 import { CategoryPage } from "../pages/seller/CategoryPage";
 import { SubCategoryPage } from "../pages/seller/SubCategoryPage";
+import { Wishlist } from "../pages/user/Wishlist";
+import {ShippingAddress} from "../pages/user/ShippingAddress";
+import ChangePassword from "../pages/user/ChangePassword";
+import ForgotPassword from "../pages/user/ForgotPassword";
+
 export const router = createBrowserRouter([
     {
         path: "",
@@ -55,6 +61,8 @@ export const router = createBrowserRouter([
             { path: "signup", element: <SignUp /> },
             { path: "login", element: <Login /> },
             { path: "about", element: <About /> },
+            { path: "forgot-password", element: <ForgotPassword /> },
+
             { path: "contact", element: <Contact /> },
             { path: "product", element: <ProductPage /> },
             { path: "product-details/:productId", element: <ProductDetailsPage /> },
@@ -84,6 +92,9 @@ export const router = createBrowserRouter([
                     { path: "cart", element: <Cart /> },
                     { path: "order", element: <Orders /> },
                     { path: "payment/success", element: <PaymentSuccess/> },
+                    {path:"wishlist",element:<Wishlist/>},
+                    {path:"shippingaddress",element:<ShippingAddress/>},
+                    {path:"changepassword",element:<ChangePassword/>}
                 ],
             },
 
@@ -103,6 +114,8 @@ export const router = createBrowserRouter([
             { path: "", element: <Home /> },
             { path: "signup", element: <SignUp /> },
             { path: "login", element: <Login /> },
+            { path: "Seller_forgot-password", element: <ForgotPassword  role="seller"/> },
+
             { path: "about", element: <About /> },
             { path: "contact", element: <Contact /> },
             { path: "product", element: <ProductPage /> },
@@ -119,13 +132,14 @@ export const router = createBrowserRouter([
                
                 path: "",
                 children: [
-                   
+                    { path: "/seller/home", element: <Home /> },
                     { path: "/seller/Seller_profile", element: <Seller_profile/> },
                    
                     { path: "/seller/create-product", element: <CreateProduct/> },
                   
                     { path: "/seller/products", element: <ViewProductPage role="seller" /> },
                     { path: "/seller/product-details/:productId", element: <ViewProductDetailsPage /> },
+                    {path:"/seller/changepassword",element:<ChangePassword/>}
                 ],
             },
 ],
@@ -158,9 +172,10 @@ export const router = createBrowserRouter([
         
         
          children: [
-           // { path: "/admin/home", element:  <Home />},
+           // { path: "/admin/home", element:  <Home  />},
            
                { path: "/admin/Admin_profile", element:  <Admin_profile />},
+               { path: "/admin/home", element: <Home /> },
                { path: "/admin/create-category", element:<CreateCategory/> },
                { path: "/admin/create-subcategory", element:<CreateSubCategory/> },
                

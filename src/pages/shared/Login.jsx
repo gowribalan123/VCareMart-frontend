@@ -81,7 +81,14 @@ export const Login = ({ role }) => {
                             <Link to={user.signupRoute} className="text-sm text-blue-500 underline">
                                 New User?
                             </Link>
+<br />
+                            <Link to="/forgot-password" className="text-sm text-blue-500 underline">
+                                Forgot Password?
+                            </Link>
+                      
                         </label>
+                       
+                           
                         <Button type="submit" className="btn btn-primary mt-4">
                             Login
                         </Button>

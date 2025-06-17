@@ -45,7 +45,7 @@ export const AdminHeader = () => {
             <nav className="flex gap-8 items-center font-semibold text-gray-800 dark:text-gray-400">
 
                 <Link to="/admin/Admin_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
-             
+                <Link to="/admin/Home" className="hover:text-blue-500 transition duration-300">Home</Link>
                 <Link to="/admin/category" className="hover:text-blue-500 transition duration-300">View Category</Link>
  
                 <Link to="/admin/subcategory" className="hover:text-blue-500 transition duration-300">View SubCategory</Link>

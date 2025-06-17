@@ -47,6 +47,9 @@ export const UserHeader = () => {
                 <Link to="/user/boys" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Boys</Link>
                 <Link to="/user/girls" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Girls</Link>
                 <Link to="/user/product" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Products</Link>
+                <Link to="/user/shippingaddress" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Shipping Address</Link>
+                <Link to="/user/changepassword" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">Change Password</Link>
+               
                 <Link to="/user/order" className="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300">My Orders</Link>
                 
                 <Link to="/user/cart" className="relative" aria-label="View Cart">

@@ -81,6 +81,10 @@ export const Seller_Login = ({ role }) => {
                             <Link to="/Seller_SignUp" className="text-sm text-blue-500 underline">
                                 New Seller? Sign Up
                             </Link>
+                            <br />
+                                                        <Link to="/Seller_forgot-password" className="text-sm text-blue-500 underline">
+                                                            Forgot Password?
+                                                        </Link>
                         </label>
                         <Button type="submit" className="btn btn-primary mt-4">
                             Login

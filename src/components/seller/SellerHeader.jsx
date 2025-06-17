@@ -41,10 +41,11 @@ export const SellerHeader = () => {
                         </Link>
             
             <nav className="flex gap-8 items-center font-semibold text-gray-300">
-             
+              <Link to="/seller/Home" className="hover:text-blue-500 transition duration-300">Home</Link>
                  <Link to="/seller/create-product" className="hover:text-blue-500 transition duration-300">Create Products</Link>
                  <Link to="/seller/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
                  <Link to="/seller/Seller_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
+                 <Link to="/seller/changepassword" className="hover:text-blue-500 transition duration-300">ChangePassword</Link>
             </nav>
             
             
