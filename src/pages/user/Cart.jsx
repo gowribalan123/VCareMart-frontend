@@ -6,8 +6,10 @@ import axios from "axios";
 import { axiosInstance } from "../../config/axiosInstance";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button, Card, Typography, Input } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export const Cart = () => {
+    const navigate = useNavigate(); // Initialize the navigator
     const [refreshState, setRefreshState] = useState(false);
     const [quantities, setQuantities] = useState({});
     const [cartDetails, isLoading, error] = useFetch("/cart/get-cart", refreshState);
@@ -27,6 +29,7 @@ export const Cart = () => {
             toast.error("Payment failed. Please try again.");
         }
     };
+    
 
     const handleRemoveCartItem = async (productId) => {
         try {
@@ -55,6 +58,10 @@ export const Cart = () => {
             console.error(error);
             toast.error(error?.response?.data?.message || "Failed to update quantity");
         }
+    };
+
+    const handleContinue = () => {
+        navigate("/user/shippingaddress"); // Navigate to the shipping address page
     };
 
     if (isLoading) {
@@ -110,7 +117,7 @@ export const Cart = () => {
                         );
                     })}
                     <Typography variant="h6">Total Price: ₹{cartDetails.totalPrice.toFixed(2)}</Typography>
-                    <Button className="mt-20" onClick={makePayment} color="green">Make Payment</Button>
+                    <Button className="mt-20" onClick={handleContinue} color="green">Continue</Button> {/* Update here */}
                 </div>
             </section>
         </div>

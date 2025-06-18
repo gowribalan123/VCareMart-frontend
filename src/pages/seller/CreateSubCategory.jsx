@@ -8,7 +8,6 @@ export const CreateSubCategory = () => {
         name: '',
         description: '',
         image: null,
-       
         categoryId: '',
         userId: '',
     });
@@ -36,6 +35,7 @@ export const CreateSubCategory = () => {
                 setLoading(false);
             }
         };
+
 
         const fetchCategories = async () => {
           try {

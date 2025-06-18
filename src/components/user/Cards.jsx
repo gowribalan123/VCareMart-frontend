@@ -1,5 +1,8 @@
 import { Link , useNavigate} from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { axiosInstance } from "../../config/axiosInstance";
+
+
 
 export const ProductCard1 = ({ product,onDelete ,role}) => {
   // console.log("productCard=====", product);
@@ -43,9 +46,60 @@ export const ProductCard1 = ({ product,onDelete ,role}) => {
        </div>
    );
 };
-export const ProductCard = ({ product}) => {
-   // console.log("productCard=====", product);
+ 
+ 
+
+ 
+
+export const ProductCard = ({ product }) => {
     const navigate = useNavigate();
+    const [wishlist, setWishlist] = useState([]);
+
+    // Load wishlist from localStorage
+    useEffect(() => {
+        const storedWishlist = localStorage.getItem('wishlist');
+        if (storedWishlist) {
+            setWishlist(JSON.parse(storedWishlist));
+        }
+    }, []);
+
+    // Update localStorage whenever wishlist changes
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    }, [wishlist]);
+
+    // Add product to wishlist
+    const addToWishlist = async (productId) => {
+        try {
+            const response = await axiosInstance.post('/wishlist/add-wishlist', { productId });
+            if (response.status === 200) {
+                setWishlist([...wishlist, product]); // Update local state
+                alert('Product added to wishlist successfully!');
+            }
+        } catch (err) {
+            console.error('Error adding to wishlist:', err);
+            alert('Failed to add product to wishlist.');
+        }
+    };
+
+    // Remove product from wishlist
+    const removeFromWishlist = async (productId) => {
+        try {
+            const response = await axiosInstance.delete('/wishlist/delete-wishlist', { data: { productId } });
+            if (response.status === 200) {
+                setWishlist(wishlist.filter((item) => item._id !== productId)); // Update local state
+                alert('Product removed from wishlist successfully!');
+            }
+        } catch (err) {
+            console.error('Error removing from the wishlist:', err);
+            alert('Failed to remove product from wishlist.');
+        }
+    };
+
+    // Check if product is in wishlist
+    const isProductInWishlist = (product) => {
+        return wishlist.some((item) => item._id === product._id);
+    };
 
     return (
         <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
@@ -53,20 +107,84 @@ export const ProductCard = ({ product}) => {
                 <img 
                     src={product?.image} 
                     alt={product?.name} 
-                    className="h-64 w-full object-cover" // Adjust height for better aspect ratio
+                    className="h-64 w-full object-cover"
                 />
             </figure>
             <div className="card-body p-4">
                 <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{product?.name}</h2>
-                <p className="text-gray-600 text-xl font-bold"> ₹{product?.price.toFixed(2)}</p>
+                <p className="text-gray-600 text-xl font-bold"> ₹{product?.price}</p>
                 <div className="card-actions justify-end mt-4">
                     <Link to={`/product-details/${product?._id}`}>
                         <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
                             More Details
                         </button>
-              
                     </Link>
-           
+                    <button 
+                        className={`m-2 transition duration-300 ease-in-out`}
+                        onClick={() => isProductInWishlist(product) ? removeFromWishlist(product._id) : addToWishlist(product._id)}
+                    >
+                        {isProductInWishlist(product) ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 fill-current text-red-600" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
+                        )}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+export const WishlistCard = ({product}) => {
+  const navigate = useNavigate();
+    const [wishlist, setWishlist] = useState([]);
+
+    // Load wishlist from localStorage
+    useEffect(() => {
+        const storedWishlist = localStorage.getItem('wishlist');
+        if (storedWishlist) {
+            setWishlist(JSON.parse(storedWishlist));
+        }
+    }, []);
+
+    // Update localStorage whenever wishlist changes
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    }, [wishlist]);
+
+  
+   
+    
+
+    // Check if product is in wishlist
+    const isProductInWishlist = (product) => {
+        return wishlist.some((item) => item._id === product._id);
+    };
+
+    return (
+        <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+            <figure>
+                <img 
+                    src={product?.image} 
+                    alt={product?.name} 
+                    className="h-64 w-full object-cover"
+                />
+            </figure>
+            <div className="card-body p-4">
+                <h2 className="card-title text-lg font-semibold text-gray-800 uppercase">{product?.name}</h2>
+                <p className="text-gray-600 text-xl font-bold"> ₹{product?.price}</p>
+                <div className="card-actions justify-end mt-4">
+                    <Link to={`/product-details/${product?._id}`}>
+                        <button className="btn btn-primary bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
+                            More Details
+                        </button>
+                    </Link>
+                   
                 </div>
             </div>
         </div>
