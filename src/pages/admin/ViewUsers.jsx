@@ -3,20 +3,9 @@ import { useFetch } from "../../hooks/useFetch";
 import { UserCard2 } from "../../components/user/Cards";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
-import { saveUser, updateUser } from '../../redux/features/userSlice';
 import { useDispatch } from "react-redux";
 
 export const ViewUsers = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        dob: '',
-        shippingaddress: '',
-        image: null,
-        noofproducts: '',
-    });
-
     const [refreshState, setRefreshState] = useState(false);
     const [userDetails, isLoading, error] = useFetch("/user/get-all-user", refreshState);
     const [searchTerm, setSearchTerm] = useState('');
@@ -33,28 +22,23 @@ export const ViewUsers = () => {
         }
     };
 
-    const handleUpdateUser = async (userId) => {
+    const handleToggleUser = async (userId, isActive) => {
+        console.log("userid", userId);
         try {
-            const formDataToSend = new FormData();
-            Object.keys(formData).forEach(key => {
-                formDataToSend.append(key, formData[key]);
-            });
-
-            await axiosInstance.put('/user/updateprofile', formDataToSend, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            dispatch(updateUser());
-            alert('Profile updated successfully!');
+            const endpoint = isActive 
+                ? `/user/account-deactivate/${userId}` 
+                : `/user/account-activate/${userId}`;
+            
+            await axiosInstance.put(endpoint);
+            toast.success(`User is now ${isActive ? 'inactive' : 'active'}`);
             setRefreshState(prev => !prev);
         } catch (error) {
             console.log(error);
-            toast.error(error?.response?.data?.message || "Failed to update user");
+            toast.error(error?.response?.data?.message || "Failed to toggle user status");
         }
     };
 
-    // Ensure Users is an array before filtering and filter by role
+    // Filter users based on search term and role
     const filteredUsers = Array.isArray(userDetails) ? userDetails.filter(user =>
         user.role === 'user' && user.name.toLowerCase().includes(searchTerm.toLowerCase())
     ) : [];
@@ -75,7 +59,12 @@ export const ViewUsers = () => {
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredUsers.map(user => (
-                    <UserCard2 key={user._id} user={user} onRemove={handleRemoveUser} onUpdate={handleUpdateUser} />
+                    <UserCard2 
+                        key={user._id} 
+                        user={user} 
+                        onRemove={handleRemoveUser} 
+                        onToggle={handleToggleUser} 
+                    />
                 ))}
             </div>
         </div>

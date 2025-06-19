@@ -22,10 +22,27 @@ export const ViewSellers = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
 
+        const handleToggleUser = async (userId, isActive) => {
+            console.log("userid", userId);
+            try {
+                const endpoint = isActive 
+                    ? `/user/account-deactivate/${userId}` 
+                    : `/user/account-activate/${userId}`;
+                
+                await axiosInstance.put(endpoint);
+                toast.success(`User is now ${isActive ? 'inactive' : 'active'}`);
+                setRefreshState(prev => !prev);
+            } catch (error) {
+                console.log(error);
+                toast.error(error?.response?.data?.message || "Failed to toggle seller status");
+            }
+        };
+    
+
     const handleRemoveUser = async (userId) => {
         try {
             await axiosInstance.delete(`/user/delete/${userId}`);
-            toast.success("User removed");
+            toast.success("Seller removed");
             setRefreshState(prev => !prev);
         } catch (error) {
             console.log(error);
@@ -75,7 +92,7 @@ export const ViewSellers = () => {
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredUsers.map(user => (
-                    <SellerCard2 key={user._id} user={user} onRemove={handleRemoveUser} onUpdate={handleUpdateUser} />
+                    <SellerCard2 key={user._id} user={user} onRemove={handleRemoveUser} onUpdate={handleUpdateUser}  onToggle={handleToggleUser} />
                 ))}
             </div>
         </div>
