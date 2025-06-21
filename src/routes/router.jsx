@@ -137,7 +137,7 @@ export const router = createBrowserRouter([
                    
                     { path: "/seller/create-product", element: <CreateProduct/> },
                   
-                    { path: "/seller/products", element: <ViewProductPage role="seller" /> },
+                    { path: "/seller/products/:sellerId", element: <ViewProductPage role="seller" /> },
                     { path: "/seller/product-details/:productId", element: <ViewProductDetailsPage /> },
                     {path:"/seller/changepassword",element:<ChangePassword/>}
                 ],

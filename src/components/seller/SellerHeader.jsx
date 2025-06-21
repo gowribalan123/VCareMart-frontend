@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { CircleUser, ShoppingBag } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DarkMode } from "../shared/DarkMode";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
@@ -8,12 +8,14 @@ import { useFetch } from "../../hooks/useFetch";
 import { axiosInstance } from "../../config/axiosInstance";
 export const SellerHeader = () => {
 
+//const {seller}=useParams();
+
     const navigate = useNavigate();
    
       const [sellerDetails, setSellerDetails] = useState(null);
         const [isLoading, setIsLoading] = useState(true);
         const [error, setError] = useState(null);
-    
+ //   const [sellerId, setSellerId] = useState(null);
         useEffect(() => {
             const fetchSellerDetails = async () => {
                 try {
@@ -30,7 +32,8 @@ export const SellerHeader = () => {
             };
             fetchSellerDetails();
         }, []);
-    
+
+console.log("sellerdetails.id",sellerDetails?._id);    
     return (
         <div className="flex justify-between items-center w-full px-10 h-24 bg-gray-800 shadow-lg border-b border-gray-700">
             <Link to="/seller/Seller_profile" className="flex items-center">
@@ -43,7 +46,7 @@ export const SellerHeader = () => {
             <nav className="flex gap-8 items-center font-semibold text-gray-300">
               <Link to="/seller/Home" className="hover:text-blue-500 transition duration-300">Home</Link>
                  <Link to="/seller/create-product" className="hover:text-blue-500 transition duration-300">Create Products</Link>
-                 <Link to="/seller/products" className="hover:text-blue-500 transition duration-300">View Products</Link>
+                <Link to={`/seller/products/${sellerDetails?._id}`} className="hover:text-blue-500 transition duration-300">View Products</Link>
                  <Link to="/seller/Seller_profile" className="hover:text-blue-500 transition duration-300">View Profile</Link>
                  <Link to="/seller/changepassword" className="hover:text-blue-500 transition duration-300">ChangePassword</Link>
             </nav>
