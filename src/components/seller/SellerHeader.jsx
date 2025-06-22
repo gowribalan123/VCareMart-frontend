@@ -33,7 +33,7 @@ export const SellerHeader = () => {
             fetchSellerDetails();
         }, []);
 
-console.log("sellerdetails.id",sellerDetails?._id);    
+  
     return (
         <div className="flex justify-between items-center w-full px-10 h-24 bg-gray-800 shadow-lg border-b border-gray-700">
             <Link to="/seller/Seller_profile" className="flex items-center">
