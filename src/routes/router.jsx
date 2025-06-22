@@ -192,7 +192,7 @@ export const router = createBrowserRouter([
 
                { path: "/admin/product-details/:productId", element: <ViewProductDetailsPage  /> },
 
-
+              { path: "/admin/products/:sellerId", element: <ViewProductPage role="admin" /> },
               
               
             ],

@@ -850,8 +850,11 @@ export const UserCard2 = ({ user, onRemove, onUpdate, onToggle }) => {
 
  
 
-export const SellerCard2 = ({ user, onRemove, onUpdate,onToggle }) => {
-  const [isEditing, setIsEditing] = useState(false);
+
+ 
+
+export const SellerCard2 = ({ user, onRemove, onUpdate, onToggle, onViewProducts }) => {
+    const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState(user);
 
     const handleEditChange = (e) => {
@@ -860,6 +863,7 @@ export const SellerCard2 = ({ user, onRemove, onUpdate,onToggle }) => {
     };
 
     const handleSave = () => {
+        // Add validation here if needed
         onUpdate(editedUser);
         setIsEditing(false);
     };
@@ -871,79 +875,82 @@ export const SellerCard2 = ({ user, onRemove, onUpdate,onToggle }) => {
         }
     };
 
-   
-   return (
-    <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
-        <div className="flex-shrink-0 w-1/3">
-            <img src={user.image} alt={`${user.name}'s profile`} className="w-full h-auto rounded-full mb-4" />
-          
-        {/**    <button 
-                className="bg-red-600 hover:bg-red-700 text-white px-10 py-1.5 rounded-lg transition duration-200" 
-                onClick={handleDelete}
-            >
-                Delete
-            </button>
-*/} 
-            <button 
-                onClick={() => onToggle(user._id, user.isActive)} 
-                className={`mt-2 px-4 py-2 rounded ${user.isActive ? 'bg-red-500' : 'bg-green-500'} text-white`}
-            >
-                {user.isActive ? 'Deactivate' : 'Activate'}
-            </button>
-        </div>
-        <div className="w-2/3 pl-4">
-            <h3 className="text-xl font-semibold text-gray-800">{user.name}</h3>
-            <ul className="mt-4 text-gray-600">
-                <li>Email: <span className="font-medium">{user.email}</span></li>
-                {user.phone && <li>Phone: <span className="font-medium">{user.phone}</span></li>}
-                {user.role && <li>Role: <span className="font-medium">{user.role}</span></li>}
-                <li>Status: <span className={`font-semibold text-${user.isActive ? 'green' : 'red'}-500`}>{user.isActive ? 'ACTIVE' : 'INACTIVE'}</span></li>
-                <li>Date of Birth: <span className="font-medium">{new Date(user.dob).toLocaleDateString()}</span></li>
-                <li>Shipping Address: <span className="font-medium">{user.shippingaddress}</span></li>
-            </ul>
-        </div>
+    return (
+        <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
+            <div className="flex-shrink-0 w-1/3">
+                <img src={user.image} alt={`${user.name}'s profile`} className="w-full h-auto rounded-full mb-4" />
+                <button 
+                    onClick={() => onToggle(user._id, user.isActive)} 
+                    aria-label={user.isActive ? 'Deactivate user' : 'Activate user'}
+                    className={`mt-2 px-4 py-2 rounded ${user.isActive ? 'bg-red-500' : 'bg-green-500'} text-white`}
+                >
+                    {user.isActive ? 'Deactivate' : 'Activate'}
+                </button>
 
-        {isEditing && (
-            <div className="modal">
-                <div className="modal-content">
-                    <h2>Edit User</h2>
-                    <label>
-                        Name:
-                        <input type="text" name="name" value={editedUser.name} onChange={handleEditChange} className="border rounded p-1" />
-                    </label>
-                    <label>
-                        Email:
-                        <input type="email" name="email" value={editedUser.email} onChange={handleEditChange} className="border rounded p-1" />
-                    </label>
-                    <label>
-                        Phone:
-                        <input type="text" name="phone" value={editedUser.phone} onChange={handleEditChange} className="border rounded p-1" />
-                    </label>
-                    <label>
-                        Role:
-                        <input type="text" name="role" value={editedUser.role} onChange={handleEditChange} className="border rounded p-1" />
-                    </label>
-                    <div className="flex justify-between mt-4">
-                        <button 
-                            className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
-                            onClick={handleSave}
-                        >
-                            Save
-                        </button>
-                        <button 
-                            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
-                            onClick={() => setIsEditing(false)}
-                        >
-                            Cancel
-                        </button>
+                <Link to={`/admin/products/${user?._id}`}>
+                    <button 
+                        onClick={() => onViewProducts(user._id)} 
+                        className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                    >
+                        View Products
+                    </button> 
+                </Link>
+            </div>
+            
+            <div className="w-2/3 pl-4">
+                <h3 className="text-xl font-semibold text-gray-800">{user.name}</h3>
+                <ul className="mt-4 text-gray-600">
+                    <li>Email: <span className="font-medium">{user.email}</span></li>
+                    {user.phone && <li>Phone: <span className="font-medium">{user.phone}</span></li>}
+                    {user.role && <li>Role: <span className="font-medium">{user.role}</span></li>}
+                    <li>Status: <span className={`font-semibold text-${user.isActive ? 'green' : 'red'}-500`}>{user.isActive ? 'ACTIVE' : 'INACTIVE'}</span></li>
+                    <li>Date of Birth: <span className="font-medium">{new Date(user.dob).toLocaleDateString()}</span></li>
+                    <li>Shipping Address: <span className="font-medium">{user.shippingaddress}</span></li>
+                </ul>
+            </div>
+
+            {isEditing && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Edit User</h2>
+                        <label>
+                            Name:
+                            <input type="text" name="name" value={editedUser.name} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Email:
+                            <input type="email" name="email" value={editedUser.email} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Phone:
+                            <input type="text" name="phone" value={editedUser.phone} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <label>
+                            Role:
+                            <input type="text" name="role" value={editedUser.role} onChange={handleEditChange} className="border rounded p-1" />
+                        </label>
+                        <div className="flex justify-between mt-4">
+                            <button 
+                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={handleSave}
+                            >
+                                Save
+                            </button>
+                            <button 
+                                className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg transition duration-200"
+                                onClick={() => setIsEditing(false)}
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )}
-    </div>
-);
-
+            )}
+        </div>
+    );
 };
+
+
 
 
  

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFetch } from "../../hooks/useFetch";
 import { SellerCard2 } from "../../components/user/Cards";
 import toast from "react-hot-toast";
@@ -16,28 +16,43 @@ export const ViewSellers = () => {
         image: null,
         noofproducts: '',
     });
-
+    const [products, setProducts] = useState([]);
+    const [sellerDetails, setSellerDetails] = useState(null);
     const [refreshState, setRefreshState] = useState(false);
-    const [userDetails, isLoading, error] = useFetch("/user/get-all-user", refreshState);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [userDetails] = useFetch("/user/get-all-user", refreshState);
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
 
-        const handleToggleUser = async (userId, isActive) => {
-            console.log("userid", userId);
+    // Fetch seller details on component mount
+    useEffect(() => {
+        const fetchSellerDetails = async () => {
             try {
-                const endpoint = isActive 
-                    ? `/user/account-deactivate/${userId}` 
-                    : `/user/account-activate/${userId}`;
-                
-                await axiosInstance.put(endpoint);
-                toast.success(`User is now ${isActive ? 'inactive' : 'active'}`);
-                setRefreshState(prev => !prev);
-            } catch (error) {
-                console.log(error);
-                toast.error(error?.response?.data?.message || "Failed to toggle seller status");
+                const response = await axiosInstance.get("/user/get-all-user");
+                setSellerDetails(response.data);
+            } catch (err) {
+                console.error("Error fetching seller details:", err);
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
             }
         };
-    
+        fetchSellerDetails();
+    }, []);
+
+    const handleToggleUser = async (userId, isActive) => {
+        try {
+            const endpoint = isActive 
+                ? `/user/account-deactivate/${userId}` 
+                : `/user/account-activate/${userId}`;
+            await axiosInstance.put(endpoint);
+            toast.success(`User is now ${isActive ? 'inactive' : 'active'}`);
+            setRefreshState(prev => !prev);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Failed to toggle seller status");
+        }
+    };
 
     const handleRemoveUser = async (userId) => {
         try {
@@ -45,7 +60,6 @@ export const ViewSellers = () => {
             toast.success("Seller removed");
             setRefreshState(prev => !prev);
         } catch (error) {
-            console.log(error);
             toast.error(error?.response?.data?.message || "Failed to remove seller");
         }
     };
@@ -56,7 +70,6 @@ export const ViewSellers = () => {
             Object.keys(formData).forEach(key => {
                 formDataToSend.append(key, formData[key]);
             });
-
             await axiosInstance.put('/user/updateprofile', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -66,18 +79,40 @@ export const ViewSellers = () => {
             toast.success('Profile updated successfully!');
             setRefreshState(prev => !prev);
         } catch (error) {
-            console.log(error);
             toast.error(error?.response?.data?.message || "Failed to update seller");
         }
     };
 
-    // Ensure userDetails is an array before filtering and filter by role
+ 
+
+    const handleViewProducts = (sellerDetails) => {
+        try {console.log(sellerDetails?._id)
+        const response =  axiosInstance.get(`/product/get-all-products-by-seller/${sellerDetails._id}`);
+        if (response.data && response.data.data) {
+            if (response.data.data.length === 0) {
+                // No products found for this seller
+                setError("No products found for this seller.");
+                setProducts([]); // Reset products to empty
+                return; // Exit the function early
+            }
+            setProducts(response.data.data);
+            setError(''); // Clear any previous error
+        } else {
+            setError("Unexpected response structure.");
+            setProducts([]);
+        }
+    } catch (err) {
+        setError(err.response ? err.response.data.message : err.message);
+        setProducts([]); // Reset products to empty on error
+    }
+    };
+
     const filteredUsers = Array.isArray(userDetails) ? userDetails.filter(user =>
         user.role === 'seller' && user.name.toLowerCase().includes(searchTerm.toLowerCase())
     ) : [];
 
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <p className="text-red-500">Error: {error.message}</p>;
+    if (error) return <p className="text-red-500">Error: {error}</p>;
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -92,7 +127,14 @@ export const ViewSellers = () => {
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredUsers.map(user => (
-                    <SellerCard2 key={user._id} user={user} onRemove={handleRemoveUser} onUpdate={handleUpdateUser}  onToggle={handleToggleUser} />
+                    <SellerCard2 
+                        key={user._id} 
+                        user={user} 
+                        onRemove={handleRemoveUser}
+                        onUpdate={handleUpdateUser}  
+                        onToggle={handleToggleUser} 
+                        onViewProducts={handleViewProducts}
+                    />
                 ))}
             </div>
         </div>
