@@ -855,7 +855,7 @@ export const UserCard2 = ({ user, onRemove, onUpdate, onToggle }) => {
 
  
 
-export const SellerCard2 = ({ user, onRemove, onUpdate, onToggle, onViewProducts }) => {
+export const SellerCard2 = ({ user, onRemove, onUpdate, onToggle }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState(user);
     const [products, setProducts] = useState([]);
@@ -879,10 +879,7 @@ export const SellerCard2 = ({ user, onRemove, onUpdate, onToggle, onViewProducts
         }
     };
 
-   const handleViewProducts = ()=>{
-    onViewProducts(user._id)
-    navigate(`/admin/products/${user._id}`); // Navigate to the shipping address page
-   }
+  
 
     return (
         <div className="flex border border-gray-300 rounded-lg p-6 bg-white shadow-lg transition-transform transform hover:scale-105">
@@ -898,7 +895,7 @@ export const SellerCard2 = ({ user, onRemove, onUpdate, onToggle, onViewProducts
 
                 <Link to={`/admin/products/${user?._id}`}>
                     <button 
-                       onClick={handleViewProducts}
+                       
                         className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                     >
                         View Products

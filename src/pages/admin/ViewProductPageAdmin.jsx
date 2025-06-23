@@ -3,60 +3,42 @@ import { axiosInstance } from "../../config/axiosInstance";
 import { ProductCard1 } from "../../components/user/Cards";
 import { ProductSkelton } from "../../components/shared/Skeltons";
 import { toast } from "react-toastify"; 
+import { useParams } from "react-router-dom";
 
 export const ViewProductPageAdmin = ({ role }) => {
-    const [refreshState, setRefreshState] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [products, setProducts] = useState([]);
-    const [sellerDetails, setSellerDetails] = useState(null);
-    const [userId, setUserId] = useState(null);
+    
+    const { sellerId } = useParams();
 
-    // Fetch seller details on component mount
     useEffect(() => {
-        const fetchSellerDetails = async () => {
+        const handleViewProducts = async () => {
+            console.log("Viewing products for seller with ID:", sellerId);
             try {
-                const response = await axiosInstance.get("/user/get-all-user");
-                // Assuming response.data returns an array of users, set the first user for simplicity
-                if (response.data && response.data.length > 0) {
-                    setSellerDetails(response.data);
-                    setUserId(response); // Set the userId from the first seller
+                const response = await axiosInstance.get(`/product/get-all-products-by-seller/${sellerId}`);
+                if (response && response.data && response.data.data) {
+                    setProducts(response.data.data);
+                    setError(null); // Clear any previous errors
+
+                    if (response.data.data.length === 0) {
+                        toast.info("No products added. Please add products.");
+                    }
+                } else {
+                    console.error("Unexpected response structure:", response);
+                    setError("Unexpected response structure.");
                 }
             } catch (err) {
-                console.error("Error fetching seller details:", err);
-                setError("Failed to fetch seller details. Please try again.");
+                console.error("Error fetching products:", err);
+                setError(err.response ? err.response.data.message : err.message);
+                setProducts([]); // Reset products to empty on error
             } finally {
-                setIsLoading(false);
+                setIsLoading(false); // Set loading state to false after fetching
             }
         };
-        fetchSellerDetails();
-    }, []);
 
-    // Fetch products when seller details are loaded
-    useEffect(() => {
-      const fetchProducts  = async (sellerDetails) => {
-        console.log("Viewing products for seller with ID:", sellerDetails._id);
-        try {
-            const response = await axiosInstance.get(`/product/get-all-products-by-seller/${sellerDetails._id}`);
-            if (response && response.data && response.data.data) {
-                setProducts(response.data.data);
-                setError('');
-
-                if (response.data.data.length === 0) {
-                    toast.info("No products added. Please add products.");
-                }
-            } else {
-                console.error("Unexpected response structure:", response);
-                setError("Unexpected response structure.");
-            }
-        } catch (err) {
-            console.error("Error fetching products:", err);
-            setError(err.response ? err.response.data.message : err.message);
-            setProducts([]); // Reset products to empty on error
-        }
-    };
- fetchProducts();
-    }, [sellerDetails, refreshState]);
+        handleViewProducts();
+    }, [sellerId]); // Fetch products when sellerId changes
 
     // Handle product deletion
     const handleDelete = async (id) => {
@@ -65,7 +47,7 @@ export const ViewProductPageAdmin = ({ role }) => {
             try {
                 await axiosInstance.delete(`/product/delete-product/${id}`);
                 toast.success("Product removed successfully");
-                setRefreshState(prev => !prev); // Refresh the product list
+                setProducts(prev => prev.filter(product => product._id !== id)); // Update products state
             } catch (err) {
                 console.error("Failed to delete product:", err);
                 toast.error("Failed to delete product. Please try again.");
@@ -92,7 +74,11 @@ export const ViewProductPageAdmin = ({ role }) => {
             </section>
             <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
                 {products.length === 0 ? (
-                    <div>No products found for this seller.</div>
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"  >
+   
+    <span className="block sm:inline"> No products found for this seller.</span>
+</div>
+
                 ) : (
                     products.map((product) => (
                         <ProductCard1
