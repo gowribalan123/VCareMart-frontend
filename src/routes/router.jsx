@@ -38,7 +38,7 @@ import{ViewSubCategory} from "../pages/admin/ViewSubCategory";
 import{ViewUsers} from "../pages/admin/ViewUsers";
 import{ViewSellers} from "../pages/admin/ViewSellers";
 import{ViewProductDetailsPage} from "../pages/admin/ViewProductDetailsPage"
-
+import {ViewProductPageAdmin}  from "../pages/admin/ViewProductPageAdmin"
 
 import {CreateCategory} from "../pages/seller/CreateCategory";
 import {CreateSubCategory} from "../pages/seller/CreateSubCategory";
@@ -192,7 +192,7 @@ export const router = createBrowserRouter([
 
                { path: "/admin/product-details/:productId", element: <ViewProductDetailsPage  /> },
 
-              { path: "/admin/products/:sellerId", element: <ViewProductPage role="admin" /> },
+              { path: "/admin/products/:sellerId", element: <ViewProductPageAdmin role="admin" /> },
               
               
             ],

@@ -4,62 +4,59 @@ import { ProductCard1 } from "../../components/user/Cards";
 import { ProductSkelton } from "../../components/shared/Skeltons";
 import { toast } from "react-toastify"; 
 
-export const ViewProductPage = ({role}) => {
+export const ViewProductPageAdmin = ({ role }) => {
     const [refreshState, setRefreshState] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [products, setProducts] = useState([]);
     const [sellerDetails, setSellerDetails] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     // Fetch seller details on component mount
     useEffect(() => {
         const fetchSellerDetails = async () => {
             try {
-                const response = await axiosInstance.get("/user/profile");
-                setSellerDetails(response.data);
+                const response = await axiosInstance.get("/user/get-all-user");
+                // Assuming response.data returns an array of users, set the first user for simplicity
+                if (response.data && response.data.length > 0) {
+                    setSellerDetails(response.data);
+                    setUserId(response); // Set the userId from the first seller
+                }
             } catch (err) {
                 console.error("Error fetching seller details:", err);
-                setError(err.message);
+                setError("Failed to fetch seller details. Please try again.");
             } finally {
                 setIsLoading(false);
             }
         };
         fetchSellerDetails();
     }, []);
- 
-   useEffect(() => {
-    const fetchProducts = async () => {
-        let response; // Declare response here
-        try {
-             
-                response = await axiosInstance.get(`/product/get-all-products-by-seller/${sellerDetails._id}`);
-            
 
-            // Check if response is defined and has data
+    // Fetch products when seller details are loaded
+    useEffect(() => {
+      const fetchProducts  = async (sellerDetails) => {
+        console.log("Viewing products for seller with ID:", sellerDetails._id);
+        try {
+            const response = await axiosInstance.get(`/product/get-all-products-by-seller/${sellerDetails._id}`);
             if (response && response.data && response.data.data) {
                 setProducts(response.data.data);
                 setError('');
-                
-                // Check if no products were returned and show alert
+
                 if (response.data.data.length === 0) {
-                    alert("No products added. Please add products.");
+                    toast.info("No products added. Please add products.");
                 }
             } else {
-                // Handle case where response structure is not as expected
                 console.error("Unexpected response structure:", response);
                 setError("Unexpected response structure.");
             }
         } catch (err) {
-            // Handle network or server errors
             console.error("Error fetching products:", err);
             setError(err.response ? err.response.data.message : err.message);
             setProducts([]); // Reset products to empty on error
         }
     };
-
-    fetchProducts();
-}, [sellerDetails, refreshState, role]); // Added role to dependencies
-
+ fetchProducts();
+    }, [sellerDetails, refreshState]);
 
     // Handle product deletion
     const handleDelete = async (id) => {
@@ -86,11 +83,7 @@ export const ViewProductPage = ({role}) => {
         return <div className="text-red-500 text-lg font-semibold">Error: {error}</div>;
     }
 
-    // Seller details loading state
-    if (!sellerDetails) {
-        return <div>Loading seller details...</div>;
-    }
-
+    // Render the main component
     return (
         <div className="flex flex-col items-center justify-start px-4 py-16 max-w-screen-xl mx-auto">
             <section className="mb-8 text-center">

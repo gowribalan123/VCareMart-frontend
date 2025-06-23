@@ -6,7 +6,7 @@ import { axiosInstance } from "../../config/axiosInstance";
 import { updateUser } from '../../redux/features/userSlice';
 import { useDispatch } from "react-redux";
 
-export const ViewSellers = () => {
+export const ViewSellers = ({ role }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -16,6 +16,7 @@ export const ViewSellers = () => {
         image: null,
         noofproducts: '',
     });
+
     const [products, setProducts] = useState([]);
     const [sellerDetails, setSellerDetails] = useState(null);
     const [refreshState, setRefreshState] = useState(false);
@@ -25,7 +26,6 @@ export const ViewSellers = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
 
-    // Fetch seller details on component mount
     useEffect(() => {
         const fetchSellerDetails = async () => {
             try {
@@ -47,7 +47,7 @@ export const ViewSellers = () => {
                 ? `/user/account-deactivate/${userId}` 
                 : `/user/account-activate/${userId}`;
             await axiosInstance.put(endpoint);
-            toast.success(`User is now ${isActive ? 'inactive' : 'active'}`);
+            toast.success(`Seller is now ${isActive ? 'inactive' : 'active'}`);
             setRefreshState(prev => !prev);
         } catch (error) {
             toast.error(error?.response?.data?.message || "Failed to toggle seller status");
@@ -83,28 +83,26 @@ export const ViewSellers = () => {
         }
     };
 
- 
+    const handleViewProducts = async (userId) => {
+        console.log("Viewing products for seller with ID:", userId);
+        try {
+            const response = await axiosInstance.get(`/product/get-all-products-by-seller/${userId}`);
+            if (response && response.data && response.data.data) {
+                setProducts(response.data.data);
+                setError('');
 
-    const handleViewProducts = (sellerDetails) => {
-        try {console.log(sellerDetails?._id)
-        const response =  axiosInstance.get(`/product/get-all-products-by-seller/${sellerDetails._id}`);
-        if (response.data && response.data.data) {
-            if (response.data.data.length === 0) {
-                // No products found for this seller
-                setError("No products found for this seller.");
-                setProducts([]); // Reset products to empty
-                return; // Exit the function early
+                if (response.data.data.length === 0) {
+                    toast.info("No products added. Please add products.");
+                }
+            } else {
+                console.error("Unexpected response structure:", response);
+                setError("Unexpected response structure.");
             }
-            setProducts(response.data.data);
-            setError(''); // Clear any previous error
-        } else {
-            setError("Unexpected response structure.");
-            setProducts([]);
+        } catch (err) {
+            console.error("Error fetching products:", err);
+            setError(err.response ? err.response.data.message : err.message);
+            setProducts([]); // Reset products to empty on error
         }
-    } catch (err) {
-        setError(err.response ? err.response.data.message : err.message);
-        setProducts([]); // Reset products to empty on error
-    }
     };
 
     const filteredUsers = Array.isArray(userDetails) ? userDetails.filter(user =>
